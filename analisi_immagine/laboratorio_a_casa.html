@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La vera e la falsa Chiesa — Lavoro a casa</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Josefin+Sans:wght@300;400;600&display=swap');
+
+  :root {
+    --ink: #1a1410;
+    --parchment: #f5f0e8;
+    --warm-mid: #e8dfc8;
+    --accent: #8b3a1a;
+    --accent-light: #c4602e;
+    --accent-blue: #2a4a6b;
+    --border: #c8b89a;
+    --faint: #ede5d0;
+    --line-color: #b8a888;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 11.5pt;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 14mm 16mm;
+  }
+
+  /* HEADER */
+  .header {
+    border-top: 3px solid var(--accent);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .header-left .label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 7.5pt;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .header-left h1 {
+    font-size: 17pt;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .header-left .subtitle {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: #5a4a38;
+    margin-top: 2px;
+  }
+  .header-right {
+    text-align: right;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8pt;
+    color: #7a6a58;
+    line-height: 2;
+  }
+  .header-right .field-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 4px;
+  }
+  .header-right .field-row label {
+    white-space: nowrap;
+    font-size: 7.5pt;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .header-right .field-row input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line-color);
+    width: 130px;
+    font-family: 'EB Garamond', serif;
+    font-size: 10pt;
+    color: var(--ink);
+    outline: none;
+    padding: 1px 3px;
+  }
+  .header-right .field-row input:focus {
+    border-bottom-color: var(--accent);
+  }
+
+  /* ISTRUZIONI */
+  .istruzioni-box {
+    background: var(--faint);
+    border-left: 3px solid var(--accent);
+    padding: 9px 12px;
+    margin-bottom: 24px;
+    font-size: 9.5pt;
+    color: #3a2e20;
+  }
+  .istruzioni-box strong {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 7.5pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* RISORSE */
+  .section-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 7.5pt;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin-bottom: 14px;
+    margin-top: 24px;
+  }
+
+  .risorse-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .risorsa-card {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .risorsa-card .rc-head {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .risorsa-card.video .rc-head { background: #2a1a10; }
+  .risorsa-card.manuale .rc-head { background: #1a2a3a; }
+  .rc-icon {
+    font-size: 14pt;
+    line-height: 1;
+  }
+  .rc-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 7.5pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .risorsa-card.video .rc-title { color: #d4a888; }
+  .risorsa-card.manuale .rc-title { color: #88a8c8; }
+  .rc-body {
+    padding: 10px 12px;
+    background: var(--faint);
+  }
+  .rc-desc {
+    font-size: 9.5pt;
+    color: #5a4a38;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .rc-link {
+    display: inline-block;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 7.5pt;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .rc-link:hover { opacity: 0.8; }
+  .risorsa-card.video .rc-link {
+    background: #2a1a10;
+    color: #d4a888;
+    border: 1px solid #4a3a28;
+  }
+  .risorsa-card.manuale .rc-link {
+    background: #1a2a3a;
+    color: #88a8c8;
+    border: 1px solid #2a4a6b;
+  }
+
+  /* NOTA ANNOTAZIONE */
+  .nota-box {
+    background: var(--warm-mid);
+    border: 1px solid var(--border);
+    border-left: 3px solid #7a6a50;
+    padding: 8px 12px;
+    font-size: 9.5pt;
+    color: #4a3a28;
+    margin-bottom: 4px;
+    font-style: italic;
+  }
+
+  /* DOMANDE */
+  .domanda {
+    margin-bottom: 24px;
+    page-break-inside: avoid;
+  }
+  .domanda-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 7px;
+  }
+  .domanda-num {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8pt;
+    font-weight: 600;
+    color: var(--accent-light);
+    letter-spacing: 0.05em;
+    min-width: 20px;
+  }
+  .domanda-tag {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 6.5pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9a8a78;
+    background: var(--warm-mid);
+    padding: 2px 7px;
+    border-radius: 1px;
+  }
+  .domanda-testo {
+    font-size: 11pt;
+    line-height: 1.55;
+    color: var(--ink);
+    padding-left: 30px;
+    margin-bottom: 8px;
+  }
+  .domanda-testo em { color: #5a4a38; }
+  .risposta-area {
+    padding-left: 30px;
+  }
+  .risposta-area textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.35);
+    border: none;
+    border-bottom: 1px solid var(--line-color);
+    font-family: 'EB Garamond', serif;
+    font-size: 11pt;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    padding: 6px 8px;
+    line-height: 1.7;
+    min-height: 110px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .risposta-area textarea:focus {
+    background: rgba(255,255,255,0.6);
+    border-bottom-color: var(--accent);
+  }
+
+  /* DOMANDA FINALE — riscrittura */
+  .domanda-finale {
+    background: var(--warm-mid);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 14px 16px;
+    margin-top: 8px;
+    page-break-inside: avoid;
+  }
+  .domanda-finale .df-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 7px;
+  }
+  .domanda-finale .df-testo {
+    font-size: 11pt;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .domanda-finale textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.4);
+    border: none;
+    border-bottom: 1px solid var(--border);
+    font-family: 'EB Garamond', serif;
+    font-size: 11pt;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    padding: 6px 8px;
+    line-height: 1.7;
+    min-height: 180px;
+    transition: background 0.15s;
+  }
+  .domanda-finale textarea:focus {
+    background: rgba(255,255,255,0.65);
+  }
+
+  /* EXPORT */
+  .export-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px;
+  }
+  .btn-export {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #f5f0e8;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-export:hover { background: var(--accent-light); }
+
+  .footer {
+    margin-top: 18px;
+    border-top: 1px solid var(--border);
+    padding-top: 7px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 7pt;
+    color: #9a8a78;
+    letter-spacing: 0.08em;
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: white; }
+    .page { padding: 10mm 14mm; }
+    .rc-link, .export-bar { display: none !important; }
+    .risorsa-card.video .rc-head,
+    .risorsa-card.manuale .rc-head {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .istruzioni-box, .domanda-finale, .nota-box {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    textarea, input {
+      background: transparent !important;
+      border: none !important;
+      border-bottom: 1px solid #b8a888 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="label">Laboratorio di Storia · Classe III — Lavoro a casa</div>
+      <h1>La vera e la falsa Chiesa</h1>
+      <div class="subtitle">Revisione, confronto e metacognizione</div>
+    </div>
+    <div class="header-right">
+      <div class="field-row"><label>Nome</label><input type="text" id="f-nome" placeholder=""></div>
+      <div class="field-row"><label>Classe</label><input type="text" id="f-classe" placeholder=""></div>
+      <div class="field-row"><label>Data</label><input type="text" id="f-data" placeholder=""></div>
+    </div>
+  </div>
+
+  <!-- ISTRUZIONI -->
+  <div class="istruzioni-box">
+    <strong>Istruzioni</strong>
+    Riprendi la scheda che hai compilato in classe. Guarda il video e leggi le pagine del manuale usando i link qui sotto. Poi rispondi alle domande di questa scheda. Lavoro individuale.
+  </div>
+
+  <!-- RISORSE -->
+  <div class="section-title">Risorse</div>
+  <div class="risorse-grid">
+    <div class="risorsa-card video">
+      <div class="rc-head">
+        <span class="rc-icon">▶</span>
+        <span class="rc-title">Video — Analisi della stampa</span>
+      </div>
+      <div class="rc-body">
+        <div class="rc-desc">Analisi approfondita dell'incisione di Cranach il Giovane.</div>
+        <a class="rc-link" href="https://drive.google.com/file/d/1IfDIR2WRSmTR1TeAATJFDvVdqcdzfd1s/view?usp=sharing" target="_blank">Apri il video →</a>
+      </div>
+    </div>
+    <div class="risorsa-card manuale">
+      <div class="rc-head">
+        <span class="rc-icon">📄</span>
+        <span class="rc-title">Manuale — La fonte</span>
+      </div>
+      <div class="rc-body">
+        <div class="rc-desc">Scheda del manuale con didascalie e domande di analisi.</div>
+        <a class="rc-link" href="https://drive.google.com/file/d/17Q5iyuIEZuS6ZXRXnZd9gqa2_Bs_yeL-/view?usp=sharing" target="_blank">Apri le pagine →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="nota-box">
+    Durante la visione del video annota su un foglio gli elementi che non avevi colto e quelli che invece avevi già identificato — ti serviranno per rispondere alle domande.
+  </div>
+
+  <!-- DOMANDE METACOGNITIVE -->
+  <div class="section-title">Confronto e metacognizione</div>
+
+  <div class="domanda">
+    <div class="domanda-header">
+      <span class="domanda-num">1.</span>
+      <span class="domanda-tag">Confronto · Cosa mi è sfuggito</span>
+    </div>
+    <div class="domanda-testo">
+      Rileggi le tue risposte della scheda in classe. Dopo aver guardato il video e letto il manuale, indica almeno due elementi che non avevi colto autonomamente. Spiega brevemente perché ti erano sfuggiti.
+    </div>
+    <div class="risposta-area">
+      <textarea id="r1" placeholder=""></textarea>
+    </div>
+  </div>
+
+  <div class="domanda">
+    <div class="domanda-header">
+      <span class="domanda-num">2.</span>
+      <span class="domanda-tag">Confronto · Interpretazioni diverse</span>
+    </div>
+    <div class="domanda-testo">
+      Indica almeno un elemento che avevi già identificato autonomamente, ma che il video o il manuale interpretano in modo diverso dal tuo. Se non trovi differenze interpretative significative, scrivi semplicemente che le tue letture coincidono.
+    </div>
+    <div class="risposta-area">
+      <textarea id="r2" placeholder=""></textarea>
+    </div>
+  </div>
+
+  <!-- DOMANDA FINALE -->
+  <div class="domanda-finale">
+    <div class="df-label">Revisione · Risposta finale</div>
+    <div class="df-testo">
+      Rileggi la tua risposta alla domanda finale della scheda in classe (<em>«Un documento di propaganda può essere usato come fonte storica?»</em>). Dopo aver guardato il video e letto il manuale, ritieni che vada modificata o integrata? Se sì, riscrivila qui. Se no, spiega in poche righe perché la confermi.
+    </div>
+    <textarea id="r-finale" placeholder=""></textarea>
+  </div>
+
+  <div class="export-bar">
+    <button class="btn-export" onclick="window.print()">⬇ Salva / Stampa PDF</button>
+  </div>
+
+  <div class="footer">
+    <span>Liceo Classico G.B. Vico · Chieti</span>
+    <span>La Riforma protestante</span>
+  </div>
+
+</div>
+</body>
+</html>
