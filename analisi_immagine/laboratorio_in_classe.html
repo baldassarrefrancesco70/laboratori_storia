@@ -94,9 +94,7 @@
     outline: none;
     padding: 1px 3px;
   }
-  .header-right .field-row input:focus {
-    border-bottom-color: var(--accent);
-  }
+  .header-right .field-row input:focus { border-bottom-color: var(--accent); }
 
   .didascalia {
     font-style: italic;
@@ -107,14 +105,12 @@
     letter-spacing: 0.02em;
   }
 
-  /* VIEWER */
   .viewer-wrapper {
     border: 1px solid var(--border);
     background: #2a2018;
     border-radius: 3px;
     overflow: hidden;
     margin-bottom: 8px;
-    position: relative;
   }
   .viewer-controls {
     display: flex;
@@ -138,8 +134,7 @@
     font-family: 'Josefin Sans', sans-serif;
     font-size: 9pt;
     font-weight: 600;
-    width: 26px;
-    height: 26px;
+    width: 26px; height: 26px;
     border-radius: 2px;
     cursor: pointer;
     display: flex;
@@ -150,9 +145,7 @@
   .ctrl-btn:hover { background: #3e3028; }
   .zoom-slider {
     -webkit-appearance: none;
-    appearance: none;
-    width: 110px;
-    height: 3px;
+    width: 110px; height: 3px;
     background: #4a3a28;
     border-radius: 2px;
     outline: none;
@@ -160,8 +153,7 @@
   }
   .zoom-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 13px;
-    height: 13px;
+    width: 13px; height: 13px;
     border-radius: 50%;
     background: var(--accent-light);
     cursor: pointer;
@@ -188,8 +180,7 @@
   }
   .reset-btn:hover { border-color: var(--accent-light); color: var(--accent-light); }
   #viewer-canvas {
-    width: 100%;
-    height: 300px;
+    width: 100%; height: 300px;
     overflow: hidden;
     position: relative;
     cursor: grab;
@@ -198,8 +189,7 @@
   #viewer-canvas:active { cursor: grabbing; }
   #viewer-canvas img {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform-origin: center center;
     user-select: none;
     -webkit-user-drag: none;
@@ -245,20 +235,11 @@
     margin-top: 22px;
   }
 
-  .domanda {
-    margin-bottom: 22px;
-    page-break-inside: avoid;
-  }
-  .domanda-header {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    margin-bottom: 7px;
-  }
+  .domanda { margin-bottom: 22px; page-break-inside: avoid; }
+  .domanda-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 7px; }
   .domanda-num {
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 8pt;
-    font-weight: 600;
+    font-size: 8pt; font-weight: 600;
     color: var(--accent-light);
     letter-spacing: 0.05em;
     min-width: 20px;
@@ -282,16 +263,12 @@
   }
   .domanda-testo em { color: #5a4a38; }
 
-  /* TEXTAREA */
-  .risposta-area {
-    padding-left: 30px;
-  }
+  .risposta-area { padding-left: 30px; }
   .risposta-area textarea {
     width: 100%;
     background: rgba(255,255,255,0.35);
     border: none;
     border-bottom: 1px solid var(--line-color);
-    border-radius: 0;
     font-family: 'EB Garamond', serif;
     font-size: 11pt;
     color: var(--ink);
@@ -299,15 +276,14 @@
     outline: none;
     padding: 6px 8px;
     line-height: 1.7;
-    transition: background 0.15s, border-color 0.15s;
     min-height: 88px;
+    transition: background 0.15s, border-color 0.15s;
   }
   .risposta-area textarea:focus {
     background: rgba(255,255,255,0.6);
     border-bottom-color: var(--accent);
   }
 
-  /* TABELLA */
   .tabella-wrap { padding-left: 30px; }
   .tabella-elementi {
     width: 100%;
@@ -340,17 +316,9 @@
     outline: none;
     padding: 5px 4px;
   }
-  .tabella-elementi td input:focus {
-    background: rgba(255,255,255,0.5);
-  }
+  .tabella-elementi td input:focus { background: rgba(255,255,255,0.5); }
 
-  /* FASE 1 osservazione */
-  .obs-grid {
-    padding-left: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
+  .obs-grid { padding-left: 30px; display: flex; flex-direction: column; gap: 14px; }
   .obs-block label {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 7.5pt;
@@ -372,15 +340,14 @@
     outline: none;
     padding: 6px 8px;
     line-height: 1.7;
-    transition: background 0.15s, border-color 0.15s;
     min-height: 66px;
+    transition: background 0.15s, border-color 0.15s;
   }
   .obs-block textarea:focus {
     background: rgba(255,255,255,0.6);
     border-bottom-color: var(--accent);
   }
 
-  /* DOMANDA FINALE */
   .domanda-finale {
     background: var(--warm-mid);
     border: 1px solid var(--border);
@@ -391,8 +358,7 @@
   }
   .domanda-finale .df-label {
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 7pt;
-    font-weight: 600;
+    font-size: 7pt; font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
@@ -418,21 +384,16 @@
     min-height: 180px;
     transition: background 0.15s;
   }
-  .domanda-finale textarea:focus {
-    background: rgba(255,255,255,0.65);
-  }
+  .domanda-finale textarea:focus { background: rgba(255,255,255,0.65); }
 
-  /* EXPORT BUTTON */
   .export-bar {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
-    gap: 10px;
   }
   .btn-export {
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 8pt;
-    font-weight: 600;
+    font-size: 8pt; font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     background: var(--accent);
@@ -457,30 +418,61 @@
     letter-spacing: 0.08em;
   }
 
-  /* PRINT */
+  .stampa-img { display: none; width: 100%; margin-bottom: 8px; }
+  .stampa-img img { width: 100%; display: block; border: 1px solid var(--border); }
+
+  /* Elemento statico generato dallo script per la stampa */
+  .print-content {
+    display: none;
+  }
+
+
   @media print {
     body { background: white; }
     .page { padding: 10mm 14mm; }
     .viewer-wrapper, .viewer-hint, .export-bar { display: none !important; }
     .stampa-img { display: block !important; }
-    textarea, input {
-      background: transparent !important;
-      border: none !important;
-      border-bottom: 1px solid #b8a888 !important;
+    
+    textarea, input[type="text"] { display: none !important; }
+    
+    .hide-for-print { display: none !important; }
+    
+    .print-content {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 11pt;
+      line-height: 1.7;
+      color: #1a1410;
+      padding: 6px 8px;
+      min-height: 1.7em;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border-bottom: 1px solid #b8a888;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
-    .istruzioni-box, .domanda-finale {
+    
+    .istruzioni-box {
+      background: #ede5d0 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .domanda-finale {
+      background: #e8dfc8 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .domanda-tag {
+      background: #e8dfc8 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .tabella-elementi th {
+      background: #ede5d0 !important;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
   }
-  .stampa-img {
-    display: none;
-    width: 100%;
-    margin-bottom: 8px;
-  }
-  .stampa-img img { width: 100%; display: block; border: 1px solid var(--border); }
+
 </style>
 </head>
 <body>
@@ -493,9 +485,9 @@
       <div class="subtitle">Analisi di una fonte iconografica della Riforma</div>
     </div>
     <div class="header-right">
-      <div class="field-row"><label>Nome</label><input type="text" id="f-nome" placeholder=""></div>
-      <div class="field-row"><label>Classe</label><input type="text" id="f-classe" placeholder=""></div>
-      <div class="field-row"><label>Data</label><input type="text" id="f-data" placeholder=""></div>
+      <div class="field-row"><label>Nome</label><input type="text" id="f-nome"></div>
+      <div class="field-row"><label>Classe</label><input type="text" id="f-classe"></div>
+      <div class="field-row"><label>Data</label><input type="text" id="f-data"></div>
     </div>
   </div>
 
@@ -503,7 +495,6 @@
     Lucas Cranach il Giovane, <em>La vera e la falsa Chiesa</em>, 1546. Incisione su carta.
   </div>
 
-  <!-- VIEWER -->
   <div class="viewer-wrapper">
     <div class="viewer-controls">
       <span class="ctrl-label">Zoom</span>
@@ -529,7 +520,6 @@
     Lavoro individuale. Osserva attentamente la stampa prima di rispondere — non utilizzare alcuno strumento di supporto. Leggi ogni domanda fino in fondo prima di iniziare a scrivere. Hai 50 minuti.
   </div>
 
-  <!-- FASE 1 -->
   <div class="section-title">Fase 1 · Osservazione libera — 5 minuti</div>
   <div class="domanda">
     <div class="domanda-testo">
@@ -538,16 +528,15 @@
     <div class="obs-grid">
       <div class="obs-block">
         <label>Tre cose che vedo</label>
-        <textarea id="obs-cose" placeholder=""></textarea>
+        <textarea id="obs-cose"></textarea>
       </div>
       <div class="obs-block">
         <label>Una domanda che mi viene</label>
-        <textarea id="obs-domanda" placeholder="" style="min-height:50px;"></textarea>
+        <textarea id="obs-domanda" style="min-height:50px;"></textarea>
       </div>
     </div>
   </div>
 
-  <!-- FASE 2 -->
   <div class="section-title">Fase 2 · Analisi guidata — 25 minuti</div>
 
   <div class="domanda">
@@ -558,9 +547,7 @@
     <div class="domanda-testo">
       Osserva la stampa nel suo insieme. Come è organizzato lo spazio visivo? Descrivi la struttura compositiva in 3–4 righe.
     </div>
-    <div class="risposta-area">
-      <textarea id="r1" placeholder=""></textarea>
-    </div>
+    <div class="risposta-area"><textarea id="r1"></textarea></div>
   </div>
 
   <div class="domanda">
@@ -597,9 +584,7 @@
     <div class="domanda-testo">
       Scegli gli elementi che ti sembrano simbolicamente più significativi — almeno uno per metà. Spiega perché l'artista potrebbe averli scelti e cosa comunicano al pubblico dell'epoca.
     </div>
-    <div class="risposta-area">
-      <textarea id="r3" placeholder="" style="min-height:110px;"></textarea>
-    </div>
+    <div class="risposta-area"><textarea id="r3" style="min-height:110px;"></textarea></div>
   </div>
 
   <div class="domanda">
@@ -610,9 +595,7 @@
     <div class="domanda-testo">
       Il titolo recita: <em>"Differenza tra la vera religione di Cristo e la falsa dottrina idolatra dell'Anticristo."</em> Chi è, secondo te, l'"Anticristo" a cui si riferisce il titolo? Che effetto produce questa scelta lessicale su chi guarda la stampa?
     </div>
-    <div class="risposta-area">
-      <textarea id="r4" placeholder=""></textarea>
-    </div>
+    <div class="risposta-area"><textarea id="r4"></textarea></div>
   </div>
 
   <div class="domanda">
@@ -623,22 +606,19 @@
     <div class="domanda-testo">
       Cranach il Giovane era pittore di corte dei principi protestanti. In che modo questa informazione cambia il modo in cui leggi la stampa?
     </div>
-    <div class="risposta-area">
-      <textarea id="r5" placeholder=""></textarea>
-    </div>
+    <div class="risposta-area"><textarea id="r5"></textarea></div>
   </div>
 
-  <!-- FASE 3 -->
   <div class="domanda-finale">
     <div class="df-label">Fase 3 · Sintesi — 20 minuti</div>
     <div class="df-testo">
       Un documento di propaganda può essere usato come fonte storica? In quali condizioni e con quali cautele? Ragiona sulla base di questa stampa e scrivi una risposta di 8–10 righe.
     </div>
-    <textarea id="r-finale" placeholder=""></textarea>
+    <textarea id="r-finale"></textarea>
   </div>
 
   <div class="export-bar">
-    <button class="btn-export" onclick="window.print()">⬇ Salva / Stampa PDF</button>
+    <button class="btn-export" onclick="prepareForPrint()">⬇ Salva / Stampa PDF</button>
   </div>
 
   <div class="footer">
@@ -649,6 +629,26 @@
 </div>
 
 <script>
+  
+  function prepareForPrint() {
+    // Per ogni textarea e input, crea un div statico con il contenuto
+    document.querySelectorAll('textarea, input[type="text"]').forEach(function(el) {
+      const div = document.createElement('div');
+      div.className = 'print-content';
+      div.textContent = el.value || '';
+      el.parentNode.insertBefore(div, el.nextSibling);
+      el.classList.add('hide-for-print');
+    });
+    
+    window.print();
+    
+    // Dopo la stampa, ripristina
+    document.querySelectorAll('.print-content').forEach(el => el.remove());
+    document.querySelectorAll('.hide-for-print').forEach(el => el.classList.remove('hide-for-print'));
+  }
+
+
+  // VIEWER
   const img = document.getElementById('zoomable-img');
   const canvas = document.getElementById('viewer-canvas');
   const slider = document.getElementById('zoom-slider');
