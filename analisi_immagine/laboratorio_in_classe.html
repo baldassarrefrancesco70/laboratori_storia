@@ -34,6 +34,7 @@
     padding: 14mm 16mm;
   }
 
+  /* HEADER */
   .header {
     border-top: 3px solid var(--accent);
     border-bottom: 1px solid var(--border);
@@ -55,7 +56,6 @@
     font-size: 17pt;
     font-weight: 600;
     line-height: 1.2;
-    color: var(--ink);
   }
   .header-left .subtitle {
     font-style: italic;
@@ -68,203 +68,55 @@
     font-family: 'Josefin Sans', sans-serif;
     font-size: 8pt;
     color: #7a6a58;
-    line-height: 2;
   }
-  .header-right .field-row {
+  .field-row {
     display: flex;
     align-items: center;
     gap: 8px;
     justify-content: flex-end;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
-  .header-right .field-row label {
-    white-space: nowrap;
+  .field-row label {
     font-size: 7.5pt;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    white-space: nowrap;
   }
-  .header-right .field-row input {
+
+  /* CAMPO IBRIDO: input visibile su schermo, mirror per stampa */
+  .field-wrap {
+    position: relative;
+    width: 140px;
+  }
+  .field-wrap input {
+    width: 100%;
     background: transparent;
     border: none;
     border-bottom: 1px solid var(--line-color);
-    width: 130px;
     font-family: 'EB Garamond', serif;
     font-size: 10pt;
     color: var(--ink);
     outline: none;
     padding: 1px 3px;
   }
-  .header-right .field-row input:focus { border-bottom-color: var(--accent); }
-
-  .didascalia {
-    font-style: italic;
-    font-size: 9.5pt;
-    color: #5a4a38;
-    text-align: center;
-    margin-bottom: 12px;
-    letter-spacing: 0.02em;
-  }
-
-  .viewer-wrapper {
-    border: 1px solid var(--border);
-    background: #2a2018;
-    border-radius: 3px;
-    overflow: hidden;
-    margin-bottom: 8px;
-  }
-  .viewer-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 12px;
-    background: #1a1410;
-    border-bottom: 1px solid #3a2e20;
-  }
-  .ctrl-label {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 7pt;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #8a7a68;
-  }
-  .ctrl-btn {
-    background: #2e2418;
-    border: 1px solid #4a3a28;
-    color: #d4c4a8;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 9pt;
-    font-weight: 600;
-    width: 26px; height: 26px;
-    border-radius: 2px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s;
-  }
-  .ctrl-btn:hover { background: #3e3028; }
-  .zoom-slider {
-    -webkit-appearance: none;
-    width: 110px; height: 3px;
-    background: #4a3a28;
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-  }
-  .zoom-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 13px; height: 13px;
-    border-radius: 50%;
-    background: var(--accent-light);
-    cursor: pointer;
-  }
-  .zoom-value {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 8pt;
-    color: #8a7a68;
-    min-width: 36px;
-  }
-  .ctrl-sep { flex: 1; }
-  .reset-btn {
-    background: transparent;
-    border: 1px solid #3a2e20;
-    color: #8a7a68;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 7pt;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .reset-btn:hover { border-color: var(--accent-light); color: var(--accent-light); }
-  #viewer-canvas {
-    width: 100%; height: 300px;
-    overflow: hidden;
-    position: relative;
-    cursor: grab;
-    background: #2a2018;
-  }
-  #viewer-canvas:active { cursor: grabbing; }
-  #viewer-canvas img {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform-origin: center center;
-    user-select: none;
-    -webkit-user-drag: none;
-    max-width: none;
-  }
-  .viewer-hint {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 7pt;
-    color: #6a5a48;
-    text-align: center;
-    padding: 5px;
-    letter-spacing: 0.08em;
-  }
-
-  .istruzioni-box {
-    background: var(--faint);
-    border-left: 3px solid var(--accent);
-    padding: 9px 12px;
-    margin-bottom: 20px;
-    font-size: 9.5pt;
-    color: #3a2e20;
-  }
-  .istruzioni-box strong {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 7.5pt;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .section-title {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 7.5pt;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 4px;
-    margin-bottom: 14px;
-    margin-top: 22px;
-  }
-
-  .domanda { margin-bottom: 22px; page-break-inside: avoid; }
-  .domanda-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 7px; }
-  .domanda-num {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 8pt; font-weight: 600;
-    color: var(--accent-light);
-    letter-spacing: 0.05em;
-    min-width: 20px;
-  }
-  .domanda-tag {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 6.5pt;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #9a8a78;
-    background: var(--warm-mid);
-    padding: 2px 7px;
-    border-radius: 1px;
-  }
-  .domanda-testo {
-    font-size: 11pt;
-    line-height: 1.55;
+  .field-wrap input:focus { border-bottom-color: var(--accent); }
+  .field-mirror {
+    display: none;
+    font-family: 'EB Garamond', serif;
+    font-size: 10pt;
     color: var(--ink);
-    padding-left: 30px;
-    margin-bottom: 8px;
+    border-bottom: 1px solid var(--line-color);
+    min-height: 1.4em;
+    padding: 1px 3px;
+    word-break: break-word;
   }
-  .domanda-testo em { color: #5a4a38; }
 
-  .risposta-area { padding-left: 30px; }
-  .risposta-area textarea {
+  /* WRAPPER RISPOSTA: textarea sovrapposta al mirror */
+  .risposta-wrap {
+    position: relative;
+    width: 100%;
+  }
+  .risposta-wrap textarea {
     width: 100%;
     background: rgba(255,255,255,0.35);
     border: none;
@@ -277,13 +129,24 @@
     padding: 6px 8px;
     line-height: 1.7;
     min-height: 88px;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background 0.15s;
+    display: block;
   }
-  .risposta-area textarea:focus {
-    background: rgba(255,255,255,0.6);
-    border-bottom-color: var(--accent);
+  .risposta-wrap textarea:focus { background: rgba(255,255,255,0.6); border-bottom-color: var(--accent); }
+  .risposta-mirror {
+    display: none;
+    font-family: 'EB Garamond', serif;
+    font-size: 11pt;
+    color: var(--ink);
+    line-height: 1.7;
+    padding: 6px 8px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border-bottom: 1px solid var(--line-color);
+    min-height: 1.7em;
   }
 
+  /* TABELLA */
   .tabella-wrap { padding-left: 30px; }
   .tabella-elementi {
     width: 100%;
@@ -303,10 +166,11 @@
   }
   .tabella-elementi td {
     border-bottom: 1px solid var(--line-color);
-    padding: 2px 4px;
+    padding: 0;
     vertical-align: top;
   }
-  .tabella-elementi td input {
+  .cell-wrap { position: relative; }
+  .cell-wrap input {
     width: 100%;
     background: transparent;
     border: none;
@@ -314,165 +178,190 @@
     font-size: 10.5pt;
     color: var(--ink);
     outline: none;
-    padding: 5px 4px;
-  }
-  .tabella-elementi td input:focus { background: rgba(255,255,255,0.5); }
-
-  .obs-grid { padding-left: 30px; display: flex; flex-direction: column; gap: 14px; }
-  .obs-block label {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 7.5pt;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #9a8a78;
+    padding: 5px 8px;
     display: block;
-    margin-bottom: 4px;
   }
-  .obs-block textarea {
-    width: 100%;
-    background: rgba(255,255,255,0.35);
-    border: none;
-    border-bottom: 1px solid var(--line-color);
+  .cell-wrap input:focus { background: rgba(255,255,255,0.5); }
+  .cell-mirror {
+    display: none;
     font-family: 'EB Garamond', serif;
-    font-size: 11pt;
+    font-size: 10.5pt;
     color: var(--ink);
-    resize: vertical;
-    outline: none;
-    padding: 6px 8px;
-    line-height: 1.7;
-    min-height: 66px;
-    transition: background 0.15s, border-color 0.15s;
-  }
-  .obs-block textarea:focus {
-    background: rgba(255,255,255,0.6);
-    border-bottom-color: var(--accent);
+    padding: 5px 8px;
+    min-height: 1.5em;
+    word-break: break-word;
   }
 
-  .domanda-finale {
-    background: var(--warm-mid);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--accent);
-    padding: 14px 16px;
-    margin-top: 24px;
-    page-break-inside: avoid;
-  }
-  .domanda-finale .df-label {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 7pt; font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 7px;
-  }
-  .domanda-finale .df-testo {
-    font-size: 11pt;
-    line-height: 1.6;
+  .didascalia {
+    font-style: italic;
+    font-size: 9.5pt;
+    color: #5a4a38;
+    text-align: center;
     margin-bottom: 12px;
   }
-  .domanda-finale textarea {
-    width: 100%;
-    background: rgba(255,255,255,0.4);
-    border: none;
-    border-bottom: 1px solid var(--border);
-    font-family: 'EB Garamond', serif;
-    font-size: 11pt;
-    color: var(--ink);
-    resize: vertical;
-    outline: none;
-    padding: 6px 8px;
-    line-height: 1.7;
-    min-height: 180px;
-    transition: background 0.15s;
-  }
-  .domanda-finale textarea:focus { background: rgba(255,255,255,0.65); }
 
-  .export-bar {
+  /* VIEWER */
+  .viewer-wrapper {
+    border: 1px solid var(--border);
+    background: #2a2018;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .viewer-controls {
     display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    background: #1a1410;
+    border-bottom: 1px solid #3a2e20;
   }
+  .ctrl-label { font-family:'Josefin Sans',sans-serif; font-size:7pt; letter-spacing:0.12em; text-transform:uppercase; color:#8a7a68; }
+  .ctrl-btn {
+    background:#2e2418; border:1px solid #4a3a28; color:#d4c4a8;
+    font-family:'Josefin Sans',sans-serif; font-size:9pt; font-weight:600;
+    width:26px; height:26px; border-radius:2px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:background 0.15s;
+  }
+  .ctrl-btn:hover { background:#3e3028; }
+  .zoom-slider {
+    -webkit-appearance:none; width:110px; height:3px;
+    background:#4a3a28; border-radius:2px; outline:none; cursor:pointer;
+  }
+  .zoom-slider::-webkit-slider-thumb {
+    -webkit-appearance:none; width:13px; height:13px;
+    border-radius:50%; background:var(--accent-light); cursor:pointer;
+  }
+  .zoom-value { font-family:'Josefin Sans',sans-serif; font-size:8pt; color:#8a7a68; min-width:36px; }
+  .ctrl-sep { flex:1; }
+  .reset-btn {
+    background:transparent; border:1px solid #3a2e20; color:#8a7a68;
+    font-family:'Josefin Sans',sans-serif; font-size:7pt; letter-spacing:0.1em;
+    text-transform:uppercase; padding:4px 10px; border-radius:2px; cursor:pointer; transition:all 0.15s;
+  }
+  .reset-btn:hover { border-color:var(--accent-light); color:var(--accent-light); }
+  #viewer-canvas {
+    width:100%; height:300px; overflow:hidden; position:relative;
+    cursor:grab; background:#2a2018;
+  }
+  #viewer-canvas:active { cursor:grabbing; }
+  #viewer-canvas img {
+    position:absolute; top:50%; left:50%;
+    transform-origin:center center; user-select:none; -webkit-user-drag:none; max-width:none;
+  }
+  .viewer-hint {
+    font-family:'Josefin Sans',sans-serif; font-size:7pt; color:#6a5a48;
+    text-align:center; padding:5px; letter-spacing:0.08em;
+  }
+
+  .istruzioni-box {
+    background: var(--faint);
+    border-left: 3px solid var(--accent);
+    padding: 9px 12px;
+    margin-bottom: 20px;
+    font-size: 9.5pt;
+    color: #3a2e20;
+  }
+  .istruzioni-box strong {
+    font-family:'Josefin Sans',sans-serif; font-size:7.5pt;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--accent);
+    display:block; margin-bottom:4px;
+  }
+
+  .section-title {
+    font-family:'Josefin Sans',sans-serif; font-size:7.5pt; font-weight:600;
+    letter-spacing:0.18em; text-transform:uppercase; color:var(--accent);
+    border-bottom:1px solid var(--border); padding-bottom:4px;
+    margin-bottom:14px; margin-top:22px;
+  }
+
+  .domanda { margin-bottom:22px; page-break-inside:avoid; }
+  .domanda-header { display:flex; align-items:baseline; gap:10px; margin-bottom:7px; }
+  .domanda-num {
+    font-family:'Josefin Sans',sans-serif; font-size:8pt; font-weight:600;
+    color:var(--accent-light); letter-spacing:0.05em; min-width:20px;
+  }
+  .domanda-tag {
+    font-family:'Josefin Sans',sans-serif; font-size:6.5pt; letter-spacing:0.14em;
+    text-transform:uppercase; color:#9a8a78; background:var(--warm-mid);
+    padding:2px 7px; border-radius:1px;
+  }
+  .domanda-testo {
+    font-size:11pt; line-height:1.55; color:var(--ink);
+    padding-left:30px; margin-bottom:8px;
+  }
+  .domanda-testo em { color:#5a4a38; }
+  .risposta-area { padding-left:30px; }
+
+  .obs-grid { padding-left:30px; display:flex; flex-direction:column; gap:14px; }
+  .obs-block label {
+    font-family:'Josefin Sans',sans-serif; font-size:7.5pt; letter-spacing:0.1em;
+    text-transform:uppercase; color:#9a8a78; display:block; margin-bottom:4px;
+  }
+  .obs-block .risposta-wrap textarea { min-height:66px; }
+
+  .domanda-finale {
+    background:var(--warm-mid); border:1px solid var(--border);
+    border-left:4px solid var(--accent); padding:14px 16px;
+    margin-top:24px; page-break-inside:avoid;
+  }
+  .domanda-finale .df-label {
+    font-family:'Josefin Sans',sans-serif; font-size:7pt; font-weight:600;
+    letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin-bottom:7px;
+  }
+  .domanda-finale .df-testo { font-size:11pt; line-height:1.6; margin-bottom:12px; }
+  .domanda-finale .risposta-wrap textarea { min-height:180px; background:rgba(255,255,255,0.4); }
+  .domanda-finale .risposta-mirror { border-bottom-color: var(--border); }
+
+  .export-bar { display:flex; justify-content:flex-end; margin-top:20px; }
   .btn-export {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 8pt; font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    background: var(--accent);
-    color: #f5f0e8;
-    border: none;
-    padding: 9px 20px;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: background 0.15s;
+    font-family:'Josefin Sans',sans-serif; font-size:8pt; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase;
+    background:var(--accent); color:#f5f0e8; border:none;
+    padding:9px 20px; border-radius:2px; cursor:pointer; transition:background 0.15s;
   }
-  .btn-export:hover { background: var(--accent-light); }
+  .btn-export:hover { background:var(--accent-light); }
 
   .footer {
-    margin-top: 18px;
-    border-top: 1px solid var(--border);
-    padding-top: 7px;
-    display: flex;
-    justify-content: space-between;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 7pt;
-    color: #9a8a78;
-    letter-spacing: 0.08em;
+    margin-top:18px; border-top:1px solid var(--border); padding-top:7px;
+    display:flex; justify-content:space-between;
+    font-family:'Josefin Sans',sans-serif; font-size:7pt; color:#9a8a78; letter-spacing:0.08em;
   }
 
-  .stampa-img { display: none; width: 100%; margin-bottom: 8px; }
-  .stampa-img img { width: 100%; display: block; border: 1px solid var(--border); }
+  .stampa-img { display:none; width:100%; margin-bottom:8px; }
+  .stampa-img img { width:100%; display:block; border:1px solid var(--border); }
 
-  /* Elemento statico generato dallo script per la stampa */
-  .print-content {
-    display: none;
-  }
-
-
+  /* STAMPA */
   @media print {
-    body { background: white; }
-    .page { padding: 10mm 14mm; }
-    .viewer-wrapper, .viewer-hint, .export-bar { display: none !important; }
-    .stampa-img { display: block !important; }
-    
-    textarea, input[type="text"] { display: none !important; }
-    
-    .hide-for-print { display: none !important; }
-    
-    .print-content {
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 11pt;
-      line-height: 1.7;
-      color: #1a1410;
-      padding: 6px 8px;
-      min-height: 1.7em;
-      white-space: pre-wrap;
-      word-break: break-word;
-      border-bottom: 1px solid #b8a888;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-    
+    body { background:white; }
+    .page { padding:10mm 14mm; }
+    .viewer-wrapper, .viewer-hint, .export-bar { display:none !important; }
+    .stampa-img { display:block !important; }
+
+    /* Nasconde i campi interattivi, mostra i mirror */
+    textarea, input[type="text"] { display:none !important; }
+    .risposta-mirror, .field-mirror, .cell-mirror { display:block !important; }
+
     .istruzioni-box {
-      background: #ede5d0 !important;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+      background:#ede5d0 !important;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact;
     }
     .domanda-finale {
-      background: #e8dfc8 !important;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+      background:#e8dfc8 !important;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact;
     }
     .domanda-tag {
-      background: #e8dfc8 !important;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+      background:#e8dfc8 !important;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact;
     }
     .tabella-elementi th {
-      background: #ede5d0 !important;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+      background:#ede5d0 !important;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact;
+    }
+    .header {
+      -webkit-print-color-adjust:exact; print-color-adjust:exact;
     }
   }
-
 </style>
 </head>
 <body>
@@ -485,9 +374,27 @@
       <div class="subtitle">Analisi di una fonte iconografica della Riforma</div>
     </div>
     <div class="header-right">
-      <div class="field-row"><label>Nome</label><input type="text" id="f-nome"></div>
-      <div class="field-row"><label>Classe</label><input type="text" id="f-classe"></div>
-      <div class="field-row"><label>Data</label><input type="text" id="f-data"></div>
+      <div class="field-row">
+        <label>Nome</label>
+        <div class="field-wrap">
+          <input type="text" id="f-nome">
+          <div class="field-mirror" id="m-nome"></div>
+        </div>
+      </div>
+      <div class="field-row">
+        <label>Classe</label>
+        <div class="field-wrap">
+          <input type="text" id="f-classe">
+          <div class="field-mirror" id="m-classe"></div>
+        </div>
+      </div>
+      <div class="field-row">
+        <label>Data</label>
+        <div class="field-wrap">
+          <input type="text" id="f-data">
+          <div class="field-mirror" id="m-data"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -528,11 +435,21 @@
     <div class="obs-grid">
       <div class="obs-block">
         <label>Tre cose che vedo</label>
-        <textarea id="obs-cose"></textarea>
+        <div class="risposta-area">
+          <div class="risposta-wrap">
+            <textarea id="obs-cose"></textarea>
+            <div class="risposta-mirror" id="m-obs-cose"></div>
+          </div>
+        </div>
       </div>
       <div class="obs-block">
         <label>Una domanda che mi viene</label>
-        <textarea id="obs-domanda" style="min-height:50px;"></textarea>
+        <div class="risposta-area">
+          <div class="risposta-wrap">
+            <textarea id="obs-domanda" style="min-height:50px;"></textarea>
+            <div class="risposta-mirror" id="m-obs-domanda"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -547,7 +464,12 @@
     <div class="domanda-testo">
       Osserva la stampa nel suo insieme. Come è organizzato lo spazio visivo? Descrivi la struttura compositiva in 3–4 righe.
     </div>
-    <div class="risposta-area"><textarea id="r1"></textarea></div>
+    <div class="risposta-area">
+      <div class="risposta-wrap">
+        <textarea id="r1"></textarea>
+        <div class="risposta-mirror" id="m-r1"></div>
+      </div>
+    </div>
   </div>
 
   <div class="domanda">
@@ -567,10 +489,22 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td><input type="text" id="t-s1"></td><td><input type="text" id="t-d1"></td></tr>
-          <tr><td><input type="text" id="t-s2"></td><td><input type="text" id="t-d2"></td></tr>
-          <tr><td><input type="text" id="t-s3"></td><td><input type="text" id="t-d3"></td></tr>
-          <tr><td><input type="text" id="t-s4"></td><td><input type="text" id="t-d4"></td></tr>
+          <tr>
+            <td><div class="cell-wrap"><input type="text" id="t-s1"><div class="cell-mirror" id="m-t-s1"></div></div></td>
+            <td><div class="cell-wrap"><input type="text" id="t-d1"><div class="cell-mirror" id="m-t-d1"></div></div></td>
+          </tr>
+          <tr>
+            <td><div class="cell-wrap"><input type="text" id="t-s2"><div class="cell-mirror" id="m-t-s2"></div></div></td>
+            <td><div class="cell-wrap"><input type="text" id="t-d2"><div class="cell-mirror" id="m-t-d2"></div></div></td>
+          </tr>
+          <tr>
+            <td><div class="cell-wrap"><input type="text" id="t-s3"><div class="cell-mirror" id="m-t-s3"></div></div></td>
+            <td><div class="cell-wrap"><input type="text" id="t-d3"><div class="cell-mirror" id="m-t-d3"></div></div></td>
+          </tr>
+          <tr>
+            <td><div class="cell-wrap"><input type="text" id="t-s4"><div class="cell-mirror" id="m-t-s4"></div></div></td>
+            <td><div class="cell-wrap"><input type="text" id="t-d4"><div class="cell-mirror" id="m-t-d4"></div></div></td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -584,7 +518,12 @@
     <div class="domanda-testo">
       Scegli gli elementi che ti sembrano simbolicamente più significativi — almeno uno per metà. Spiega perché l'artista potrebbe averli scelti e cosa comunicano al pubblico dell'epoca.
     </div>
-    <div class="risposta-area"><textarea id="r3" style="min-height:110px;"></textarea></div>
+    <div class="risposta-area">
+      <div class="risposta-wrap">
+        <textarea id="r3" style="min-height:110px;"></textarea>
+        <div class="risposta-mirror" id="m-r3"></div>
+      </div>
+    </div>
   </div>
 
   <div class="domanda">
@@ -595,7 +534,12 @@
     <div class="domanda-testo">
       Il titolo recita: <em>"Differenza tra la vera religione di Cristo e la falsa dottrina idolatra dell'Anticristo."</em> Chi è, secondo te, l'"Anticristo" a cui si riferisce il titolo? Che effetto produce questa scelta lessicale su chi guarda la stampa?
     </div>
-    <div class="risposta-area"><textarea id="r4"></textarea></div>
+    <div class="risposta-area">
+      <div class="risposta-wrap">
+        <textarea id="r4"></textarea>
+        <div class="risposta-mirror" id="m-r4"></div>
+      </div>
+    </div>
   </div>
 
   <div class="domanda">
@@ -606,7 +550,12 @@
     <div class="domanda-testo">
       Cranach il Giovane era pittore di corte dei principi protestanti. In che modo questa informazione cambia il modo in cui leggi la stampa?
     </div>
-    <div class="risposta-area"><textarea id="r5"></textarea></div>
+    <div class="risposta-area">
+      <div class="risposta-wrap">
+        <textarea id="r5"></textarea>
+        <div class="risposta-mirror" id="m-r5"></div>
+      </div>
+    </div>
   </div>
 
   <div class="domanda-finale">
@@ -614,11 +563,14 @@
     <div class="df-testo">
       Un documento di propaganda può essere usato come fonte storica? In quali condizioni e con quali cautele? Ragiona sulla base di questa stampa e scrivi una risposta di 8–10 righe.
     </div>
-    <textarea id="r-finale"></textarea>
+    <div class="risposta-wrap">
+      <textarea id="r-finale"></textarea>
+      <div class="risposta-mirror" id="m-r-finale"></div>
+    </div>
   </div>
 
   <div class="export-bar">
-    <button class="btn-export" onclick="prepareForPrint()">⬇ Salva / Stampa PDF</button>
+    <button class="btn-export" onclick="window.print()">⬇ Salva / Stampa PDF</button>
   </div>
 
   <div class="footer">
@@ -627,26 +579,39 @@
   </div>
 
 </div>
-
 <script>
-  
-  function prepareForPrint() {
-    // Per ogni textarea e input, crea un div statico con il contenuto
-    document.querySelectorAll('textarea, input[type="text"]').forEach(function(el) {
-      const div = document.createElement('div');
-      div.className = 'print-content';
-      div.textContent = el.value || '';
-      el.parentNode.insertBefore(div, el.nextSibling);
-      el.classList.add('hide-for-print');
-    });
-    
-    window.print();
-    
-    // Dopo la stampa, ripristina
-    document.querySelectorAll('.print-content').forEach(el => el.remove());
-    document.querySelectorAll('.hide-for-print').forEach(el => el.classList.remove('hide-for-print'));
+  // MIRROR: ogni campo aggiorna il suo div specchio in tempo reale
+  function bindMirror(inputId, mirrorId) {
+    const input = document.getElementById(inputId);
+    const mirror = document.getElementById(mirrorId);
+    if (!input || !mirror) return;
+    const update = () => { mirror.textContent = input.value; };
+    input.addEventListener('input', update);
+    input.addEventListener('change', update);
   }
 
+  // Campi header
+  bindMirror('f-nome', 'm-nome');
+  bindMirror('f-classe', 'm-classe');
+  bindMirror('f-data', 'm-data');
+
+  // Fase 1
+  bindMirror('obs-cose', 'm-obs-cose');
+  bindMirror('obs-domanda', 'm-obs-domanda');
+
+  // Fase 2
+  bindMirror('r1', 'm-r1');
+  bindMirror('r3', 'm-r3');
+  bindMirror('r4', 'm-r4');
+  bindMirror('r5', 'm-r5');
+
+  // Tabella
+  ['s1','s2','s3','s4','d1','d2','d3','d4'].forEach(k => {
+    bindMirror('t-' + k, 'm-t-' + k);
+  });
+
+  // Fase 3
+  bindMirror('r-finale', 'm-r-finale');
 
   // VIEWER
   const img = document.getElementById('zoomable-img');
@@ -673,7 +638,9 @@
   canvas.addEventListener('wheel', e => { e.preventDefault(); setScale(scale - e.deltaY*0.001); }, {passive:false});
 
   let lastTD = null;
-  canvas.addEventListener('touchstart', e => { if(e.touches.length===1){ dragging=true; startX=e.touches[0].clientX-posX; startY=e.touches[0].clientY-posY; } });
+  canvas.addEventListener('touchstart', e => {
+    if(e.touches.length===1){ dragging=true; startX=e.touches[0].clientX-posX; startY=e.touches[0].clientY-posY; }
+  });
   canvas.addEventListener('touchmove', e => {
     e.preventDefault();
     if(e.touches.length===1 && dragging){ posX=e.touches[0].clientX-startX; posY=e.touches[0].clientY-startY; applyTransform(); }
