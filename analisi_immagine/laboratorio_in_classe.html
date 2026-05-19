@@ -206,7 +206,7 @@
   </div>
 
   <div class="export-bar">
-    <button class="btn-export" onclick="salvasuDocs()">⬆ Salva su Google Docs</button>
+    <button class="btn-export" onclick="scaricaMd()">⬇ Scarica risposte</button>
   </div>
 
   <div class="footer">
@@ -216,57 +216,7 @@
 
 </div>
 <script>
-  function salvasuDocs() {
-    const nome = document.getElementById('f-nome').value || '—';
-    const classe = document.getElementById('f-classe').value || '—';
-    const data = document.getElementById('f-data').value || '—';
-
-    const righe = [
-      'LA VERA E LA FALSA CHIESA',
-      'Laboratorio di Storia — Classe III',
-      'Nome: ' + nome + '   Classe: ' + classe + '   Data: ' + data,
-      '',
-      '━━━ FASE 1 · OSSERVAZIONE LIBERA ━━━',
-      '',
-      'Tre cose che vedo:',
-      document.getElementById('obs-cose').value || '(nessuna risposta)',
-      '',
-      'Una domanda che mi viene:',
-      document.getElementById('obs-domanda').value || '(nessuna risposta)',
-      '',
-      '━━━ FASE 2 · ANALISI GUIDATA ━━━',
-      '',
-      '1. [Descrittivo] Struttura compositiva:',
-      document.getElementById('r1').value || '(nessuna risposta)',
-      '',
-      '2. [Descrittivo · Analitico] Elementi:',
-      'Metà sinistra                        |  Metà destra',
-      (document.getElementById('t-s1').value||'—') + '  |  ' + (document.getElementById('t-d1').value||'—'),
-      (document.getElementById('t-s2').value||'—') + '  |  ' + (document.getElementById('t-d2').value||'—'),
-      (document.getElementById('t-s3').value||'—') + '  |  ' + (document.getElementById('t-d3').value||'—'),
-      (document.getElementById('t-s4').value||'—') + '  |  ' + (document.getElementById('t-d4').value||'—'),
-      '',
-      '3. [Interpretativo] Elementi simbolicamente significativi:',
-      document.getElementById('r3').value || '(nessuna risposta)',
-      '',
-      '4. [Interpretativo \u00b7 Critico] L\u2019Anticristo e la scelta lessicale:',
-      document.getElementById('r4').value || '(nessuna risposta)',
-      '',
-      '5. [Critico] Cranach pittore di corte:',
-      document.getElementById('r5').value || '(nessuna risposta)',
-      '',
-      '━━━ FASE 3 · SINTESI ━━━',
-      '',
-      'Un documento di propaganda come fonte storica:',
-      document.getElementById('r-finale').value || '(nessuna risposta)',
-    ];
-
-    const testo = righe.join('\n');
-    const url = 'https://docs.google.com/document/create?title=' +
-      encodeURIComponent('Laboratorio_' + nome.replace(/\s+/g,'_')) +
-      '&body=' + encodeURIComponent(testo);
-    window.open(url, '_blank');
-  }
+  
 
   // VIEWER
   const img = document.getElementById('zoomable-img');
