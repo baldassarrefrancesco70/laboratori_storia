@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'ambivalenza di Giolitti nel Mezzogiorno</title>
+<style>
+:root{
+  --cream:#F5F1E0; --ink:#241F19; --muted:#746C5E; --maroon:#8B1E2D;
+  --tint:#ECE3CC; --line:#D9CBA8; --paper:#FBF9F2;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--cream); color:var(--ink);
+  font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  line-height:1.55;
+}
+.wrap{max-width:700px; margin:0 auto; padding:48px 24px 96px;}
+.tag{
+  font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+  font-style:italic; color:var(--maroon); font-size:15px; margin:0 0 6px;
+}
+h1{
+  font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+  font-weight:700; font-size:30px; line-height:1.2; margin:0 0 10px; color:var(--ink);
+}
+.sub{color:var(--muted); font-size:16px; margin:0 0 32px; font-style:italic;}
+h2{
+  font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+  font-size:20px; margin:34px 0 12px; color:var(--ink); border-bottom:1px solid var(--line); padding-bottom:6px;
+}
+p{font-size:16.5px; margin:0 0 16px;}
+ul.facts{padding:0; margin:0 0 8px; list-style:none;}
+ul.facts li{
+  font-size:16px; padding:9px 0 9px 20px; border-top:1px solid var(--line); position:relative;
+}
+ul.facts li:last-child{border-bottom:1px solid var(--line);}
+ul.facts li::before{content:"\2014"; position:absolute; left:0; color:var(--maroon);}
+blockquote{
+  font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+  background:var(--tint); border-left:4px solid var(--maroon);
+  margin:20px 0 6px; padding:18px 22px; font-size:16.5px; line-height:1.6; color:#2c2418;
+}
+blockquote p{margin:0 0 14px; font-style:italic;}
+blockquote p:last-child{margin-bottom:0;}
+.caption{font-size:13px; color:var(--muted); margin:0 0 28px;}
+.q{margin:26px 0; padding-top:22px; border-top:1px solid var(--line);}
+.q:first-of-type{border-top:none; padding-top:0;}
+.qnum{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:24px; height:24px; border-radius:50%; background:var(--maroon); color:#fff;
+  font-size:13px; font-weight:600; margin-right:10px; flex:none;
+}
+.qhead{display:flex; align-items:flex-start; gap:2px; margin-bottom:10px;}
+.qtext{font-size:16.5px; padding-top:1px;}
+textarea{
+  width:100%; min-height:80px; margin-top:4px; padding:12px 14px;
+  font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif; font-size:15px; color:var(--ink);
+  background:var(--paper); border:1px solid var(--line); border-radius:4px; resize:vertical;
+}
+textarea:focus{outline:2px solid var(--maroon); outline-offset:1px;}
+input[type=text]{
+  width:100%; padding:10px 12px; margin-bottom:14px;
+  font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif; font-size:15px; color:var(--ink);
+  background:var(--paper); border:1px solid var(--line); border-radius:4px;
+}
+input[type=text]:focus{outline:2px solid var(--maroon); outline-offset:1px;}
+label.gate-label{display:block; font-size:12.5px; color:var(--muted); margin:0 0 6px; text-transform:uppercase; letter-spacing:.03em;}
+.gate-err{color:var(--maroon); font-size:13px; margin:6px 0 14px; display:none;}
+.footer-lab{max-width:700px; margin:0 auto; padding:0 24px 40px; text-align:center;}
+.footer-lab button{background:none; border:none; color:var(--muted); font-size:12.5px; cursor:pointer; text-decoration:underline; font-family:inherit;}
+table.dash-table{width:100%; border-collapse:collapse; font-size:14px; margin-top:14px;}
+table.dash-table th, table.dash-table td{padding:6px 8px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top;}
+table.dash-table th{border-bottom:2px solid var(--line);}
+.bar{
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
+  margin-top:48px; padding-top:18px; border-top:1px solid var(--line);
+}
+.hint{font-size:12.5px; color:var(--muted);}
+button{
+  font-family:inherit; font-size:14px; background:transparent; color:var(--maroon);
+  border:1px solid var(--maroon); border-radius:4px; padding:8px 14px; cursor:pointer;
+}
+button:hover{background:var(--maroon); color:#fff;}
+@media print{
+  body{background:#fff;}
+  textarea{border:1px solid #999; background:#fff;}
+  .bar{display:none;}
+}
+@media (max-width:520px){
+  .wrap{padding:32px 16px 72px;} h1{font-size:25px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="gate">
+    <p class="tag">Coda giolittiana · 4 di 4 — chiusura</p>
+    <h1>L'ambivalenza di Giolitti nel Mezzogiorno</h1>
+    <p class="sub">Due letture storiografiche a confronto — circa 20 minuti</p>
+    <div class="q" style="border-top:none; padding-top:0;">
+      <label class="gate-label" for="gateNome">Nome e cognome</label>
+      <input type="text" id="gateNome" placeholder="Es. Maria Rossi">
+      <label class="gate-label" for="gateClasse">Classe</label>
+      <input type="text" id="gateClasse" placeholder="Es. 4A">
+      <p id="gateErr" class="gate-err">Compila entrambi i campi per iniziare.</p>
+      <button id="gateBtn" type="button">Inizia</button>
+    </div>
+  </div>
+
+  <div id="scheda" style="display:none;">
+  <p class="tag">Coda giolittiana · 4 di 4 — chiusura</p>
+  <h1>L'ambivalenza di Giolitti nel Mezzogiorno</h1>
+  <p class="sub">Due letture storiografiche a confronto — circa 20 minuti</p>
+
+
+  <p>Su Giolitti e il suo rapporto con il Mezzogiorno esistono due letture storiografiche opposte, entrambe sostenute da storici seri.</p>
+  <h2>Posizione 1 — Gaetano Salvemini, <em>Il ministro della mala vita</em> (1910)</h2>
+  <p>Salvemini, storico e meridionalista pugliese, segue di persona le elezioni del 1909 a Gioia del Colle (Bari): il candidato appoggiato da Giolitti vince con la complicità della polizia locale e di bande di malviventi, che intimidiscono gli oppositori. Nel suo saggio Salvemini generalizza il caso: sostiene che Giolitti, per garantirsi il consenso dei deputati meridionali, lascia loro mano libera sull'amministrazione locale e chiude un occhio su brogli e violenze elettorali, in cambio di fedeltà parlamentare. Da qui il soprannome con cui lo bolla: «il ministro della malavita». Per Salvemini è un cinismo sistematico: il Sud viene usato, non governato.</p>
+  <h2>Posizione 2 — gli interventi diretti nel Mezzogiorno</h2>
+  <p>Nello stesso periodo, i governi Giolitti approvano una serie di leggi speciali per il Mezzogiorno: nel 1904 una legge per l'industrializzazione di Napoli (sgravi fiscali per le imprese che si installano in città) e una per la Basilicata, colpita da un terremoto e da una miseria strutturale, con investimenti in strade, acquedotti, rimboschimento. Sono le prime volte in cui lo Stato unitario tratta l'arretratezza del Sud come un problema da correggere con risorse pubbliche mirate, invece che come un'emergenza di ordine pubblico da reprimere — il registro con cui la Destra storica aveva affrontato il brigantaggio.</p>
+  
+
+  <h2>Che cosa fare</h2>
+  
+  <div class="q">
+    <div class="qhead"><span class="qnum">1</span><span class="qtext">Riassumi in una riga la tesi centrale di ciascuna posizione: che cosa sostiene esattamente Salvemini? Che cosa mostrano esattamente le leggi speciali per il Mezzogiorno?</span></div>
+    <textarea data-q="q1" placeholder="Scrivi qui la tua risposta…"></textarea>
+  </div>
+
+  <div class="q">
+    <div class="qhead"><span class="qnum">2</span><span class="qtext">Sono davvero incompatibili, o è possibile che entrambe le cose siano vere insieme? Spiega la tua risposta in tre righe.</span></div>
+    <textarea data-q="q2" placeholder="Scrivi qui la tua risposta…"></textarea>
+  </div>
+
+  <div class="q">
+    <div class="qhead"><span class="qnum">3</span><span class="qtext">Immagina di dover scegliere una sola espressione per il titolo di un capitolo di manuale su Giolitti e il Mezzogiorno, che non prenda le parti di nessuna delle due letture. Scrivila.</span></div>
+    <textarea data-q="q3" placeholder="Scrivi qui la tua risposta…"></textarea>
+  </div>
+
+  <div class="q">
+    <div class="qhead"><span class="qnum">4</span><span class="qtext">Confronta Giolitti con Francesco Crispi, già incontrato nel manuale come figura ugualmente controversa. Entrambi vengono descritti dalla storiografia in modo ambivalente: pensa a come ciascuno dei due usa il potere dello Stato, e a che cosa, nell'uno e nell'altro caso, tiene insieme la parte “buona” e la parte “cattiva” del giudizio storico. È la stessa ambivalenza, o sono due cose diverse che si somigliano solo in superficie?</span></div>
+    <textarea data-q="q4" placeholder="Scrivi qui la tua risposta…"></textarea>
+  </div>
+
+  <div class="bar">
+    <p class="hint">Le risposte vengono salvate con il tuo nome per l'insegnante, e restano anche su questo browser per riprendere il lavoro se lo interrompi.</p>
+    <div style="display:flex; gap:8px; flex:none;">
+      <button id="printBtn" type="button">Stampa</button>
+      <button id="resetBtn" type="button">Cancella</button>
+    </div>
+  </div>
+  </div>
+
+  <div id="dash" style="display:none;">
+    <p style="margin-bottom:14px;"><button id="dashBackBtn" type="button" style="background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:4px;padding:6px 12px;font-size:13px;cursor:pointer;font-family:inherit;">&larr; Torna alla scheda</button></p>
+    <h1>Area docente &mdash; L'ambivalenza di Giolitti nel Mezzogiorno</h1>
+    <div id="dashLogin">
+      <label class="gate-label" for="dashPin">PIN</label>
+      <input type="text" id="dashPin" placeholder="PIN">
+      <p id="dashErr" class="gate-err">PIN errato.</p>
+      <button id="dashEnterBtn" type="button">Entra</button>
+    </div>
+    <div id="dashTableWrap" style="display:none;">
+      <p><button id="dashRefreshBtn" type="button">Aggiorna</button></p>
+      <p id="dashLoading" class="hint" style="display:none;">Caricamento&hellip;</p>
+      <div style="overflow-x:auto;">
+        <table class="dash-table">
+          <thead><tr><th>Nome</th><th>Classe</th><th>Risposte</th><th>Quando</th></tr></thead>
+          <tbody id="dashTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer-lab"><button id="dashOpenBtn" type="button">Area docente</button></footer>
+<script>
+(function(){
+  var TITLE_KEY = "giolitti-4-mezzogiorno";
+  var ID_KEY = TITLE_KEY + "-id";
+  var FIREBASE_BASE = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
+  var FIREBASE_PATH = "studenti_giolitti_4_mezzogiorno";
+
+  var areas = document.querySelectorAll("textarea[data-q]");
+  var gate = document.getElementById("gate");
+  var scheda = document.getElementById("scheda");
+  var gateNome = document.getElementById("gateNome");
+  var gateClasse = document.getElementById("gateClasse");
+  var gateErr = document.getElementById("gateErr");
+  var gateBtn = document.getElementById("gateBtn");
+
+  var student = { nome: "", classe: "" };
+  var studentKey = "";
+  var saveTimer = null;
+
+  function slugify(s){
+    return (s || "").toString().normalize("NFD").replace(/[̀-ͯ]/g,"")
+      .toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"") || "anon";
+  }
+  function loadLocal(){
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(TITLE_KEY) || "{}"); } catch(e) {}
+    return saved;
+  }
+  function saveLocal(data){
+    try { localStorage.setItem(TITLE_KEY, JSON.stringify(data)); } catch(e) {}
+  }
+  function applyAnswers(data){
+    areas.forEach(function(a){
+      var q = a.getAttribute("data-q");
+      if (data && data[q] !== undefined) a.value = data[q];
+    });
+  }
+  function collectAnswers(){
+    var out = {};
+    areas.forEach(function(a){ out[a.getAttribute("data-q")] = a.value; });
+    return out;
+  }
+  function scheduleSave(){
+    saveLocal(collectAnswers());
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(pushToFirebase, 700);
+  }
+  function pushToFirebase(){
+    if (!studentKey) return;
+    var payload = {
+      nome: student.nome, classe: student.classe,
+      timestamp: new Date().toISOString(),
+      risposte: collectAnswers()
+    };
+    fetch(FIREBASE_BASE + "/" + FIREBASE_PATH + "/" + studentKey + ".json", {
+      method: "PUT",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload)
+    }).catch(function(){});
+  }
+  function startWithStudent(nome, classe){
+    student = { nome: nome, classe: classe };
+    studentKey = slugify(nome) + "_" + slugify(classe);
+    try { localStorage.setItem(ID_KEY, JSON.stringify(student)); } catch(e) {}
+    gate.style.display = "none";
+    scheda.style.display = "";
+    applyAnswers(loadLocal());
+    fetch(FIREBASE_BASE + "/" + FIREBASE_PATH + "/" + studentKey + ".json")
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data && data.risposte) { applyAnswers(data.risposte); saveLocal(collectAnswers()); }
+      })
+      .catch(function(){});
+  }
+
+  var savedId = null;
+  try { savedId = JSON.parse(localStorage.getItem(ID_KEY) || "null"); } catch(e) {}
+  if (savedId && savedId.nome && savedId.classe) {
+    startWithStudent(savedId.nome, savedId.classe);
+  }
+
+  gateBtn.addEventListener("click", function(){
+    var nome = gateNome.value.trim();
+    var classe = gateClasse.value.trim();
+    if (!nome || !classe) { gateErr.style.display = "block"; return; }
+    gateErr.style.display = "none";
+    startWithStudent(nome, classe);
+  });
+
+  areas.forEach(function(a){ a.addEventListener("input", scheduleSave); });
+
+  var resetBtn = document.getElementById("resetBtn");
+  if (resetBtn) resetBtn.addEventListener("click", function(){
+    if (!confirm("Cancellare tutte le risposte scritte in questa scheda?")) return;
+    try { localStorage.removeItem(TITLE_KEY); } catch(e) {}
+    areas.forEach(function(a){ a.value = ""; });
+    if (studentKey) {
+      fetch(FIREBASE_BASE + "/" + FIREBASE_PATH + "/" + studentKey + ".json", { method: "DELETE" }).catch(function(){});
+    }
+  });
+  var printBtn = document.getElementById("printBtn");
+  if (printBtn) printBtn.addEventListener("click", function(){ window.print(); });
+
+  var TEACHER_PIN = "1970";
+  var dash = document.getElementById("dash");
+  var dashOpenBtn = document.getElementById("dashOpenBtn");
+  var dashBackBtn = document.getElementById("dashBackBtn");
+  var dashLogin = document.getElementById("dashLogin");
+  var dashTableWrap = document.getElementById("dashTableWrap");
+  var dashPin = document.getElementById("dashPin");
+  var dashErr = document.getElementById("dashErr");
+  var dashEnterBtn = document.getElementById("dashEnterBtn");
+  var dashRefreshBtn = document.getElementById("dashRefreshBtn");
+  var dashLoading = document.getElementById("dashLoading");
+  var dashTbody = document.getElementById("dashTbody");
+
+  function buildQuestionLabels(){
+    var labels = {};
+    document.querySelectorAll(".q").forEach(function(qDiv){
+      var ta = qDiv.querySelector("textarea[data-q]");
+      var txt = qDiv.querySelector(".qtext");
+      if (ta && txt) labels[ta.getAttribute("data-q")] = txt.textContent.trim();
+    });
+    return labels;
+  }
+
+  function escapeHtml(s){
+    return (s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  function caricaRisposteDash(){
+    dashLoading.style.display = "block";
+    dashLoading.textContent = "Caricamento…";
+    fetch(FIREBASE_BASE + "/" + FIREBASE_PATH + ".json")
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        dashLoading.style.display = "none";
+        var rows = data ? Object.values(data) : [];
+        rows.sort(function(a,b){ return (a.timestamp||"").localeCompare(b.timestamp||""); });
+        var labels = buildQuestionLabels();
+        dashTbody.innerHTML = "";
+        if (!rows.length) {
+          dashTbody.innerHTML = "<tr><td colspan='4'>Nessuna risposta ancora.</td></tr>";
+          return;
+        }
+        rows.forEach(function(r){
+          var risposte = r.risposte || {};
+          var testo = Object.keys(risposte).sort().map(function(k){
+            var v = (risposte[k] || "").trim();
+            if (!v) return "";
+            return "<b>" + escapeHtml(labels[k] || k) + ":</b> " + escapeHtml(v);
+          }).filter(Boolean).join("<br><br>");
+          var tr = document.createElement("tr");
+          tr.innerHTML = "<td>" + escapeHtml(r.nome||"") + "</td>" +
+            "<td>" + escapeHtml(r.classe||"") + "</td>" +
+            "<td>" + testo + "</td>" +
+            "<td>" + (r.timestamp ? new Date(r.timestamp).toLocaleString("it-IT") : "") + "</td>";
+          dashTbody.appendChild(tr);
+        });
+      })
+      .catch(function(){ dashLoading.style.display = "block"; dashLoading.textContent = "Errore nel caricamento."; });
+  }
+
+  dashOpenBtn.addEventListener("click", function(){
+    gate.style.display = "none";
+    scheda.style.display = "none";
+    dash.style.display = "";
+    window.scrollTo(0,0);
+  });
+  dashBackBtn.addEventListener("click", function(){
+    dash.style.display = "none";
+    if (studentKey) { scheda.style.display = ""; } else { gate.style.display = ""; }
+    window.scrollTo(0,0);
+  });
+  dashEnterBtn.addEventListener("click", function(){
+    if (dashPin.value.trim() !== TEACHER_PIN) { dashErr.style.display = "block"; return; }
+    dashErr.style.display = "none";
+    dashLogin.style.display = "none";
+    dashTableWrap.style.display = "";
+    caricaRisposteDash();
+  });
+  dashRefreshBtn.addEventListener("click", caricaRisposteDash);
+})();
+</script>
+</body>
+</html>
