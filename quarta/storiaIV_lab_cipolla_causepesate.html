@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cipolla e la decadenza italiana — pesare le cause</title>
+<meta name="portale:titolo" content="Cipolla e la decadenza italiana — pesare le cause">
+<meta name="portale:materia" content="storia">
+<meta name="portale:tipologia" content="argomentare">
+<meta name="portale:descrizione" content="Come costruisce Cipolla la sua spiegazione della decadenza italiana? Individui le tesi rifiutate, il meccanismo, le cause esterne e interne, le prove e il caso della seta.">
+<style>
+  :root { --bg:#f4f9f5; --ink:#17261d; --muted:#4a5f53; --card:#ffffff; --line:#c9dccf; --accent:#6d28d9; --on-accent:#ffffff; --tint:#efe9fa; --err:#b91c1c; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0f1a14; --ink:#e6f1ea; --muted:#a9bdb1; --card:#16241c; --line:#2d4034; --accent:#b59af0; --on-accent:#0f1a14; --tint:#241b3a; --err:#f19a9a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:16px 16px 84px; background:var(--bg); color:var(--ink); font:16px/1.55 -apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:640px; margin:0 auto; }
+  h1, h2 { font-family:Georgia,serif; color:var(--accent); line-height:1.25; margin:0 0 8px; }
+  h1 { font-size:1.55rem; } h2 { font-size:1.3rem; }
+  h3 { font-family:Georgia,serif; font-size:1.05rem; margin:20px 0 6px; }
+  p { margin:0 0 12px; }
+  .eyebrow { font-size:.78rem; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .meta { color:var(--muted); font-size:.92rem; margin-bottom:14px; }
+  .step { font-size:.85rem; color:var(--muted); margin:0 0 10px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin:0 0 14px; }
+  .tint { background:var(--tint); }
+  ol.plain, ul { margin:0 0 4px; padding-left:22px; } li { margin-bottom:8px; }
+  label.lbl { display:block; font-weight:600; margin:18px 0 6px; }
+  fieldset { border:0; margin:16px 0 0; padding:0; min-width:0; }
+  legend { font-weight:600; padding:0; margin-bottom:8px; }
+  label.opt { display:flex; gap:12px; align-items:flex-start; min-height:44px; padding:10px 12px; margin:0 0 8px; border:1px solid var(--line); border-radius:10px; background:var(--card); cursor:pointer; }
+  label.opt input { width:22px; height:22px; margin:2px 0 0; flex:none; accent-color:var(--accent); }
+  label.opt.on { border:2px solid var(--accent); padding:9px 11px; background:var(--tint); }
+  label.opt .k { font-weight:700; }
+  label.opt.dis { cursor:default; }
+  input[type=text], textarea { width:100%; font:inherit; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); }
+  input[type=text] { min-height:44px; }
+  textarea { min-height:140px; resize:vertical; }
+  input:disabled, textarea:disabled { opacity:.85; background:var(--card); }
+  .count { font-size:.82rem; color:var(--muted); text-align:right; }
+  button { min-height:44px; padding:8px 18px; font:inherit; font-weight:600; border-radius:10px; border:2px solid var(--accent); background:var(--accent); color:var(--on-accent); cursor:pointer; }
+  button.sec { background:transparent; color:var(--accent); }
+  button:disabled { opacity:.55; cursor:default; }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .nav { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+  .msg { border:2px solid var(--err); border-radius:10px; padding:10px 12px; margin-top:14px; }
+  .msg b { color:var(--err); }
+  .note { border:1px dashed var(--accent); border-radius:10px; padding:10px 12px; margin:12px 0; font-size:.95rem; }
+  details { margin:10px 0 0; } summary { min-height:44px; padding:10px 0; cursor:pointer; font-weight:600; color:var(--accent); }
+  dl { margin:0; } dt { font-weight:600; margin-top:12px; } dd { margin:4px 0 0; white-space:pre-wrap; }
+  ol.rank { list-style:none; margin:0 0 4px; padding:0; }
+  ol.rank li { display:flex; gap:12px; margin:0 0 10px; padding:12px; border:1px solid var(--line); border-radius:12px; background:var(--card); }
+  ol.rank .n { flex:none; width:36px; height:36px; border-radius:50%; border:2px solid var(--accent); color:var(--accent); font-family:Georgia,serif; font-weight:700; font-size:1.1rem; display:flex; align-items:center; justify-content:center; }
+  ol.rank .t { font-weight:700; margin-bottom:4px; }
+  ol.rank .r { margin:0; font-size:.95rem; }
+  .tag { display:inline-block; margin:6px 6px 0 0; padding:2px 10px; border:1px solid var(--accent); border-radius:999px; font-size:.82rem; font-weight:600; color:var(--accent); }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+  .toplink { position:sticky; top:0; z-index:5; background:var(--bg); padding:8px 0; margin:0 0 8px; border-bottom:1px solid var(--line); }
+  .toplink a { display:inline-flex; align-items:center; min-height:44px; font-weight:600; color:var(--accent); }
+  a.btnlink { display:inline-flex; align-items:center; min-height:44px; padding:8px 18px; border:2px solid var(--accent); border-radius:10px; font-weight:600; color:var(--accent); text-decoration:none; }
+  textarea { min-height:90px; }
+</style>
+</head>
+<body>
+<main id="app"></main>
+
+<script>
+/* portale-lab.v1.js — adattatore tra un laboratorio HTML e il Portale dei laboratori.
+ * Contratto: docs/istruzioni_progetto_laboratori.md (v1). Non modificare il comportamento
+ * di questa versione: eventuali cambiamenti incompatibili vanno in portale-lab.v2.js.
+ * Nessuna dipendenza, nessuna rete: comunica solo con la finestra padre via postMessage. */
+(function () {
+  "use strict";
+  if (window.PortaleLab) return;
+
+  var SOURCE = "portale-lab";
+  var ALLOWED = [
+    "https://laboratorio-vico.web.app",
+    "https://laboratorio-vico.firebaseapp.com",
+    "http://localhost:5000",
+    "http://127.0.0.1:5000"
+  ];
+  var CONNECT_TIMEOUT_MS = 15000; // dentro un iframe si aspetta il Portale fino a 15 s, poi errore (mai anteprima silenziosa)
+  var CONNECT_RETRY_MS = 500;
+  var ACK_TIMEOUT_MS = 8000;
+  var MAX_TRIES = 3;
+  var SAVE_SOON_MS = 2000;
+  var MAX_ANSWERS = 300;
+  var MAX_STATE_CHARS = 200000;
+
+  var cfg = null;
+  var started = false;
+  var ready = false;
+  var completed = false;
+  var portalOrigin = null;   // impostata solo dopo un init valido
+  var mode = null;           // "portale" | "anteprima"
+  var inPortalChannel = false; // true se c'è un Portale con cui parlare (anche in anteprima)
+  var reqSeq = 0;
+  var waiting = {};          // requestId -> callback(ok)
+  var chain = Promise.resolve(true);
+  var queuedSave = null;
+  var soonTimer = null;
+  var diag = { sent: 0, received: 0, rejected: null };
+  var connect = { iv: null, t0: 0, overlay: null };
+
+  // ---------- Indicatore (badge + avviso anteprima) ----------
+  var ui = { box: null, badge: null, banner: null, hideTimer: null };
+  function ensureUi() {
+    if (ui.box || !document.body) return;
+    var st = document.createElement("style");
+    st.textContent =
+      "#pl-box{position:fixed;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));pointer-events:none;z-index:2147483000;font:14px/1.3 -apple-system,'Segoe UI',Roboto,sans-serif}" +
+      "#pl-box div{pointer-events:none;border-radius:999px;padding:6px 12px;background:#17261d;color:#fff;border:1px solid rgba(255,255,255,.25);box-shadow:0 1px 4px rgba(0,0,0,.3)}" +
+      "#pl-box .pl-warn{background:#6b4a00;color:#fff}" +
+      "#pl-box .pl-err{background:#8a1c1c;color:#fff}" +
+      "#pl-box .pl-ok{background:#14532d;color:#fff}" +
+      "#pl-box .pl-banner{align-self:stretch;text-align:center;border-radius:10px;background:#6b4a00;color:#fff}";
+    document.head.appendChild(st);
+    var box = document.createElement("div");
+    box.id = "pl-box";
+    box.setAttribute("role", "status");
+    box.setAttribute("aria-live", "polite");
+    document.body.appendChild(box);
+    ui.box = box;
+  }
+  function clearNode(n) { if (n && n.parentNode) n.parentNode.removeChild(n); }
+  function showBadge(text, cls, autoHideMs) {
+    ensureUi();
+    if (!ui.box) return;
+    clearNode(ui.badge);
+    clearTimeout(ui.hideTimer);
+    var d = document.createElement("div");
+    d.className = cls || "";
+    d.textContent = text;
+    ui.box.appendChild(d);
+    ui.badge = d;
+    if (autoHideMs) ui.hideTimer = setTimeout(function () { clearNode(d); if (ui.badge === d) ui.badge = null; }, autoHideMs);
+  }
+  function showBanner(text) {
+    ensureUi();
+    if (!ui.box) return;
+    clearNode(ui.banner);
+    var d = document.createElement("div");
+    d.className = "pl-banner";
+    d.textContent = text;
+    ui.box.insertBefore(d, ui.box.firstChild);
+    ui.banner = d;
+  }
+
+  // ---------- Messaggistica ----------
+  // Alcune reti (tipicamente scolastiche, con un dominio di ricerca DNS impostato via DHCP)
+  // fanno sì che Safari/iOS usi il nome host assoluto con un punto finale ("web.app."): in quel
+  // caso window.location.origin del Portale è "https://laboratorio-vico.web.app." anziché
+  // "https://laboratorio-vico.web.app". postMessage confronta l'origine per stringa esatta, quindi
+  // va tollerato in entrambe le direzioni: qui si normalizza in ricezione e si prova anche in invio.
+  function stripTrailingDot(origin) {
+    return String(origin || "").replace(/^(https?:\/\/[^/:]+?)\.(:\d+)?$/, "$1$2");
+  }
+  function withTrailingDot(origin) {
+    return origin.replace(/^(https?:\/\/[^/:]+)(:\d+)?$/, "$1.$2");
+  }
+
+  function post(msg) {
+    msg.source = SOURCE;
+    try {
+      if (portalOrigin) { window.parent.postMessage(msg, portalOrigin); return; }
+      // Prima dell'init l'origine del Portale non è nota: si prova con ognuna in allowlist,
+      // nella forma normale e con il punto finale (le non corrispondenti scartano il messaggio
+      // in silenzio, quindi provarle tutte è innocuo). Mai "*".
+      if (msg.type === "ready") diag.sent++;
+      for (var i = 0; i < ALLOWED.length; i++) {
+        window.parent.postMessage(msg, ALLOWED[i]);
+        window.parent.postMessage(msg, withTrailingDot(ALLOWED[i]));
+      }
+    } catch (e) { console.error("PortaleLab: postMessage fallito", e); }
+  }
+
+  window.addEventListener("message", function (ev) {
+    var d = ev.data;
+    if (!d || d.source !== SOURCE) return;
+    diag.received++;
+    if (ALLOWED.indexOf(stripTrailingDot(ev.origin)) < 0) { diag.rejected = String(ev.origin); return; }
+    if (d.type === "init") {
+      if (ready || !started) return;
+      portalOrigin = ev.origin; // origine esatta ricevuta (col punto se presente): le risposte tornano allo stesso posto
+      handleInit(d);
+    } else if (d.type === "ack") {
+      var cb = waiting[d.requestId];
+      if (cb) { delete waiting[d.requestId]; cb(!!d.ok); }
+    }
+  });
+
+  // ---------- Avvio ----------
+  function safe(fn, args, fallback) {
+    try { return fn.apply(null, args || []); } catch (e) { console.error("PortaleLab: errore nel laboratorio", e); return fallback; }
+  }
+
+  function finishStart(ctx) {
+    if (ready) return;
+    ready = true;
+    stopConnecting();
+    mode = ctx.mode;
+    PortaleLab.mode = mode;
+    if (mode === "anteprima") showBanner("Anteprima: le risposte non vengono salvate.");
+    if (typeof cfg.onReady === "function") safe(cfg.onReady, [ctx]);
+  }
+
+  function handleInit(d) {
+    var preview = !!d.preview;
+    inPortalChannel = true;
+    var saved = d.saved || null;
+    var isCompleted = !!(saved && saved.completed);
+    var stateLost = false;
+    if (saved && typeof saved.state === "string" && saved.state) {
+      var wrapper = null;
+      try { wrapper = JSON.parse(saved.state); } catch (e) { wrapper = null; }
+      if (wrapper && wrapper.v === cfg.stateVersion && typeof cfg.restoreState === "function") {
+        safe(cfg.restoreState, [wrapper.d, { completed: isCompleted }]);
+      } else {
+        stateLost = true; // versione incompatibile: il lab riparte da zero
+      }
+    }
+    completed = isCompleted;
+    finishStart({
+      mode: preview ? "anteprima" : "portale",
+      student: d.student || null,
+      completed: isCompleted,
+      stateLost: stateLost
+    });
+  }
+
+  // ---------- Collegamento al Portale (dentro un iframe) ----------
+  function stopConnecting() {
+    clearInterval(connect.iv); connect.iv = null;
+    clearNode(connect.overlay); connect.overlay = null;
+  }
+
+  function overlayBase() {
+    var o = document.createElement("div");
+    o.style.cssText = "position:fixed;left:0;top:0;right:0;bottom:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;padding:16px;background:#f4f9f5;color:#17261d;font:16px/1.5 -apple-system,'Segoe UI',Roboto,sans-serif";
+    return o;
+  }
+
+  function showConnecting() {
+    if (!document.body || connect.overlay || ready) return;
+    var o = overlayBase();
+    o.textContent = "Collegamento al Portale in corso…";
+    document.body.appendChild(o);
+    connect.overlay = o;
+  }
+
+  function diagText() {
+    return "ready inviati: " + diag.sent + " · messaggi del portale ricevuti: " + diag.received +
+      " · origine scartata: " + (diag.rejected || "nessuna") +
+      " · " + String(navigator.userAgent || "").slice(0, 90);
+  }
+
+  function showConnectError() {
+    clearInterval(connect.iv); connect.iv = null;
+    if (ready || !document.body) return;
+    clearNode(connect.overlay);
+    var o = overlayBase();
+    var card = document.createElement("div");
+    card.style.cssText = "max-width:420px;background:#fff;color:#17261d;border:1px solid #d5e4d9;border-radius:14px;padding:20px";
+    var h = document.createElement("div"); h.style.cssText = "font:700 1.15rem Georgia,serif;margin-bottom:8px"; h.textContent = "Non riesco a collegarmi al Portale";
+    var p = document.createElement("p"); p.style.margin = "0 0 12px"; p.textContent = "Il laboratorio non è collegato al Portale, quindi i tuoi risultati NON verrebbero salvati. Controlla la connessione e riprova; se il problema resta, torna all'elenco dei laboratori e riaprilo, oppure segnala il testo qui sotto al docente.";
+    var d = document.createElement("div"); d.style.cssText = "font:12px ui-monospace,Menlo,monospace;word-break:break-word;background:#f4f9f5;border-radius:8px;padding:8px;margin-bottom:12px"; d.textContent = diagText();
+    var b = document.createElement("button"); b.textContent = "Riprova";
+    b.style.cssText = "min-height:44px;padding:8px 18px;font-weight:600;font-size:16px;font-family:inherit;border-radius:10px;border:1px solid #1e6b45;background:#1e6b45;color:#fff;cursor:pointer";
+    b.onclick = function () { clearNode(o); connect.overlay = null; beginConnecting(); };
+    card.appendChild(h); card.appendChild(p); card.appendChild(d); card.appendChild(b);
+    o.appendChild(card);
+    document.body.appendChild(o);
+    connect.overlay = o;
+  }
+
+  function beginConnecting() {
+    connect.t0 = Date.now();
+    post({ type: "ready" });
+    clearInterval(connect.iv);
+    connect.iv = setInterval(function () {
+      if (ready) { stopConnecting(); return; }
+      var waited = Date.now() - connect.t0;
+      if (waited > CONNECT_TIMEOUT_MS) { showConnectError(); return; }
+      if (waited > 1200) showConnecting();
+      post({ type: "ready" });
+    }, CONNECT_RETRY_MS);
+  }
+
+  function start(config) {
+    if (started) return;
+    if (!config || typeof config.getState !== "function" || typeof config.getAnswers !== "function" ||
+        typeof config.getProgress !== "function" || typeof config.onReady !== "function" ||
+        !(config.stateVersion >= 1)) {
+      console.error("PortaleLab.start: configurazione non valida (servono stateVersion, getState, restoreState, getAnswers, getProgress, onReady)");
+      return;
+    }
+    cfg = config;
+    started = true;
+    var inIframe = window.parent && window.parent !== window;
+    // File aperto da solo (non in un iframe): anteprima locale, niente salvataggio.
+    if (!inIframe) { finishStart({ mode: "anteprima", student: null, completed: false }); return; }
+    // Dentro un iframe ci si aspetta il Portale: si ritenta finché non risponde. Mai anteprima silenziosa.
+    beginConnecting();
+  }
+
+  // ---------- Costruzione del payload ----------
+  function cleanAnswers(list) {
+    var out = [];
+    if (!Array.isArray(list)) return out;
+    for (var i = 0; i < list.length && out.length < MAX_ANSWERS; i++) {
+      var a = list[i];
+      if (!a || typeof a.id !== "string" || !/^[a-z0-9_-]{1,40}$/.test(a.id)) { console.error("PortaleLab: answers[" + i + "] ha un id non valido", a); continue; }
+      var type = a.type === "mc" ? "mc" : "essay";
+      var correct = type === "mc" ? (a.correct === true) : null;
+      out.push({
+        id: a.id,
+        prompt: String(a.prompt == null ? "" : a.prompt).slice(0, 300),
+        type: type,
+        answer: String(a.answer == null ? "" : a.answer).slice(0, 4000),
+        correct: correct
+      });
+    }
+    return out;
+  }
+
+  function defaultScore(answers) {
+    var mc = answers.filter(function (a) { return a.type === "mc"; });
+    if (!mc.length) return null;
+    var ok = mc.filter(function (a) { return a.correct === true; }).length;
+    return Math.round((ok / mc.length) * 100);
+  }
+
+  function buildPayload(final) {
+    var raw = safe(cfg.getState, [], null);
+    var state = JSON.stringify({ v: cfg.stateVersion, d: raw });
+    if (state.length > MAX_STATE_CHARS) { console.error("PortaleLab: stato troppo grande (" + state.length + " caratteri, max " + MAX_STATE_CHARS + ")"); return null; }
+    var answers = cleanAnswers(safe(cfg.getAnswers, [], []));
+    var progress = Number(safe(cfg.getProgress, [], 0));
+    if (!(progress >= 0)) progress = 0;
+    if (progress > 1) progress = 1;
+    var p = { state: state, answers: answers, progress: final ? 1 : progress };
+    if (final) {
+      var sc = typeof cfg.getScore === "function" ? safe(cfg.getScore, [], null) : defaultScore(answers);
+      p.score = (typeof sc === "number" && isFinite(sc)) ? sc : null;
+    }
+    return p;
+  }
+
+  // ---------- Invio con ack, timeout e ritentativi ----------
+  function sendOnce(type, payload) {
+    return new Promise(function (resolve) {
+      var id = "r" + (++reqSeq) + "_" + Date.now().toString(36);
+      var timer = setTimeout(function () { delete waiting[id]; resolve(false); }, ACK_TIMEOUT_MS);
+      waiting[id] = function (ok) { clearTimeout(timer); resolve(ok); };
+      var msg = { type: type, requestId: id };
+      for (var k in payload) if (Object.prototype.hasOwnProperty.call(payload, k)) msg[k] = payload[k];
+      post(msg);
+    });
+  }
+
+  function sendWithRetry(type, buildFn) {
+    var attempt = 0;
+    function run() {
+      attempt++;
+      var payload = buildFn();
+      if (!payload) { showBadge("Non salvato", "pl-err"); return Promise.resolve(false); }
+      showBadge(attempt > 1 ? "Non salvato, riprovo…" : "Salvataggio…", attempt > 1 ? "pl-warn" : "");
+      return sendOnce(type, payload).then(function (ok) {
+        if (ok) return true;
+        if (attempt >= MAX_TRIES) return false;
+        return new Promise(function (r) { setTimeout(r, 800 * attempt); }).then(run);
+      });
+    }
+    return run().then(function (ok) {
+      if (ok) showBadge("Salvato ✓", "pl-ok", 2500);
+      else showBadge("Non salvato", "pl-err");
+      return ok;
+    });
+  }
+
+  // ---------- API pubblica ----------
+  function save() {
+    if (!ready) return Promise.resolve(false);
+    clearTimeout(soonTimer);
+    if (completed || !inPortalChannel) return Promise.resolve(true);
+    // Coalescenza: al massimo un salvataggio in coda oltre a quello in corso.
+    if (queuedSave) return queuedSave;
+    var p = chain.then(function () {
+      queuedSave = null;
+      return sendWithRetry("save", function () { return buildPayload(false); });
+    });
+    queuedSave = p;
+    chain = p.catch(function () { return false; });
+    return p;
+  }
+
+  function saveSoon() {
+    if (!ready || completed || !inPortalChannel) return;
+    clearTimeout(soonTimer);
+    soonTimer = setTimeout(function () { save(); }, SAVE_SOON_MS);
+  }
+
+  function complete() {
+    if (!ready) return Promise.resolve(false);
+    clearTimeout(soonTimer);
+    if (completed) return Promise.resolve(true);
+    if (!inPortalChannel) { completed = true; return Promise.resolve(true); }
+    var p = chain.then(function () {
+      return sendWithRetry("complete", function () { return buildPayload(true); });
+    }).then(function (ok) { if (ok) completed = true; return ok; });
+    chain = p.catch(function () { return false; });
+    return p;
+  }
+
+  var PortaleLab = { version: 1, mode: null, start: start, save: save, saveSoon: saveSoon, complete: complete };
+  window.PortaleLab = PortaleLab;
+})();
+
+</script>
+<script>
+var C = {"title":"Cipolla e la decadenza italiana — pesare le cause","eyebrow":"STORIA · QUARTO ANNO · MODULO DI APERTURA: L’EUROPA NEL ’600 · SEZIONE 4, L’ITALIA NEL ’600","istruzioni":["Questo laboratorio lavora su un testo storiografico: uno storico del Novecento spiega un fenomeno, non è una fonte del Seicento. Il compito non è riassumerlo, ma vedere come Cipolla costruisce il suo argomento causale.","Presuppone che tu abbia già letto il testo e risposto alle tre domande «Per la comprensione del testo» in fondo. Se non l’hai fatto, fallo prima.","Il testo resta aperto accanto al laboratorio: nelle risposte rimanda alle parole di Cipolla. Il paragrafo in corsivo all’inizio è dei curatori del manuale, non di Cipolla: non usarlo come prova.","Non c’è correzione automatica. Scrivi con parole tue."],"testoUrl":"https://docs.google.com/document/d/1rPy_AP0yjW74HsHva33T3U8Pf04kJ3_0W5Z_HaJQ5Lw/edit?usp=sharing","testoLink":"Apri il testo di Cipolla","testoCitazione":"C.M. Cipolla, «La decadenza italiana», da I decenni del declino (1620-1680), in Storia facile dell’economia italiana dal Medioevo a oggi, Mondadori, Milano 1995, pp. 69-73.","sezioni":[{"n":"1","titolo":"Le spiegazioni che Cipolla rifiuta","durata":5,"intro":"Nel testo gli italiani attribuivano «tradizionalmente» la propria crisi ad altri. Individua le due spiegazioni tradizionali e, per ciascuna, scrivi con quale prova Cipolla la confuta.","campi":[{"id":"c1_spieg1","label":"Prima spiegazione tradizionale","prompt":"1. Prima spiegazione tradizionale della crisi italiana","righe":3},{"id":"c1_conf1","label":"Perché, secondo Cipolla, non regge (con quale prova)","prompt":"1. Con quale prova Cipolla confuta la prima spiegazione","righe":4},{"id":"c1_spieg2","label":"Seconda spiegazione tradizionale","prompt":"1. Seconda spiegazione tradizionale della crisi italiana","righe":3},{"id":"c1_conf2","label":"Perché, secondo Cipolla, non regge (con quale prova)","prompt":"1. Con quale prova Cipolla confuta la seconda spiegazione","righe":4}]},{"n":"2","titolo":"La tesi che Cipolla propone","durata":3,"intro":"In una frase: qual è la causa che Cipolla considera decisiva? Non dare per scontato che sia «la crisi economica generale»: individua il meccanismo preciso che descrive, cioè che cosa provoca che cosa e in che ordine.","campi":[{"id":"c2_tesi","label":"La causa decisiva e il meccanismo, in una frase","prompt":"2. La causa che Cipolla considera decisiva e il meccanismo che descrive","righe":4,"max":600}]},{"n":"3","titolo":"Cause esterne e cause interne","durata":7,"intro":"Cipolla distingue fattori che gli italiani non potevano controllare da fattori di cui, scrive, erano pienamente responsabili. Elenca almeno due voci per ciascun gruppo. Poi indica quale causa Cipolla presenta come la principale.","campi":[{"id":"c3_esterne","label":"Cause esterne (non imputabili agli italiani): almeno due","prompt":"3. Cause esterne indicate da Cipolla (almeno due)","righe":4},{"id":"c3_interne","label":"Cause interne (responsabilità italiana): almeno due","prompt":"3. Cause interne indicate da Cipolla (almeno due)","righe":4},{"id":"c3_prima","label":"Quale causa Cipolla presenta come la principale? Indica le parole del testo su cui ti basi.","prompt":"3. Quale causa Cipolla presenta come la principale e su quali parole del testo","righe":4}]},{"n":"4","titolo":"Le prove","durata":6,"intro":"Cipolla non si limita ad affermare la tesi: cita dati. Poi guarda con attenzione che cosa sostiene con dati e che cosa soltanto afferma.","campi":[{"id":"c4_cifre","label":"Trova nel testo almeno due cifre di esportazione. Per ciascuna scrivi la cifra, di quale città si tratta, che cosa dimostra e che cosa non dimostra.","prompt":"4. Due cifre di esportazione: che cosa dimostrano e che cosa non dimostrano","righe":6},{"id":"c4_cause","label":"Per le cause interne che hai elencato, Cipolla porta dati a sostegno oppure le afferma soltanto? Con quale grado di sicurezza le formula?","prompt":"4. Le cause interne sono sostenute con dati o solo affermate, e con quale sicurezza","righe":5}]},{"n":"5","titolo":"Un’eccezione: la seta","durata":5,"intro":"Il settore della seta si salva in parte nel racconto di Cipolla: le esportazioni di tessuti di seta crollano, ma la domanda di filati di seta italiani aumenta.","campi":[{"id":"c5_seta","label":"Perché succede? Spiegalo con il testo.","prompt":"5. Perché crollano i tessuti di seta ma cresce la domanda di filati","righe":4},{"id":"c5_argomento","label":"Che cosa ti dice questo caso sul modo in cui Cipolla spiega il declino?","prompt":"5. Che cosa dice il caso della seta sul tipo di argomento di Cipolla","righe":5}]}],"plenaria":{"titolo":"Plenaria in classe","durata":"6 minuti","domande":["Il paragrafo in corsivo del manuale elenca tra le cause le rotte atlantiche e la supremazia spagnola, cioè le spiegazioni che Cipolla rifiuta. Come si concilia con il testo di Cipolla? Che tipo di testo è quel paragrafo?","Dove pesano le cause esterne e dove le interne? Si può dire che Cipolla propone una causa unica?"]},"chiusura":{"titolo":"Lavoro consegnato","testo":"Le tue risposte sono state registrate. La plenaria si svolge in classe. Qui sotto puoi rileggerle."}};
+var DEFMAX = 1500, NS = C.sezioni.length;     // pagine: 0 intro, 1..NS sezioni, NS+1 consegnato
+var S = { i: 0, a: {}, done: false };
+var READONLY = false, confirming = false, problem = "", sending = false, missingSecs = [];
+var app = document.getElementById("app");
+
+function el(tag, props, kids) {
+  var e = document.createElement(tag);
+  if (props) for (var k in props) {
+    if (k === "text") e.textContent = props[k];
+    else if (k === "class") e.className = props[k];
+    else e.setAttribute(k, props[k]);
+  }
+  (kids || []).forEach(function (c) { if (c) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+  return e;
+}
+function trim(s) { return (s || "").trim(); }
+function allFields() { var f = []; C.sezioni.forEach(function (s) { s.campi.forEach(function (c) { f.push({ sec: s, c: c }); }); }); return f; }
+
+function answers() {
+  return allFields().filter(function (x) { return trim(S.a[x.c.id]) !== ""; }).map(function (x) {
+    return { id: x.c.id, prompt: x.c.prompt.slice(0, 300), type: "essay", answer: trim(S.a[x.c.id]).slice(0, 4000), correct: null };
+  });
+}
+function missing() {
+  var m = [];
+  C.sezioni.forEach(function (s) { if (s.campi.some(function (c) { return !trim(S.a[c.id]); })) m.push(s.n); });
+  return m;
+}
+function go(i) { S.i = i; confirming = false; problem = ""; missingSecs = []; PortaleLab.save(); render(); window.scrollTo(0, 0); }
+function card(cls, kids) { return el("div", { class: "card " + cls }, kids); }
+
+function topLink() {
+  return el("div", { class: "toplink" }, [el("a", { href: C.testoUrl, target: "_blank", rel: "noopener noreferrer", text: C.testoLink + " ↗", title: "Si apre in una nuova scheda" })]);
+}
+
+function field(c) {
+  var frag = document.createDocumentFragment();
+  var max = c.max || DEFMAX;
+  frag.appendChild(el("label", { class: "lbl", for: c.id, text: c.label }));
+  var ta = el("textarea", { id: c.id, maxlength: String(max), rows: String(c.righe || 4), "aria-describedby": c.id + "_c" });
+  ta.value = S.a[c.id] || ""; ta.disabled = READONLY;
+  var cnt = el("div", { class: "count", id: c.id + "_c", text: ta.value.length + " / " + max });
+  ta.addEventListener("input", function () { S.a[c.id] = ta.value; cnt.textContent = ta.value.length + " / " + max; PortaleLab.saveSoon(); });
+  ta.addEventListener("change", function () { PortaleLab.save(); });
+  frag.appendChild(ta); frag.appendChild(cnt);
+  return frag;
+}
+
+function pageIntro() {
+  app.appendChild(el("p", { class: "eyebrow", text: C.eyebrow }));
+  app.appendChild(el("h1", { text: C.title }));
+  app.appendChild(el("p", { class: "meta", text: "Circa 30 minuti nel laboratorio, da solo o in coppia come indica il docente. La plenaria si fa in classe." }));
+  C.istruzioni.forEach(function (t) { app.appendChild(el("p", { text: t })); });
+  app.appendChild(card("tint", [
+    el("h3", { text: "Testo di riferimento", style: "margin-top:0" }),
+    el("p", { text: C.testoCitazione }),
+    el("a", { class: "btnlink", href: C.testoUrl, target: "_blank", rel: "noopener noreferrer", text: C.testoLink + " ↗" })
+  ]));
+  var b = el("button", { type: "button", text: "Inizia dalla sezione 1" });
+  b.onclick = function () { go(1); };
+  app.appendChild(el("div", { class: "nav" }, [b]));
+}
+
+function pageSec() {
+  var s = C.sezioni[S.i - 1];
+  app.appendChild(topLink());
+  app.appendChild(el("p", { class: "step", text: "Sezione " + s.n + " di " + NS }));
+  app.appendChild(el("h2", { text: s.n + " — " + s.titolo }));
+  app.appendChild(el("p", { class: "meta", text: s.durata + " minuti circa" }));
+  app.appendChild(el("p", { text: s.intro }));
+  s.campi.forEach(function (c) { app.appendChild(field(c)); });
+
+  var nav = el("div", { class: "nav" });
+  var back = el("button", { type: "button", class: "sec", text: S.i === 1 ? "Torna all’introduzione" : "Sezione precedente" });
+  back.onclick = function () { go(S.i - 1); };
+  nav.appendChild(back);
+  var last = S.i === NS;
+  var nx = el("button", { type: "button", id: "nx", text: last ? (sending ? "Invio in corso…" : (problem.indexOf("non è stato registrato") >= 0 ? "Riprova la consegna" : "Consegna")) : "Sezione successiva" });
+  nx.disabled = sending || (last && READONLY);
+  nx.onclick = function () {
+    if (!last) { go(S.i + 1); return; }
+    if (problem.indexOf("non è stato registrato") >= 0) { doSend(); return; }
+    missingSecs = missing(); problem = ""; confirming = true; render();
+    var c = document.getElementById("confirm"); if (c) c.focus();
+  };
+  nav.appendChild(nx);
+  app.appendChild(nav);
+  if (problem) app.appendChild(el("div", { class: "msg", role: "alert" }, [el("b", { text: "Attenzione: " }), problem]));
+  if (confirming && last) {
+    var yes = el("button", { type: "button", id: "confirm", text: missingSecs.length ? "Consegna comunque" : "Sì, consegno" });
+    yes.onclick = function () { confirming = false; doSend(); };
+    var no = el("button", { type: "button", class: "sec", text: "Torna a completare" });
+    no.onclick = function () { confirming = false; render(); };
+    var msg = missingSecs.length
+      ? "Nelle sezioni " + missingSecs.join(", ") + " c’è almeno un campo vuoto. Puoi tornare a completare oppure consegnare comunque. Dopo la consegna non potrai più modificare."
+      : "Dopo la consegna non potrai più modificare le risposte. Consegni?";
+    app.appendChild(el("div", { class: "msg", role: "alert" }, [
+      el("p", { text: msg, style: "margin:0 0 10px" }),
+      el("div", { class: "nav", style: "margin-top:0" }, [yes, no])
+    ]));
+  }
+}
+
+function doSend() {
+  problem = ""; sending = true; render();
+  PortaleLab.complete().then(function (ok) {
+    sending = false;
+    if (ok) { S.done = true; S.i = NS + 1; render(); window.scrollTo(0, 0); }
+    else { problem = "Il lavoro non è stato registrato. Controlla la connessione e riprova."; render(); }
+  });
+}
+
+function pageDone() {
+  app.appendChild(el("h1", { text: C.chiusura.titolo }));
+  app.appendChild(el("p", { text: C.chiusura.testo }));
+  app.appendChild(card("tint", [el("h3", { text: C.plenaria.titolo + " · " + C.plenaria.durata, style: "margin-top:0" }), el("ul", null, C.plenaria.domande.map(function (t) { return el("li", { text: t }); }))]));
+  C.sezioni.forEach(function (s) {
+    app.appendChild(el("h3", { text: s.n + " — " + s.titolo }));
+    var dl = el("dl");
+    s.campi.forEach(function (c) { dl.appendChild(el("dt", { text: c.prompt })); dl.appendChild(el("dd", { text: trim(S.a[c.id]) || "(nessuna risposta)" })); });
+    app.appendChild(card("", [dl]));
+  });
+  app.appendChild(topLink());
+}
+
+function render() {
+  app.innerHTML = "";
+  if (S.i === NS + 1) pageDone();
+  else if (S.i >= 1) pageSec();
+  else pageIntro();
+}
+
+PortaleLab.start({
+  stateVersion: 1,
+  getState: function () { return { i: S.i, a: S.a, done: S.done }; },
+  restoreState: function (st) { st = st || {}; S = { i: Math.min(Math.max(st.i | 0, 0), NS + 1), a: st.a || {}, done: !!st.done }; },
+  getAnswers: answers,
+  getProgress: function () { return S.done ? 1 : Math.min(S.i, NS) / (NS + 1); },
+  getScore: function () { return null; },
+  onReady: function (ctx) {
+    READONLY = !!ctx.completed;
+    if (ctx.completed) { S.done = true; S.i = NS + 1; }
+    else if (S.done) { S.done = false; S.i = NS; }
+    render();
+  }
+});
+</script>
+</body>
+</html>

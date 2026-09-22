@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il mercantilismo — la scelta del consigliere</title>
+<meta name="portale:titolo" content="Il mercantilismo — la scelta del consigliere">
+<meta name="portale:materia" content="storia">
+<meta name="portale:tipologia" content="argomentare">
+<meta name="portale:descrizione" content="Da consigliere del re scegli un provvedimento economico, lo discuti in coppia e poi lo confronti con una scala di coerenza con i principi del mercantilismo.">
+<style>
+  :root { --bg:#f4f9f5; --ink:#17261d; --muted:#4a5f53; --card:#ffffff; --line:#c9dccf; --accent:#6d28d9; --on-accent:#ffffff; --tint:#efe9fa; --err:#b91c1c; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0f1a14; --ink:#e6f1ea; --muted:#a9bdb1; --card:#16241c; --line:#2d4034; --accent:#b59af0; --on-accent:#0f1a14; --tint:#241b3a; --err:#f19a9a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:16px 16px 84px; background:var(--bg); color:var(--ink); font:16px/1.55 -apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:640px; margin:0 auto; }
+  h1, h2 { font-family:Georgia,serif; color:var(--accent); line-height:1.25; margin:0 0 8px; }
+  h1 { font-size:1.55rem; } h2 { font-size:1.3rem; }
+  h3 { font-family:Georgia,serif; font-size:1.05rem; margin:20px 0 6px; }
+  p { margin:0 0 12px; }
+  .eyebrow { font-size:.78rem; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .meta { color:var(--muted); font-size:.92rem; margin-bottom:14px; }
+  .step { font-size:.85rem; color:var(--muted); margin:0 0 10px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin:0 0 14px; }
+  .tint { background:var(--tint); }
+  ol.plain, ul { margin:0 0 4px; padding-left:22px; } li { margin-bottom:8px; }
+  label.lbl { display:block; font-weight:600; margin:18px 0 6px; }
+  fieldset { border:0; margin:16px 0 0; padding:0; min-width:0; }
+  legend { font-weight:600; padding:0; margin-bottom:8px; }
+  label.opt { display:flex; gap:12px; align-items:flex-start; min-height:44px; padding:10px 12px; margin:0 0 8px; border:1px solid var(--line); border-radius:10px; background:var(--card); cursor:pointer; }
+  label.opt input { width:22px; height:22px; margin:2px 0 0; flex:none; accent-color:var(--accent); }
+  label.opt.on { border:2px solid var(--accent); padding:9px 11px; background:var(--tint); }
+  label.opt .k { font-weight:700; }
+  label.opt.dis { cursor:default; }
+  input[type=text], textarea { width:100%; font:inherit; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); }
+  input[type=text] { min-height:44px; }
+  textarea { min-height:140px; resize:vertical; }
+  input:disabled, textarea:disabled { opacity:.85; background:var(--card); }
+  .count { font-size:.82rem; color:var(--muted); text-align:right; }
+  button { min-height:44px; padding:8px 18px; font:inherit; font-weight:600; border-radius:10px; border:2px solid var(--accent); background:var(--accent); color:var(--on-accent); cursor:pointer; }
+  button.sec { background:transparent; color:var(--accent); }
+  button:disabled { opacity:.55; cursor:default; }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .nav { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+  .msg { border:2px solid var(--err); border-radius:10px; padding:10px 12px; margin-top:14px; }
+  .msg b { color:var(--err); }
+  .note { border:1px dashed var(--accent); border-radius:10px; padding:10px 12px; margin:12px 0; font-size:.95rem; }
+  details { margin:10px 0 0; } summary { min-height:44px; padding:10px 0; cursor:pointer; font-weight:600; color:var(--accent); }
+  dl { margin:0; } dt { font-weight:600; margin-top:12px; } dd { margin:4px 0 0; white-space:pre-wrap; }
+  ol.rank { list-style:none; margin:0 0 4px; padding:0; }
+  ol.rank li { display:flex; gap:12px; margin:0 0 10px; padding:12px; border:1px solid var(--line); border-radius:12px; background:var(--card); }
+  ol.rank .n { flex:none; width:36px; height:36px; border-radius:50%; border:2px solid var(--accent); color:var(--accent); font-family:Georgia,serif; font-weight:700; font-size:1.1rem; display:flex; align-items:center; justify-content:center; }
+  ol.rank .t { font-weight:700; margin-bottom:4px; }
+  ol.rank .r { margin:0; font-size:.95rem; }
+  .tag { display:inline-block; margin:6px 6px 0 0; padding:2px 10px; border:1px solid var(--accent); border-radius:999px; font-size:.82rem; font-weight:600; color:var(--accent); }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+<main id="app"></main>
+
+<script>
+/* portale-lab.v1.js — adattatore tra un laboratorio HTML e il Portale dei laboratori.
+ * Contratto: docs/istruzioni_progetto_laboratori.md (v1). Non modificare il comportamento
+ * di questa versione: eventuali cambiamenti incompatibili vanno in portale-lab.v2.js.
+ * Nessuna dipendenza, nessuna rete: comunica solo con la finestra padre via postMessage. */
+(function () {
+  "use strict";
+  if (window.PortaleLab) return;
+
+  var SOURCE = "portale-lab";
+  var ALLOWED = [
+    "https://laboratorio-vico.web.app",
+    "https://laboratorio-vico.firebaseapp.com",
+    "http://localhost:5000",
+    "http://127.0.0.1:5000"
+  ];
+  var CONNECT_TIMEOUT_MS = 15000; // dentro un iframe si aspetta il Portale fino a 15 s, poi errore (mai anteprima silenziosa)
+  var CONNECT_RETRY_MS = 500;
+  var ACK_TIMEOUT_MS = 8000;
+  var MAX_TRIES = 3;
+  var SAVE_SOON_MS = 2000;
+  var MAX_ANSWERS = 300;
+  var MAX_STATE_CHARS = 200000;
+
+  var cfg = null;
+  var started = false;
+  var ready = false;
+  var completed = false;
+  var portalOrigin = null;   // impostata solo dopo un init valido
+  var mode = null;           // "portale" | "anteprima"
+  var inPortalChannel = false; // true se c'è un Portale con cui parlare (anche in anteprima)
+  var reqSeq = 0;
+  var waiting = {};          // requestId -> callback(ok)
+  var chain = Promise.resolve(true);
+  var queuedSave = null;
+  var soonTimer = null;
+  var diag = { sent: 0, received: 0, rejected: null };
+  var connect = { iv: null, t0: 0, overlay: null };
+
+  // ---------- Indicatore (badge + avviso anteprima) ----------
+  var ui = { box: null, badge: null, banner: null, hideTimer: null };
+  function ensureUi() {
+    if (ui.box || !document.body) return;
+    var st = document.createElement("style");
+    st.textContent =
+      "#pl-box{position:fixed;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));pointer-events:none;z-index:2147483000;font:14px/1.3 -apple-system,'Segoe UI',Roboto,sans-serif}" +
+      "#pl-box div{pointer-events:none;border-radius:999px;padding:6px 12px;background:#17261d;color:#fff;border:1px solid rgba(255,255,255,.25);box-shadow:0 1px 4px rgba(0,0,0,.3)}" +
+      "#pl-box .pl-warn{background:#6b4a00;color:#fff}" +
+      "#pl-box .pl-err{background:#8a1c1c;color:#fff}" +
+      "#pl-box .pl-ok{background:#14532d;color:#fff}" +
+      "#pl-box .pl-banner{align-self:stretch;text-align:center;border-radius:10px;background:#6b4a00;color:#fff}";
+    document.head.appendChild(st);
+    var box = document.createElement("div");
+    box.id = "pl-box";
+    box.setAttribute("role", "status");
+    box.setAttribute("aria-live", "polite");
+    document.body.appendChild(box);
+    ui.box = box;
+  }
+  function clearNode(n) { if (n && n.parentNode) n.parentNode.removeChild(n); }
+  function showBadge(text, cls, autoHideMs) {
+    ensureUi();
+    if (!ui.box) return;
+    clearNode(ui.badge);
+    clearTimeout(ui.hideTimer);
+    var d = document.createElement("div");
+    d.className = cls || "";
+    d.textContent = text;
+    ui.box.appendChild(d);
+    ui.badge = d;
+    if (autoHideMs) ui.hideTimer = setTimeout(function () { clearNode(d); if (ui.badge === d) ui.badge = null; }, autoHideMs);
+  }
+  function showBanner(text) {
+    ensureUi();
+    if (!ui.box) return;
+    clearNode(ui.banner);
+    var d = document.createElement("div");
+    d.className = "pl-banner";
+    d.textContent = text;
+    ui.box.insertBefore(d, ui.box.firstChild);
+    ui.banner = d;
+  }
+
+  // ---------- Messaggistica ----------
+  // Alcune reti (tipicamente scolastiche, con un dominio di ricerca DNS impostato via DHCP)
+  // fanno sì che Safari/iOS usi il nome host assoluto con un punto finale ("web.app."): in quel
+  // caso window.location.origin del Portale è "https://laboratorio-vico.web.app." anziché
+  // "https://laboratorio-vico.web.app". postMessage confronta l'origine per stringa esatta, quindi
+  // va tollerato in entrambe le direzioni: qui si normalizza in ricezione e si prova anche in invio.
+  function stripTrailingDot(origin) {
+    return String(origin || "").replace(/^(https?:\/\/[^/:]+?)\.(:\d+)?$/, "$1$2");
+  }
+  function withTrailingDot(origin) {
+    return origin.replace(/^(https?:\/\/[^/:]+)(:\d+)?$/, "$1.$2");
+  }
+
+  function post(msg) {
+    msg.source = SOURCE;
+    try {
+      if (portalOrigin) { window.parent.postMessage(msg, portalOrigin); return; }
+      // Prima dell'init l'origine del Portale non è nota: si prova con ognuna in allowlist,
+      // nella forma normale e con il punto finale (le non corrispondenti scartano il messaggio
+      // in silenzio, quindi provarle tutte è innocuo). Mai "*".
+      if (msg.type === "ready") diag.sent++;
+      for (var i = 0; i < ALLOWED.length; i++) {
+        window.parent.postMessage(msg, ALLOWED[i]);
+        window.parent.postMessage(msg, withTrailingDot(ALLOWED[i]));
+      }
+    } catch (e) { console.error("PortaleLab: postMessage fallito", e); }
+  }
+
+  window.addEventListener("message", function (ev) {
+    var d = ev.data;
+    if (!d || d.source !== SOURCE) return;
+    diag.received++;
+    if (ALLOWED.indexOf(stripTrailingDot(ev.origin)) < 0) { diag.rejected = String(ev.origin); return; }
+    if (d.type === "init") {
+      if (ready || !started) return;
+      portalOrigin = ev.origin; // origine esatta ricevuta (col punto se presente): le risposte tornano allo stesso posto
+      handleInit(d);
+    } else if (d.type === "ack") {
+      var cb = waiting[d.requestId];
+      if (cb) { delete waiting[d.requestId]; cb(!!d.ok); }
+    }
+  });
+
+  // ---------- Avvio ----------
+  function safe(fn, args, fallback) {
+    try { return fn.apply(null, args || []); } catch (e) { console.error("PortaleLab: errore nel laboratorio", e); return fallback; }
+  }
+
+  function finishStart(ctx) {
+    if (ready) return;
+    ready = true;
+    stopConnecting();
+    mode = ctx.mode;
+    PortaleLab.mode = mode;
+    if (mode === "anteprima") showBanner("Anteprima: le risposte non vengono salvate.");
+    if (typeof cfg.onReady === "function") safe(cfg.onReady, [ctx]);
+  }
+
+  function handleInit(d) {
+    var preview = !!d.preview;
+    inPortalChannel = true;
+    var saved = d.saved || null;
+    var isCompleted = !!(saved && saved.completed);
+    var stateLost = false;
+    if (saved && typeof saved.state === "string" && saved.state) {
+      var wrapper = null;
+      try { wrapper = JSON.parse(saved.state); } catch (e) { wrapper = null; }
+      if (wrapper && wrapper.v === cfg.stateVersion && typeof cfg.restoreState === "function") {
+        safe(cfg.restoreState, [wrapper.d, { completed: isCompleted }]);
+      } else {
+        stateLost = true; // versione incompatibile: il lab riparte da zero
+      }
+    }
+    completed = isCompleted;
+    finishStart({
+      mode: preview ? "anteprima" : "portale",
+      student: d.student || null,
+      completed: isCompleted,
+      stateLost: stateLost
+    });
+  }
+
+  // ---------- Collegamento al Portale (dentro un iframe) ----------
+  function stopConnecting() {
+    clearInterval(connect.iv); connect.iv = null;
+    clearNode(connect.overlay); connect.overlay = null;
+  }
+
+  function overlayBase() {
+    var o = document.createElement("div");
+    o.style.cssText = "position:fixed;left:0;top:0;right:0;bottom:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;padding:16px;background:#f4f9f5;color:#17261d;font:16px/1.5 -apple-system,'Segoe UI',Roboto,sans-serif";
+    return o;
+  }
+
+  function showConnecting() {
+    if (!document.body || connect.overlay || ready) return;
+    var o = overlayBase();
+    o.textContent = "Collegamento al Portale in corso…";
+    document.body.appendChild(o);
+    connect.overlay = o;
+  }
+
+  function diagText() {
+    return "ready inviati: " + diag.sent + " · messaggi del portale ricevuti: " + diag.received +
+      " · origine scartata: " + (diag.rejected || "nessuna") +
+      " · " + String(navigator.userAgent || "").slice(0, 90);
+  }
+
+  function showConnectError() {
+    clearInterval(connect.iv); connect.iv = null;
+    if (ready || !document.body) return;
+    clearNode(connect.overlay);
+    var o = overlayBase();
+    var card = document.createElement("div");
+    card.style.cssText = "max-width:420px;background:#fff;color:#17261d;border:1px solid #d5e4d9;border-radius:14px;padding:20px";
+    var h = document.createElement("div"); h.style.cssText = "font:700 1.15rem Georgia,serif;margin-bottom:8px"; h.textContent = "Non riesco a collegarmi al Portale";
+    var p = document.createElement("p"); p.style.margin = "0 0 12px"; p.textContent = "Il laboratorio non è collegato al Portale, quindi i tuoi risultati NON verrebbero salvati. Controlla la connessione e riprova; se il problema resta, torna all'elenco dei laboratori e riaprilo, oppure segnala il testo qui sotto al docente.";
+    var d = document.createElement("div"); d.style.cssText = "font:12px ui-monospace,Menlo,monospace;word-break:break-word;background:#f4f9f5;border-radius:8px;padding:8px;margin-bottom:12px"; d.textContent = diagText();
+    var b = document.createElement("button"); b.textContent = "Riprova";
+    b.style.cssText = "min-height:44px;padding:8px 18px;font-weight:600;font-size:16px;font-family:inherit;border-radius:10px;border:1px solid #1e6b45;background:#1e6b45;color:#fff;cursor:pointer";
+    b.onclick = function () { clearNode(o); connect.overlay = null; beginConnecting(); };
+    card.appendChild(h); card.appendChild(p); card.appendChild(d); card.appendChild(b);
+    o.appendChild(card);
+    document.body.appendChild(o);
+    connect.overlay = o;
+  }
+
+  function beginConnecting() {
+    connect.t0 = Date.now();
+    post({ type: "ready" });
+    clearInterval(connect.iv);
+    connect.iv = setInterval(function () {
+      if (ready) { stopConnecting(); return; }
+      var waited = Date.now() - connect.t0;
+      if (waited > CONNECT_TIMEOUT_MS) { showConnectError(); return; }
+      if (waited > 1200) showConnecting();
+      post({ type: "ready" });
+    }, CONNECT_RETRY_MS);
+  }
+
+  function start(config) {
+    if (started) return;
+    if (!config || typeof config.getState !== "function" || typeof config.getAnswers !== "function" ||
+        typeof config.getProgress !== "function" || typeof config.onReady !== "function" ||
+        !(config.stateVersion >= 1)) {
+      console.error("PortaleLab.start: configurazione non valida (servono stateVersion, getState, restoreState, getAnswers, getProgress, onReady)");
+      return;
+    }
+    cfg = config;
+    started = true;
+    var inIframe = window.parent && window.parent !== window;
+    // File aperto da solo (non in un iframe): anteprima locale, niente salvataggio.
+    if (!inIframe) { finishStart({ mode: "anteprima", student: null, completed: false }); return; }
+    // Dentro un iframe ci si aspetta il Portale: si ritenta finché non risponde. Mai anteprima silenziosa.
+    beginConnecting();
+  }
+
+  // ---------- Costruzione del payload ----------
+  function cleanAnswers(list) {
+    var out = [];
+    if (!Array.isArray(list)) return out;
+    for (var i = 0; i < list.length && out.length < MAX_ANSWERS; i++) {
+      var a = list[i];
+      if (!a || typeof a.id !== "string" || !/^[a-z0-9_-]{1,40}$/.test(a.id)) { console.error("PortaleLab: answers[" + i + "] ha un id non valido", a); continue; }
+      var type = a.type === "mc" ? "mc" : "essay";
+      var correct = type === "mc" ? (a.correct === true) : null;
+      out.push({
+        id: a.id,
+        prompt: String(a.prompt == null ? "" : a.prompt).slice(0, 300),
+        type: type,
+        answer: String(a.answer == null ? "" : a.answer).slice(0, 4000),
+        correct: correct
+      });
+    }
+    return out;
+  }
+
+  function defaultScore(answers) {
+    var mc = answers.filter(function (a) { return a.type === "mc"; });
+    if (!mc.length) return null;
+    var ok = mc.filter(function (a) { return a.correct === true; }).length;
+    return Math.round((ok / mc.length) * 100);
+  }
+
+  function buildPayload(final) {
+    var raw = safe(cfg.getState, [], null);
+    var state = JSON.stringify({ v: cfg.stateVersion, d: raw });
+    if (state.length > MAX_STATE_CHARS) { console.error("PortaleLab: stato troppo grande (" + state.length + " caratteri, max " + MAX_STATE_CHARS + ")"); return null; }
+    var answers = cleanAnswers(safe(cfg.getAnswers, [], []));
+    var progress = Number(safe(cfg.getProgress, [], 0));
+    if (!(progress >= 0)) progress = 0;
+    if (progress > 1) progress = 1;
+    var p = { state: state, answers: answers, progress: final ? 1 : progress };
+    if (final) {
+      var sc = typeof cfg.getScore === "function" ? safe(cfg.getScore, [], null) : defaultScore(answers);
+      p.score = (typeof sc === "number" && isFinite(sc)) ? sc : null;
+    }
+    return p;
+  }
+
+  // ---------- Invio con ack, timeout e ritentativi ----------
+  function sendOnce(type, payload) {
+    return new Promise(function (resolve) {
+      var id = "r" + (++reqSeq) + "_" + Date.now().toString(36);
+      var timer = setTimeout(function () { delete waiting[id]; resolve(false); }, ACK_TIMEOUT_MS);
+      waiting[id] = function (ok) { clearTimeout(timer); resolve(ok); };
+      var msg = { type: type, requestId: id };
+      for (var k in payload) if (Object.prototype.hasOwnProperty.call(payload, k)) msg[k] = payload[k];
+      post(msg);
+    });
+  }
+
+  function sendWithRetry(type, buildFn) {
+    var attempt = 0;
+    function run() {
+      attempt++;
+      var payload = buildFn();
+      if (!payload) { showBadge("Non salvato", "pl-err"); return Promise.resolve(false); }
+      showBadge(attempt > 1 ? "Non salvato, riprovo…" : "Salvataggio…", attempt > 1 ? "pl-warn" : "");
+      return sendOnce(type, payload).then(function (ok) {
+        if (ok) return true;
+        if (attempt >= MAX_TRIES) return false;
+        return new Promise(function (r) { setTimeout(r, 800 * attempt); }).then(run);
+      });
+    }
+    return run().then(function (ok) {
+      if (ok) showBadge("Salvato ✓", "pl-ok", 2500);
+      else showBadge("Non salvato", "pl-err");
+      return ok;
+    });
+  }
+
+  // ---------- API pubblica ----------
+  function save() {
+    if (!ready) return Promise.resolve(false);
+    clearTimeout(soonTimer);
+    if (completed || !inPortalChannel) return Promise.resolve(true);
+    // Coalescenza: al massimo un salvataggio in coda oltre a quello in corso.
+    if (queuedSave) return queuedSave;
+    var p = chain.then(function () {
+      queuedSave = null;
+      return sendWithRetry("save", function () { return buildPayload(false); });
+    });
+    queuedSave = p;
+    chain = p.catch(function () { return false; });
+    return p;
+  }
+
+  function saveSoon() {
+    if (!ready || completed || !inPortalChannel) return;
+    clearTimeout(soonTimer);
+    soonTimer = setTimeout(function () { save(); }, SAVE_SOON_MS);
+  }
+
+  function complete() {
+    if (!ready) return Promise.resolve(false);
+    clearTimeout(soonTimer);
+    if (completed) return Promise.resolve(true);
+    if (!inPortalChannel) { completed = true; return Promise.resolve(true); }
+    var p = chain.then(function () {
+      return sendWithRetry("complete", function () { return buildPayload(true); });
+    }).then(function (ok) { if (ok) completed = true; return ok; });
+    chain = p.catch(function () { return false; });
+    return p;
+  }
+
+  var PortaleLab = { version: 1, mode: null, start: start, save: save, saveSoon: saveSoon, complete: complete };
+  window.PortaleLab = PortaleLab;
+})();
+
+</script>
+<script>
+var C = {"title":"Il mercantilismo — la scelta del consigliere","eyebrow":"STORIA · QUARTO ANNO · MODULO DI APERTURA: L’EUROPA NEL ’600 · SEZIONE 1, ECONOMIA E SOCIETÀ","istruzioni":["Sei consigliere economico del re. Prima scegli da solo un provvedimento, senza alcuna correzione. Poi, in coppia, ne scegliete uno insieme e scrivete perché lo ritenete il più solido. Solo dopo l’invio vedrai una classifica dei provvedimenti.","La classifica non dice chi ha ragione: ordina i provvedimenti per quanto rafforzano i principi del mercantilismo, che è il modo di ragionare dell’epoca. Vale il ragionamento, non il posto."],"principi":{"titolo":"Il quadro: i principi del mercantilismo","intro":"Nel ’600 la maggior parte degli stati europei condivide un’idea di fondo: la ricchezza del mondo è una quantità fissa, e uno stato si arricchisce solo a spese di un altro. Da questa idea derivano tre principi pratici.","voci":[{"nome":"Accumulare oro e argento","testo":"Sono la forma più sicura di ricchezza. Uno stato deve esportare più di quanto importa, per far affluire metalli preziosi nelle proprie casse (bilancia commerciale attiva)."},{"nome":"Proteggere i produttori nazionali","testo":"Con dazi sulle merci straniere, perché ogni acquisto all’estero è considerato una perdita per lo stato (protezionismo)."},{"nome":"Sostenere direttamente commercio e produzione","testo":"Il potere pubblico sostiene compagnie commerciali, manifatture e colonie, perché il commercio è troppo importante per lasciarlo alla sola iniziativa privata (sostegno statale)."}],"chiusura":"Un consigliere mercantilista giudica una misura buona se rafforza uno di questi tre principi — non se rende il commercio più libero o più efficiente in senso moderno: quell’idea non esiste ancora."},"scenario":{"titolo":"Lo scenario","testo":"Sei consigliere economico del re. Il regno ha appena concluso una guerra costosa; le casse sono vuote. Il sovrano ti chiede: «Come aumentiamo le entrate del regno nei prossimi cinque anni?»"},"opzioni":[{"key":"tasse","pos":4,"testo":"Aumentare le tasse dirette sui contadini, i sudditi più numerosi del regno."},{"key":"export","pos":2,"testo":"Vietare per legge l’esportazione di oro e argento dal regno."},{"key":"laissez","pos":6,"testo":"Lasciare che il mercato si regoli da solo, senza interventi della corona."},{"key":"compagnia","pos":3,"testo":"Concedere a una compagnia privata il monopolio dei commerci con le colonie, sotto controllo della corona."},{"key":"dazi","pos":1,"testo":"Imporre dazi elevati sulle manifatture straniere, per proteggere i produttori nazionali."},{"key":"libero","pos":5,"testo":"Abolire le tariffe doganali con i regni vicini, per favorire scambi più liberi."}],"classifica":{"export":"Accumulo di metalli preziosi: è coerente con il principio cardine del mercantilismo, ma si limita a trattenere l’oro nel regno senza far crescere le esportazioni, e l’effetto sulle entrate è più indiretto che nel protezionismo.","dazi":"Protezionismo: rafforza la bilancia commerciale, perché impedisce che l’oro esca dal regno per pagare merci straniere, e agisce già nei primi anni.","compagnia":"Sostegno statale al commercio coloniale: è coerente con il terzo principio, ma l’effetto sulle entrate è meno immediato che nei primi due, perché richiede tempo per dare frutti.","tasse":"Misura fiscale generica: aumenta le entrate, ma non rafforza nessuno dei tre principi. È efficace solo nel senso più banale, non nel senso della dottrina.","libero":"Contraria alla logica mercantilista: lascia che l’oro esca dal regno tanto quanto entra.","laissez":"La meno coerente in assoluto: rinuncia al ruolo di guida della corona su cui si fonda tutta la dottrina."},"gruppiClassifica":[{"da":1,"a":3,"titolo":"Posti 1–3: coerenti con i principi, con differenze di grado"},{"da":4,"a":6,"titolo":"Posti 4–6: problematici, ma non allo stesso modo"}],"fase1":{"titolo":"Fase 1 — La tua scelta","durata":"3 minuti · individuale","consegna":"Scegli il provvedimento che proporresti al re. Non c’è nessuna correzione: è la tua prima ipotesi, e la porterai al confronto con il tuo compagno o la tua compagna.","id":"f1_scelta","prompt":"Fase 1. Il provvedimento che proporrei al re (scelta individuale)"},"fase2":{"titolo":"Fase 2 — La scelta della coppia","durata":"8 minuti · a coppie","passi":["Dite a voce ciascuno la propria scelta della Fase 1.","Confrontatevi e scegliete insieme un provvedimento: può essere una delle due scelte oppure una diversa.","Scrivete perché lo considerate il più solido, usando i concetti del quadro (bilancia commerciale attiva, protezionismo, sostegno statale)."],"notaCoppia":"Nel laboratorio non ci sono campi condivisi: ciascuno dei due registra sul proprio dispositivo la scelta comune e la motivazione.","idCompagno":"f2_compagno","promptCompagno":"Fase 2. Con chi ho lavorato (nome del compagno o della compagna)","labelCompagno":"Con chi hai lavorato (nome e cognome)","idScelta":"f2_scelta","promptScelta":"Fase 2. Provvedimento scelto dalla coppia","labelScelta":"Il provvedimento scelto insieme","idMotiv":"f2_motivazione","promptMotiv":"Fase 2. Perché la coppia lo considera il più solido","labelMotiv":"Perché lo considerate il più solido?"},"classificaTitolo":"La classifica","classificaIntro":"Ecco i sei provvedimenti in ordine di coerenza con i principi del mercantilismo. È una scala, non un elenco di giusti e sbagliati: le differenze tra un posto e l’altro sono di grado. Non misura quanto è buono il tuo ragionamento, né che cosa sia stato davvero efficace nei fatti: misura quanto ciascuna misura rafforza uno dei tre principi.","plenaria":{"titolo":"Fase 3 — Plenaria in classe","durata":"5 minuti","domande":["Dov’è finita la scelta della vostra coppia? Che cosa ha in più, secondo i principi, la misura al primo posto?","Se la coppia ha scelto diversamente da come avevi scelto tu, che cosa vi ha convinto?"]},"chiusura":{"titolo":"Scelta inviata","testo":"La tua scelta e la motivazione sono state registrate. Qui sotto vedi la classifica e puoi rileggere le tue risposte."}};
+var MAXLEN = 1500;
+var LET = "ABCDEF".split("");
+var OPT = C.opzioni;                      // ordine di visualizzazione fisso (deterministico)
+
+var S = { i: 0, f1: "", partner: "", pair: "", motiv: "", locked: false, done: false };
+// i: 0 lettura, 1 Fase 1, 2 Fase 2, 3 inviato
+var READONLY = false, confirming = false, problem = "", sending = false;
+var app = document.getElementById("app");
+
+function el(tag, props, kids) {
+  var e = document.createElement(tag);
+  if (props) for (var k in props) {
+    if (k === "text") e.textContent = props[k];
+    else if (k === "class") e.className = props[k];
+    else e.setAttribute(k, props[k]);
+  }
+  (kids || []).forEach(function (c) { if (c) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+  return e;
+}
+function idx(key) { for (var i = 0; i < OPT.length; i++) if (OPT[i].key === key) return i; return -1; }
+function optText(key) { var i = idx(key); return i < 0 ? "" : LET[i] + ". " + OPT[i].testo; }
+function trim(s) { return (s || "").trim(); }
+
+function answers() {
+  var a = [];
+  if (S.f1) a.push({ id: C.fase1.id, prompt: C.fase1.prompt, type: "essay", answer: optText(S.f1), correct: null });
+  if (trim(S.partner)) a.push({ id: C.fase2.idCompagno, prompt: C.fase2.promptCompagno, type: "essay", answer: trim(S.partner).slice(0, 4000), correct: null });
+  if (S.pair) a.push({ id: C.fase2.idScelta, prompt: C.fase2.promptScelta, type: "essay", answer: optText(S.pair), correct: null });
+  if (trim(S.motiv)) a.push({ id: C.fase2.idMotiv, prompt: C.fase2.promptMotiv, type: "essay", answer: trim(S.motiv).slice(0, 4000), correct: null });
+  return a;
+}
+
+function go(i) { S.i = i; confirming = false; problem = ""; PortaleLab.save(); render(); window.scrollTo(0, 0); }
+function card(cls, kids) { return el("div", { class: "card " + cls }, kids); }
+
+function principiCard() {
+  var P = C.principi;
+  return card("tint", [
+    el("h3", { text: P.titolo, style: "margin-top:0" }),
+    el("p", { text: P.intro }),
+    el("ol", { class: "plain" }, P.voci.map(function (v) { return el("li", null, [el("b", { text: v.nome + ". " }), v.testo]); })),
+    el("p", { text: P.chiusura, style: "font-style:italic;margin:8px 0 0" })
+  ]);
+}
+function scenarioCard() {
+  return card("", [el("h3", { text: C.scenario.titolo, style: "margin-top:0" }), el("p", { text: C.scenario.testo, style: "margin:0" })]);
+}
+function reviewDetails() {
+  var d = el("details");
+  d.appendChild(el("summary", { text: "Rivedi i principi e lo scenario" }));
+  d.appendChild(principiCard()); d.appendChild(scenarioCard());
+  return d;
+}
+
+// gruppo di radio: nome, legenda, valore corrente, disabilitato, callback
+function radios(name, legend, value, disabled, onpick) {
+  var fs = el("fieldset"); fs.appendChild(el("legend", { text: legend }));
+  OPT.forEach(function (o, i) {
+    var inp = el("input", { type: "radio", name: name, value: o.key });
+    inp.checked = value === o.key; inp.disabled = disabled;
+    var lab = el("label", { class: "opt" + (inp.checked ? " on" : "") + (disabled ? " dis" : "") }, [inp, el("span", null, [el("span", { class: "k", text: LET[i] + ". " }), o.testo])]);
+    inp.addEventListener("change", function () {
+      onpick(o.key);
+      var all = fs.querySelectorAll("label.opt"); for (var j = 0; j < all.length; j++) all[j].classList.remove("on");
+      lab.classList.add("on");
+    });
+    fs.appendChild(lab);
+  });
+  return fs;
+}
+
+function textField(id, labelText, value, disabled, multiline, onchange) {
+  var frag = document.createDocumentFragment();
+  frag.appendChild(el("label", { class: "lbl", for: id, text: labelText }));
+  var f = multiline ? el("textarea", { id: id, maxlength: String(MAXLEN) }) : el("input", { id: id, type: "text", maxlength: "80", autocomplete: "off" });
+  f.value = value || ""; f.disabled = disabled;
+  var cnt = multiline ? el("div", { class: "count", id: id + "_c", text: f.value.length + " / " + MAXLEN }) : null;
+  if (cnt) f.setAttribute("aria-describedby", id + "_c");
+  f.addEventListener("input", function () { onchange(f.value); if (cnt) cnt.textContent = f.value.length + " / " + MAXLEN; PortaleLab.saveSoon(); });
+  f.addEventListener("change", function () { PortaleLab.save(); });
+  frag.appendChild(f); if (cnt) frag.appendChild(cnt);
+  return frag;
+}
+
+function pageIntro() {
+  app.appendChild(el("p", { class: "eyebrow", text: C.eyebrow }));
+  app.appendChild(el("h1", { text: C.title }));
+  app.appendChild(el("p", { class: "meta", text: "Circa 15 minuti nel laboratorio: lettura, Fase 1 da solo, Fase 2 in coppia. La plenaria si fa in classe." }));
+  C.istruzioni.forEach(function (t) { app.appendChild(el("p", { text: t })); });
+  app.appendChild(principiCard());
+  app.appendChild(scenarioCard());
+  var b = el("button", { type: "button", text: "Inizia la Fase 1" });
+  b.onclick = function () { go(1); };
+  app.appendChild(el("div", { class: "nav" }, [b]));
+}
+
+function pageF1() {
+  var F = C.fase1;
+  app.appendChild(el("p", { class: "step", text: "Passo 1 di 2" }));
+  app.appendChild(el("h2", { text: F.titolo }));
+  app.appendChild(el("p", { class: "meta", text: "3 minuti · da solo" }));
+  app.appendChild(scenarioCard());
+  app.appendChild(el("p", { text: F.consegna }));
+  app.appendChild(reviewDetails());
+  var locked = S.locked || READONLY;
+  if (S.locked) app.appendChild(el("div", { class: "note", role: "note", text: "Hai già confermato la scelta: puoi rileggerla, non modificarla." }));
+  app.appendChild(radios("f1", "Il provvedimento che proporresti al re", S.f1, locked, function (k) { S.f1 = k; problem = ""; PortaleLab.save(); }));
+
+  var nav = el("div", { class: "nav" });
+  var back = el("button", { type: "button", class: "sec", text: "Torna alla lettura" });
+  back.onclick = function () { go(0); };
+  nav.appendChild(back);
+  if (S.locked) {
+    var nx = el("button", { type: "button", text: "Vai alla Fase 2" });
+    nx.onclick = function () { go(2); };
+    nav.appendChild(nx);
+  } else if (!confirming) {
+    var ok = el("button", { type: "button", text: "Conferma la mia scelta" });
+    ok.onclick = function () {
+      if (!S.f1) { problem = "Scegli un provvedimento prima di confermare."; render(); return; }
+      problem = ""; confirming = true; render(); var c = document.getElementById("confirm"); if (c) c.focus();
+    };
+    nav.appendChild(ok);
+  }
+  app.appendChild(nav);
+  if (problem) app.appendChild(el("div", { class: "msg", role: "alert" }, [el("b", { text: "Attenzione: " }), problem]));
+  if (confirming) {
+    var yes = el("button", { type: "button", id: "confirm", text: "Sì, confermo" });
+    yes.onclick = function () { S.locked = true; go(2); };
+    var no = el("button", { type: "button", class: "sec", text: "Continua a scegliere" });
+    no.onclick = function () { confirming = false; render(); };
+    app.appendChild(el("div", { class: "msg", role: "alert" }, [
+      el("p", { text: "Dopo la conferma non potrai cambiare la scelta: servirà come punto di partenza per il confronto in coppia.", style: "margin:0 0 10px" }),
+      el("div", { class: "nav", style: "margin-top:0" }, [yes, no])
+    ]));
+  }
+}
+
+function pageF2() {
+  var F = C.fase2;
+  app.appendChild(el("p", { class: "step", text: "Passo 2 di 2" }));
+  app.appendChild(el("h2", { text: F.titolo }));
+  app.appendChild(el("p", { class: "meta", text: "8 minuti · in coppia" }));
+  app.appendChild(card("tint", [el("p", { style: "margin:0" }, [el("b", { text: "La tua scelta individuale: " }), optText(S.f1)])]));
+  app.appendChild(el("ol", { class: "plain" }, F.passi.map(function (p) { return el("li", { text: p }); })));
+  app.appendChild(el("p", { class: "meta", text: F.notaCoppia }));
+  app.appendChild(reviewDetails());
+  app.appendChild(textField(F.idCompagno, F.labelCompagno, S.partner, READONLY, false, function (v) { S.partner = v; }));
+  app.appendChild(radios("f2", F.labelScelta, S.pair, READONLY, function (k) { S.pair = k; problem = ""; PortaleLab.save(); }));
+  app.appendChild(textField(F.idMotiv, F.labelMotiv, S.motiv, READONLY, true, function (v) { S.motiv = v; }));
+
+  var nav = el("div", { class: "nav" });
+  var back = el("button", { type: "button", class: "sec", text: "Rileggi la Fase 1" });
+  back.onclick = function () { go(1); };
+  nav.appendChild(back);
+  var retry = problem.indexOf("non è stato registrato") >= 0;
+  var send = el("button", { type: "button", id: "send", text: sending ? "Invio in corso…" : (retry ? "Riprova l’invio" : "Invia la scelta della coppia") });
+  send.disabled = sending || READONLY || confirming;
+  send.onclick = function () {
+    var miss = [];
+    if (!trim(S.partner)) miss.push("con chi hai lavorato");
+    if (!S.pair) miss.push("il provvedimento scelto insieme");
+    if (!trim(S.motiv)) miss.push("la motivazione");
+    if (miss.length) { problem = "Manca: " + miss.join(", ") + "."; render(); return; }
+    if (!retry) { problem = ""; confirming = true; render(); var c = document.getElementById("confirm2"); if (c) c.focus(); return; }
+    doSend();
+  };
+  nav.appendChild(send);
+  app.appendChild(nav);
+  if (problem) app.appendChild(el("div", { class: "msg", role: "alert" }, [el("b", { text: "Attenzione: " }), problem]));
+  if (confirming) {
+    var yes = el("button", { type: "button", id: "confirm2", text: "Sì, invia" });
+    yes.onclick = function () { confirming = false; doSend(); };
+    var no = el("button", { type: "button", class: "sec", text: "Continua a lavorare" });
+    no.onclick = function () { confirming = false; render(); };
+    app.appendChild(el("div", { class: "msg", role: "alert" }, [
+      el("p", { text: "Dopo l’invio vedrai la classifica e non potrai più modificare scelta e motivazione. Invii?", style: "margin:0 0 10px" }),
+      el("div", { class: "nav", style: "margin-top:0" }, [yes, no])
+    ]));
+  }
+}
+
+function doSend() {
+  problem = ""; sending = true; render();
+  PortaleLab.complete().then(function (ok) {
+    sending = false;
+    if (ok) { S.done = true; S.i = 3; render(); window.scrollTo(0, 0); }
+    else { problem = "Il lavoro non è stato registrato. Controlla la connessione e riprova."; render(); }
+  });
+}
+
+function pageDone() {
+  app.appendChild(el("h1", { text: C.chiusura.titolo }));
+  app.appendChild(el("p", { text: C.chiusura.testo }));
+
+  var posOf = function (k) { var i = idx(k); return i < 0 ? 0 : OPT[i].pos; };
+  var kids = [
+    el("p", { style: "margin:0 0 8px" }, [el("b", { text: "Scelta della coppia: " }), optText(S.pair) + " — posto " + posOf(S.pair) + " su 6."]),
+    el("p", { style: "margin:0" }, [el("b", { text: "La tua scelta individuale: " }), optText(S.f1) + " — posto " + posOf(S.f1) + " su 6." + (S.f1 === S.pair ? " Coincide con la scelta della coppia." : "")])
+  ];
+  app.appendChild(card("tint", kids));
+
+  app.appendChild(el("h2", { text: C.classificaTitolo }));
+  app.appendChild(el("p", { text: C.classificaIntro }));
+  var ranked = OPT.map(function (o, i) { return { o: o, letter: LET[i] }; }).sort(function (a, b) { return a.o.pos - b.o.pos; });
+  C.gruppiClassifica.forEach(function (g) {
+    app.appendChild(el("h3", { text: g.titolo }));
+    var ol = el("ol", { class: "rank" });
+    ranked.filter(function (r) { return r.o.pos >= g.da && r.o.pos <= g.a; }).forEach(function (r) {
+      var body = el("div", null, [
+        el("div", { class: "t", text: r.letter + ". " + r.o.testo }),
+        el("p", { class: "r", text: C.classifica[r.o.key] })
+      ]);
+      if (r.o.key === S.pair) body.appendChild(el("span", { class: "tag", text: "Scelta della vostra coppia" }));
+      if (r.o.key === S.f1) body.appendChild(el("span", { class: "tag", text: "La tua scelta individuale" }));
+      ol.appendChild(el("li", null, [el("span", { class: "n" }, [el("span", { class: "sr", text: "Posto " }), String(r.o.pos)]), body]));
+    });
+    app.appendChild(ol);
+  });
+
+  app.appendChild(el("h2", { text: C.plenaria.titolo, style: "margin-top:24px" }));
+  app.appendChild(el("p", { class: "meta", text: "In classe · " + C.plenaria.durata }));
+  app.appendChild(el("ul", null, C.plenaria.domande.map(function (t) { return el("li", { text: t }); })));
+
+  app.appendChild(el("h3", { text: "Le tue risposte" }));
+  var dl = el("dl");
+  answers().forEach(function (a) { dl.appendChild(el("dt", { text: a.prompt })); dl.appendChild(el("dd", { text: a.answer })); });
+  app.appendChild(card("", [dl]));
+}
+
+function render() {
+  app.innerHTML = "";
+  if (S.i === 3) pageDone();
+  else if (S.i === 2) pageF2();
+  else if (S.i === 1) pageF1();
+  else pageIntro();
+}
+
+PortaleLab.start({
+  stateVersion: 1,
+  getState: function () { return { i: S.i, f1: S.f1, partner: S.partner, pair: S.pair, motiv: S.motiv, locked: S.locked, done: S.done }; },
+  restoreState: function (st) {
+    st = st || {};
+    S = { i: st.i | 0, f1: st.f1 || "", partner: st.partner || "", pair: st.pair || "", motiv: st.motiv || "", locked: !!st.locked, done: !!st.done };
+  },
+  getAnswers: answers,
+  getProgress: function () { return S.done ? 1 : Math.min(S.i, 2) / 3; },
+  getScore: function () { return null; },
+  onReady: function (ctx) {
+    READONLY = !!ctx.completed;
+    if (ctx.completed) { S.done = true; S.i = 3; }
+    else if (S.done) { S.done = false; S.i = 2; }
+    render();
+  }
+});
+</script>
+</body>
+</html>

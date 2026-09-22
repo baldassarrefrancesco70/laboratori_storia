@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sourcing sul Bill of Rights (1689)</title>
+<meta name="portale:titolo" content="Sourcing sul Bill of Rights (1689)">
+<meta name="portale:materia" content="storia">
+<meta name="portale:tipologia" content="analizzare">
+<meta name="portale:descrizione" content="Ricava informazioni da una fonte prima di leggerla: sourcing alla cieca sull’intestazione del Bill of Rights (1689), poi confronto con il testo.">
+<style>
+  :root {
+    --bg:#f4f9f5; --ink:#17261d; --muted:#4a5f53; --card:#ffffff; --line:#c9dccf;
+    --accent:#2b6cb0; --on-accent:#ffffff; --tint:#e6eef7; --err:#b91c1c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#0f1a14; --ink:#e6f1ea; --muted:#a9bdb1; --card:#16241c; --line:#2d4034;
+      --accent:#7fb2f0; --on-accent:#0f1a14; --tint:#1a2b3d; --err:#f19a9a;
+    }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:16px 16px 84px; background:var(--bg); color:var(--ink); font:16px/1.55 -apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:640px; margin:0 auto; }
+  h1, h2 { font-family:Georgia,serif; color:var(--accent); line-height:1.25; margin:0 0 8px; }
+  h1 { font-size:1.55rem; }
+  h2 { font-size:1.3rem; }
+  h3 { font-family:Georgia,serif; font-size:1.05rem; margin:20px 0 6px; }
+  p { margin:0 0 12px; }
+  .eyebrow { font-size:.8rem; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .meta { color:var(--muted); font-size:.92rem; margin-bottom:14px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin:0 0 14px; }
+  .tint { background:var(--tint); }
+  .source { border:2px solid var(--accent); }
+  .source .st { font-family:Georgia,serif; font-weight:bold; font-size:1.1rem; margin-bottom:6px; }
+  .art { border-left:4px solid var(--accent); padding:4px 0 4px 12px; margin:0 0 12px; font-style:italic; }
+  .art b { font-style:normal; }
+  ul { margin:0 0 4px; padding-left:20px; } li { margin-bottom:8px; }
+  label { display:block; font-weight:600; margin:18px 0 6px; }
+  textarea { width:100%; min-height:110px; font:inherit; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); resize:vertical; }
+  textarea:disabled { opacity:.85; background:var(--card); }
+  .count { font-size:.82rem; color:var(--muted); text-align:right; }
+  button { min-height:44px; padding:8px 18px; font:inherit; font-weight:600; border-radius:10px; border:2px solid var(--accent); background:var(--accent); color:var(--on-accent); cursor:pointer; }
+  button.sec { background:transparent; color:var(--accent); }
+  button:disabled { opacity:.55; cursor:default; }
+  button:focus-visible, textarea:focus-visible, summary:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .nav { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+  .msg { border:2px solid var(--err); border-radius:10px; padding:10px 12px; margin-top:14px; }
+  .msg b { color:var(--err); }
+  .note { border:1px dashed var(--accent); border-radius:10px; padding:10px 12px; margin:12px 0; font-size:.95rem; }
+  details { margin:10px 0 0; } summary { min-height:44px; padding:10px 0; cursor:pointer; font-weight:600; color:var(--accent); }
+  dl { margin:0; } dt { font-weight:600; margin-top:12px; } dd { margin:4px 0 0; white-space:pre-wrap; }
+  .step { font-size:.85rem; color:var(--muted); margin:0 0 10px; }
+</style>
+</head>
+<body>
+<main id="app"></main>
+
+<script>
+/* portale-lab.v1.js — adattatore tra un laboratorio HTML e il Portale dei laboratori.
+ * Contratto: docs/istruzioni_progetto_laboratori.md (v1). Non modificare il comportamento
+ * di questa versione: eventuali cambiamenti incompatibili vanno in portale-lab.v2.js.
+ * Nessuna dipendenza, nessuna rete: comunica solo con la finestra padre via postMessage. */
+(function () {
+  "use strict";
+  if (window.PortaleLab) return;
+
+  var SOURCE = "portale-lab";
+  var ALLOWED = [
+    "https://laboratorio-vico.web.app",
+    "https://laboratorio-vico.firebaseapp.com",
+    "http://localhost:5000",
+    "http://127.0.0.1:5000"
+  ];
+  var CONNECT_TIMEOUT_MS = 15000; // dentro un iframe si aspetta il Portale fino a 15 s, poi errore (mai anteprima silenziosa)
+  var CONNECT_RETRY_MS = 500;
+  var ACK_TIMEOUT_MS = 8000;
+  var MAX_TRIES = 3;
+  var SAVE_SOON_MS = 2000;
+  var MAX_ANSWERS = 300;
+  var MAX_STATE_CHARS = 200000;
+
+  var cfg = null;
+  var started = false;
+  var ready = false;
+  var completed = false;
+  var portalOrigin = null;   // impostata solo dopo un init valido
+  var mode = null;           // "portale" | "anteprima"
+  var inPortalChannel = false; // true se c'è un Portale con cui parlare (anche in anteprima)
+  var reqSeq = 0;
+  var waiting = {};          // requestId -> callback(ok)
+  var chain = Promise.resolve(true);
+  var queuedSave = null;
+  var soonTimer = null;
+  var diag = { sent: 0, received: 0, rejected: null };
+  var connect = { iv: null, t0: 0, overlay: null };
+
+  // ---------- Indicatore (badge + avviso anteprima) ----------
+  var ui = { box: null, badge: null, banner: null, hideTimer: null };
+  function ensureUi() {
+    if (ui.box || !document.body) return;
+    var st = document.createElement("style");
+    st.textContent =
+      "#pl-box{position:fixed;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));pointer-events:none;z-index:2147483000;font:14px/1.3 -apple-system,'Segoe UI',Roboto,sans-serif}" +
+      "#pl-box div{pointer-events:none;border-radius:999px;padding:6px 12px;background:#17261d;color:#fff;border:1px solid rgba(255,255,255,.25);box-shadow:0 1px 4px rgba(0,0,0,.3)}" +
+      "#pl-box .pl-warn{background:#6b4a00;color:#fff}" +
+      "#pl-box .pl-err{background:#8a1c1c;color:#fff}" +
+      "#pl-box .pl-ok{background:#14532d;color:#fff}" +
+      "#pl-box .pl-banner{align-self:stretch;text-align:center;border-radius:10px;background:#6b4a00;color:#fff}";
+    document.head.appendChild(st);
+    var box = document.createElement("div");
+    box.id = "pl-box";
+    box.setAttribute("role", "status");
+    box.setAttribute("aria-live", "polite");
+    document.body.appendChild(box);
+    ui.box = box;
+  }
+  function clearNode(n) { if (n && n.parentNode) n.parentNode.removeChild(n); }
+  function showBadge(text, cls, autoHideMs) {
+    ensureUi();
+    if (!ui.box) return;
+    clearNode(ui.badge);
+    clearTimeout(ui.hideTimer);
+    var d = document.createElement("div");
+    d.className = cls || "";
+    d.textContent = text;
+    ui.box.appendChild(d);
+    ui.badge = d;
+    if (autoHideMs) ui.hideTimer = setTimeout(function () { clearNode(d); if (ui.badge === d) ui.badge = null; }, autoHideMs);
+  }
+  function showBanner(text) {
+    ensureUi();
+    if (!ui.box) return;
+    clearNode(ui.banner);
+    var d = document.createElement("div");
+    d.className = "pl-banner";
+    d.textContent = text;
+    ui.box.insertBefore(d, ui.box.firstChild);
+    ui.banner = d;
+  }
+
+  // ---------- Messaggistica ----------
+  // Alcune reti (tipicamente scolastiche, con un dominio di ricerca DNS impostato via DHCP)
+  // fanno sì che Safari/iOS usi il nome host assoluto con un punto finale ("web.app."): in quel
+  // caso window.location.origin del Portale è "https://laboratorio-vico.web.app." anziché
+  // "https://laboratorio-vico.web.app". postMessage confronta l'origine per stringa esatta, quindi
+  // va tollerato in entrambe le direzioni: qui si normalizza in ricezione e si prova anche in invio.
+  function stripTrailingDot(origin) {
+    return String(origin || "").replace(/^(https?:\/\/[^/:]+?)\.(:\d+)?$/, "$1$2");
+  }
+  function withTrailingDot(origin) {
+    return origin.replace(/^(https?:\/\/[^/:]+)(:\d+)?$/, "$1.$2");
+  }
+
+  function post(msg) {
+    msg.source = SOURCE;
+    try {
+      if (portalOrigin) { window.parent.postMessage(msg, portalOrigin); return; }
+      // Prima dell'init l'origine del Portale non è nota: si prova con ognuna in allowlist,
+      // nella forma normale e con il punto finale (le non corrispondenti scartano il messaggio
+      // in silenzio, quindi provarle tutte è innocuo). Mai "*".
+      if (msg.type === "ready") diag.sent++;
+      for (var i = 0; i < ALLOWED.length; i++) {
+        window.parent.postMessage(msg, ALLOWED[i]);
+        window.parent.postMessage(msg, withTrailingDot(ALLOWED[i]));
+      }
+    } catch (e) { console.error("PortaleLab: postMessage fallito", e); }
+  }
+
+  window.addEventListener("message", function (ev) {
+    var d = ev.data;
+    if (!d || d.source !== SOURCE) return;
+    diag.received++;
+    if (ALLOWED.indexOf(stripTrailingDot(ev.origin)) < 0) { diag.rejected = String(ev.origin); return; }
+    if (d.type === "init") {
+      if (ready || !started) return;
+      portalOrigin = ev.origin; // origine esatta ricevuta (col punto se presente): le risposte tornano allo stesso posto
+      handleInit(d);
+    } else if (d.type === "ack") {
+      var cb = waiting[d.requestId];
+      if (cb) { delete waiting[d.requestId]; cb(!!d.ok); }
+    }
+  });
+
+  // ---------- Avvio ----------
+  function safe(fn, args, fallback) {
+    try { return fn.apply(null, args || []); } catch (e) { console.error("PortaleLab: errore nel laboratorio", e); return fallback; }
+  }
+
+  function finishStart(ctx) {
+    if (ready) return;
+    ready = true;
+    stopConnecting();
+    mode = ctx.mode;
+    PortaleLab.mode = mode;
+    if (mode === "anteprima") showBanner("Anteprima: le risposte non vengono salvate.");
+    if (typeof cfg.onReady === "function") safe(cfg.onReady, [ctx]);
+  }
+
+  function handleInit(d) {
+    var preview = !!d.preview;
+    inPortalChannel = true;
+    var saved = d.saved || null;
+    var isCompleted = !!(saved && saved.completed);
+    var stateLost = false;
+    if (saved && typeof saved.state === "string" && saved.state) {
+      var wrapper = null;
+      try { wrapper = JSON.parse(saved.state); } catch (e) { wrapper = null; }
+      if (wrapper && wrapper.v === cfg.stateVersion && typeof cfg.restoreState === "function") {
+        safe(cfg.restoreState, [wrapper.d, { completed: isCompleted }]);
+      } else {
+        stateLost = true; // versione incompatibile: il lab riparte da zero
+      }
+    }
+    completed = isCompleted;
+    finishStart({
+      mode: preview ? "anteprima" : "portale",
+      student: d.student || null,
+      completed: isCompleted,
+      stateLost: stateLost
+    });
+  }
+
+  // ---------- Collegamento al Portale (dentro un iframe) ----------
+  function stopConnecting() {
+    clearInterval(connect.iv); connect.iv = null;
+    clearNode(connect.overlay); connect.overlay = null;
+  }
+
+  function overlayBase() {
+    var o = document.createElement("div");
+    o.style.cssText = "position:fixed;left:0;top:0;right:0;bottom:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;padding:16px;background:#f4f9f5;color:#17261d;font:16px/1.5 -apple-system,'Segoe UI',Roboto,sans-serif";
+    return o;
+  }
+
+  function showConnecting() {
+    if (!document.body || connect.overlay || ready) return;
+    var o = overlayBase();
+    o.textContent = "Collegamento al Portale in corso…";
+    document.body.appendChild(o);
+    connect.overlay = o;
+  }
+
+  function diagText() {
+    return "ready inviati: " + diag.sent + " · messaggi del portale ricevuti: " + diag.received +
+      " · origine scartata: " + (diag.rejected || "nessuna") +
+      " · " + String(navigator.userAgent || "").slice(0, 90);
+  }
+
+  function showConnectError() {
+    clearInterval(connect.iv); connect.iv = null;
+    if (ready || !document.body) return;
+    clearNode(connect.overlay);
+    var o = overlayBase();
+    var card = document.createElement("div");
+    card.style.cssText = "max-width:420px;background:#fff;color:#17261d;border:1px solid #d5e4d9;border-radius:14px;padding:20px";
+    var h = document.createElement("div"); h.style.cssText = "font:700 1.15rem Georgia,serif;margin-bottom:8px"; h.textContent = "Non riesco a collegarmi al Portale";
+    var p = document.createElement("p"); p.style.margin = "0 0 12px"; p.textContent = "Il laboratorio non è collegato al Portale, quindi i tuoi risultati NON verrebbero salvati. Controlla la connessione e riprova; se il problema resta, torna all'elenco dei laboratori e riaprilo, oppure segnala il testo qui sotto al docente.";
+    var d = document.createElement("div"); d.style.cssText = "font:12px ui-monospace,Menlo,monospace;word-break:break-word;background:#f4f9f5;border-radius:8px;padding:8px;margin-bottom:12px"; d.textContent = diagText();
+    var b = document.createElement("button"); b.textContent = "Riprova";
+    b.style.cssText = "min-height:44px;padding:8px 18px;font-weight:600;font-size:16px;font-family:inherit;border-radius:10px;border:1px solid #1e6b45;background:#1e6b45;color:#fff;cursor:pointer";
+    b.onclick = function () { clearNode(o); connect.overlay = null; beginConnecting(); };
+    card.appendChild(h); card.appendChild(p); card.appendChild(d); card.appendChild(b);
+    o.appendChild(card);
+    document.body.appendChild(o);
+    connect.overlay = o;
+  }
+
+  function beginConnecting() {
+    connect.t0 = Date.now();
+    post({ type: "ready" });
+    clearInterval(connect.iv);
+    connect.iv = setInterval(function () {
+      if (ready) { stopConnecting(); return; }
+      var waited = Date.now() - connect.t0;
+      if (waited > CONNECT_TIMEOUT_MS) { showConnectError(); return; }
+      if (waited > 1200) showConnecting();
+      post({ type: "ready" });
+    }, CONNECT_RETRY_MS);
+  }
+
+  function start(config) {
+    if (started) return;
+    if (!config || typeof config.getState !== "function" || typeof config.getAnswers !== "function" ||
+        typeof config.getProgress !== "function" || typeof config.onReady !== "function" ||
+        !(config.stateVersion >= 1)) {
+      console.error("PortaleLab.start: configurazione non valida (servono stateVersion, getState, restoreState, getAnswers, getProgress, onReady)");
+      return;
+    }
+    cfg = config;
+    started = true;
+    var inIframe = window.parent && window.parent !== window;
+    // File aperto da solo (non in un iframe): anteprima locale, niente salvataggio.
+    if (!inIframe) { finishStart({ mode: "anteprima", student: null, completed: false }); return; }
+    // Dentro un iframe ci si aspetta il Portale: si ritenta finché non risponde. Mai anteprima silenziosa.
+    beginConnecting();
+  }
+
+  // ---------- Costruzione del payload ----------
+  function cleanAnswers(list) {
+    var out = [];
+    if (!Array.isArray(list)) return out;
+    for (var i = 0; i < list.length && out.length < MAX_ANSWERS; i++) {
+      var a = list[i];
+      if (!a || typeof a.id !== "string" || !/^[a-z0-9_-]{1,40}$/.test(a.id)) { console.error("PortaleLab: answers[" + i + "] ha un id non valido", a); continue; }
+      var type = a.type === "mc" ? "mc" : "essay";
+      var correct = type === "mc" ? (a.correct === true) : null;
+      out.push({
+        id: a.id,
+        prompt: String(a.prompt == null ? "" : a.prompt).slice(0, 300),
+        type: type,
+        answer: String(a.answer == null ? "" : a.answer).slice(0, 4000),
+        correct: correct
+      });
+    }
+    return out;
+  }
+
+  function defaultScore(answers) {
+    var mc = answers.filter(function (a) { return a.type === "mc"; });
+    if (!mc.length) return null;
+    var ok = mc.filter(function (a) { return a.correct === true; }).length;
+    return Math.round((ok / mc.length) * 100);
+  }
+
+  function buildPayload(final) {
+    var raw = safe(cfg.getState, [], null);
+    var state = JSON.stringify({ v: cfg.stateVersion, d: raw });
+    if (state.length > MAX_STATE_CHARS) { console.error("PortaleLab: stato troppo grande (" + state.length + " caratteri, max " + MAX_STATE_CHARS + ")"); return null; }
+    var answers = cleanAnswers(safe(cfg.getAnswers, [], []));
+    var progress = Number(safe(cfg.getProgress, [], 0));
+    if (!(progress >= 0)) progress = 0;
+    if (progress > 1) progress = 1;
+    var p = { state: state, answers: answers, progress: final ? 1 : progress };
+    if (final) {
+      var sc = typeof cfg.getScore === "function" ? safe(cfg.getScore, [], null) : defaultScore(answers);
+      p.score = (typeof sc === "number" && isFinite(sc)) ? sc : null;
+    }
+    return p;
+  }
+
+  // ---------- Invio con ack, timeout e ritentativi ----------
+  function sendOnce(type, payload) {
+    return new Promise(function (resolve) {
+      var id = "r" + (++reqSeq) + "_" + Date.now().toString(36);
+      var timer = setTimeout(function () { delete waiting[id]; resolve(false); }, ACK_TIMEOUT_MS);
+      waiting[id] = function (ok) { clearTimeout(timer); resolve(ok); };
+      var msg = { type: type, requestId: id };
+      for (var k in payload) if (Object.prototype.hasOwnProperty.call(payload, k)) msg[k] = payload[k];
+      post(msg);
+    });
+  }
+
+  function sendWithRetry(type, buildFn) {
+    var attempt = 0;
+    function run() {
+      attempt++;
+      var payload = buildFn();
+      if (!payload) { showBadge("Non salvato", "pl-err"); return Promise.resolve(false); }
+      showBadge(attempt > 1 ? "Non salvato, riprovo…" : "Salvataggio…", attempt > 1 ? "pl-warn" : "");
+      return sendOnce(type, payload).then(function (ok) {
+        if (ok) return true;
+        if (attempt >= MAX_TRIES) return false;
+        return new Promise(function (r) { setTimeout(r, 800 * attempt); }).then(run);
+      });
+    }
+    return run().then(function (ok) {
+      if (ok) showBadge("Salvato ✓", "pl-ok", 2500);
+      else showBadge("Non salvato", "pl-err");
+      return ok;
+    });
+  }
+
+  // ---------- API pubblica ----------
+  function save() {
+    if (!ready) return Promise.resolve(false);
+    clearTimeout(soonTimer);
+    if (completed || !inPortalChannel) return Promise.resolve(true);
+    // Coalescenza: al massimo un salvataggio in coda oltre a quello in corso.
+    if (queuedSave) return queuedSave;
+    var p = chain.then(function () {
+      queuedSave = null;
+      return sendWithRetry("save", function () { return buildPayload(false); });
+    });
+    queuedSave = p;
+    chain = p.catch(function () { return false; });
+    return p;
+  }
+
+  function saveSoon() {
+    if (!ready || completed || !inPortalChannel) return;
+    clearTimeout(soonTimer);
+    soonTimer = setTimeout(function () { save(); }, SAVE_SOON_MS);
+  }
+
+  function complete() {
+    if (!ready) return Promise.resolve(false);
+    clearTimeout(soonTimer);
+    if (completed) return Promise.resolve(true);
+    if (!inPortalChannel) { completed = true; return Promise.resolve(true); }
+    var p = chain.then(function () {
+      return sendWithRetry("complete", function () { return buildPayload(true); });
+    }).then(function (ok) { if (ok) completed = true; return ok; });
+    chain = p.catch(function () { return false; });
+    return p;
+  }
+
+  var PortaleLab = { version: 1, mode: null, start: start, save: save, saveSoon: saveSoon, complete: complete };
+  window.PortaleLab = PortaleLab;
+})();
+
+</script>
+<script>
+var C = {"title":"Sourcing sul Bill of Rights (1689)","eyebrow":"STORIA · QUARTO ANNO · MODULO DI APERTURA: L’EUROPA NEL ’600","istruzioni":["Rispondi prima alle domande della Fase 1, leggendo solo l’intestazione della fonte. Passa alla Fase 2 — e al testo degli articoli — solo dopo aver scritto le tue risposte.","L’obiettivo è esercitarsi a ricavare informazioni da una fonte prima di conoscerne il contenuto, non indovinare le risposte giuste. Un’ipotesi vale per il ragionamento che la sostiene: scrivi sempre su quale elemento dell’intestazione ti basi.","Se non sai rispondere, scrivilo e spiega che cosa ti manca."],"richiamoSourcing":{"titolo":"Che cosa vuol dire fare sourcing","testo":"Fare sourcing significa chiedersi, prima di leggere che cosa dice un documento, da dove viene: chi lo ha prodotto, a chi si rivolge, quando, che genere di testo è e che scopo ha. Alcune risposte si ricavano dai dati che hai davanti; altre sono solo ipotesi, e va detto che lo sono."},"fonte":{"titolo":"Dichiarazione dei diritti (Bill of Rights)","intestazione":"Presentata il 13 febbraio 1689 dai Lord spirituali e temporali e dai Comuni riuniti in Parlamento a Guglielmo e Maria, principe e principessa d’Orange."},"fase1":{"titolo":"Fase 1 — Sourcing alla cieca","durata":"8 minuti · individuale","consegna":"Rispondi alle domande usando solo l’intestazione qui sopra. Non leggere ancora oltre.","domande":[{"id":"f1_produttore","n":"1","testo":"Chi produce questo documento? Che genere di soggetto è (non un singolo autore)?","prompt":"Fase 1, 1. Chi produce il documento? Che genere di soggetto è?"},{"id":"f1_destinatario","n":"2","testo":"A chi è indirizzato?","prompt":"Fase 1, 2. A chi è indirizzato il documento?"},{"id":"f1_data","n":"3","testo":"In che data? Che cosa era appena accaduto in Inghilterra pochi mesi prima? (Richiama quanto visto a lezione sulle rivoluzioni inglesi.)","prompt":"Fase 1, 3. In che data? Che cosa era accaduto in Inghilterra pochi mesi prima?"},{"id":"f1_tipo","n":"4","testo":"Che tipo di testo è, a giudicare solo dall’intestazione? Una legge, una lettera, un trattato, una dichiarazione politica? Indica quale parola dell’intestazione ti fa pensare così.","prompt":"Fase 1, 4. Che tipo di testo è? Quale parola dell’intestazione lo suggerisce?"},{"id":"f1_scopo","n":"5","testo":"Qual è lo scopo dichiarato di chi scrive? E quale altro scopo puoi ipotizzare, anche se non è dichiarato? Per l’ipotesi, indica su che cosa la basi.","prompt":"Fase 1, 5. Quale scopo dichiara chi scrive? Quale altro scopo ipotizzi, e su che base?"}]},"fase2":{"titolo":"Fase 2 — Il testo","durata":"7 minuti · individuale","richiamo":{"titolo":"Che cosa era successo, in breve","punti":["Giacomo II Stuart era re d’Inghilterra dal 1685. Era cattolico, in un regno a maggioranza protestante, e in contrasto con il Parlamento.","Nel novembre 1688 Guglielmo d’Orange, marito di Maria (figlia di Giacomo II), sbarcò in Inghilterra con un esercito; a dicembre Giacomo II lasciò il paese e riparò in Francia.","Tra gennaio e febbraio 1689 un’assemblea di Lord e Comuni dichiarò vacante il trono e offrì la corona a Guglielmo e Maria, presentando loro la Dichiarazione."]},"notaTraduzione":"Il testo che segue è una resa italiana curata per uso didattico a partire dall’originale inglese del 1689 (atto del Parlamento, di pubblico dominio). Non è la traduzione di un’edizione specifica.","preambolo":{"titolo":"Preambolo (sintesi)","testo":"I Lord e i Comuni dichiarano che il precedente re, Giacomo II, con l’aiuto di cattivi consiglieri, giudici e ministri, aveva tentato di sovvertire la religione protestante e le leggi e le libertà del regno. Riuniti ora in piena rappresentanza della nazione, dichiarano — come già fecero i loro antenati in casi simili — quali sono gli antichi diritti e libertà da riaffermare."},"articoliTitolo":"Tre articoli della Dichiarazione","articoli":[{"n":"1","testo":"È illegale il preteso potere della Corona di sospendere le leggi, o la loro esecuzione, senza il consenso del Parlamento."},{"n":"5","testo":"È diritto dei sudditi rivolgere petizioni al re; ed è illegale ogni arresto o procedimento contro chi lo fa."},{"n":"6","testo":"È contrario alla legge tenere un esercito permanente nel regno in tempo di pace, senza il consenso del Parlamento."}],"domande":[{"id":"f2_art1","n":"1a","gruppo":"1","testo":"Articolo 1. Quale pratica del sovrano pensi che venga vietata? Su quali parole del testo ti basi?","prompt":"Fase 2, 1a. Articolo 1: quale pratica del sovrano viene vietata e su quali parole si basa la risposta?"},{"id":"f2_art5","n":"1b","gruppo":"1","testo":"Articolo 5. Quale pratica del sovrano pensi che venga vietata? Su quali parole del testo ti basi?","prompt":"Fase 2, 1b. Articolo 5: quale pratica del sovrano viene vietata e su quali parole si basa la risposta?"},{"id":"f2_art6","n":"1c","gruppo":"1","testo":"Articolo 6. Quale pratica del sovrano pensi che venga vietata? Su quali parole del testo ti basi?","prompt":"Fase 2, 1c. Articolo 6: quale pratica del sovrano viene vietata e su quali parole si basa la risposta?"},{"id":"f2_ipotesi","n":"2","testo":"Rileggi le tue risposte della Fase 1. Quali tue ipotesi sullo scopo del documento il testo conferma e quali corregge? Che cosa ti ha sorpreso, confrontando l’intestazione con il testo?","prompt":"Fase 2, 2. Quali ipotesi della Fase 1 il testo conferma o corregge? Che cosa ti ha sorpreso?"}],"gruppo1Testo":"Una norma che vieta una pratica di solito presuppone che quella pratica sia stata seguita, o temuta. Per ciascun articolo ricostruisci quale."},"plenaria":{"titolo":"Plenaria","durata":"8 minuti · in classe","testo":"La plenaria si svolge dal vivo: porta con te le risposte delle due fasi."},"chiusura":{"titolo":"Lavoro consegnato","testo":"Le tue risposte sono state registrate. La plenaria si svolge in classe: porta con te ciò che hai scritto. Qui sotto puoi rileggerle."}};
+var MAXLEN = 1500;
+
+// domande in ordine: Fase 1 poi Fase 2
+var Q1 = C.fase1.domande;
+var Q2 = C.fase2.domande;
+var ALLQ = Q1.concat(Q2);
+
+var S = { i: 0, a: {}, locked: false, done: false };   // i: 0 intro, 1 fase 1, 2 fase 2, 3 consegnato
+var READONLY = false;
+var confirming = false;
+var problem = "";
+var sending = false;
+var app = document.getElementById("app");
+
+function el(tag, props, kids) {
+  var e = document.createElement(tag);
+  if (props) for (var k in props) {
+    if (k === "text") e.textContent = props[k];
+    else if (k === "class") e.className = props[k];
+    else e.setAttribute(k, props[k]);
+  }
+  (kids || []).forEach(function (c) { if (c) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+  return e;
+}
+function val(id) { return (S.a[id] || "").trim(); }
+function missing(list) { return list.filter(function (q) { return !val(q.id); }); }
+
+function answers() {
+  return ALLQ.filter(function (q) { return val(q.id) !== ""; }).map(function (q) {
+    return { id: q.id, prompt: q.prompt.slice(0, 300), type: "essay", answer: String(S.a[q.id]).trim().slice(0, 4000), correct: null };
+  });
+}
+
+function go(i) { S.i = i; confirming = false; problem = ""; PortaleLab.save(); render(); window.scrollTo(0, 0); }
+
+function box(cls, kids) { return el("div", { class: "card " + cls }, kids); }
+
+function question(q, disabled, labelText) {
+  var frag = document.createDocumentFragment();
+  var lab = el("label", { for: q.id, text: labelText || (q.n + ". " + q.testo) });
+  var ta = el("textarea", { id: q.id, maxlength: String(MAXLEN), "aria-describedby": q.id + "_c" });
+  ta.value = S.a[q.id] || "";
+  ta.disabled = disabled;
+  var cnt = el("div", { class: "count", id: q.id + "_c", text: ta.value.length + " / " + MAXLEN });
+  ta.addEventListener("input", function () { S.a[q.id] = ta.value; cnt.textContent = ta.value.length + " / " + MAXLEN; PortaleLab.saveSoon(); });
+  ta.addEventListener("change", function () { PortaleLab.save(); });
+  frag.appendChild(lab); frag.appendChild(ta); frag.appendChild(cnt);
+  return frag;
+}
+
+function summaryList(qs) {
+  var dl = el("dl");
+  qs.forEach(function (q) {
+    dl.appendChild(el("dt", { text: q.prompt }));
+    dl.appendChild(el("dd", { text: val(q.id) || "(nessuna risposta)" }));
+  });
+  return dl;
+}
+
+function pageIntro() {
+  app.appendChild(el("p", { class: "eyebrow", text: C.eyebrow }));
+  app.appendChild(el("h1", { text: C.title }));
+  app.appendChild(el("p", { class: "meta", text: "Circa 15 minuti da solo: Fase 1 (8 minuti) e Fase 2 (7 minuti). La plenaria si fa in classe." }));
+  C.istruzioni.forEach(function (t) { app.appendChild(el("p", { text: t })); });
+  app.appendChild(box("tint", [el("h3", { text: C.richiamoSourcing.titolo, style: "margin-top:0" }), el("p", { text: C.richiamoSourcing.testo, style: "margin:0" })]));
+  var b = el("button", { type: "button", text: "Inizia la Fase 1" });
+  b.onclick = function () { go(1); };
+  app.appendChild(el("div", { class: "nav" }, [b]));
+}
+
+function pageF1() {
+  var F = C.fase1;
+  app.appendChild(el("p", { class: "step", text: "Passo 1 di 2" }));
+  app.appendChild(el("h2", { text: F.titolo }));
+  app.appendChild(el("p", { class: "meta", text: F.durata.replace(" · individuale", "") }));
+  app.appendChild(box("source", [
+    el("div", { class: "st", text: C.fonte.titolo }),
+    el("p", { text: C.fonte.intestazione, style: "font-style:italic;margin:0" })
+  ]));
+  app.appendChild(el("p", { text: F.consegna, style: "font-style:italic" }));
+  var locked = S.locked || READONLY;
+  if (S.locked) app.appendChild(el("div", { class: "note", role: "note", text: "Hai già superato questa fase: le risposte sono bloccate, perché servono a confrontarti con il testo. Puoi rileggerle, non modificarle." }));
+  Q1.forEach(function (q) { app.appendChild(question(q, locked)); });
+
+  var nav = el("div", { class: "nav" });
+  var back = el("button", { type: "button", class: "sec", text: "Torna all’introduzione" });
+  back.onclick = function () { go(0); };
+  nav.appendChild(back);
+  if (S.locked) {
+    var nx = el("button", { type: "button", text: "Vai alla Fase 2" });
+    nx.onclick = function () { go(2); };
+    nav.appendChild(nx);
+  } else if (!confirming) {
+    var pass = el("button", { type: "button", text: "Passa alla Fase 2" });
+    pass.onclick = function () {
+      var m = missing(Q1);
+      if (m.length) { problem = "Manca la risposta alle domande: " + m.map(function (q) { return q.n; }).join(", ") + ". Se non sai rispondere, scrivilo e spiega che cosa ti manca."; render(); return; }
+      problem = ""; confirming = true; render();
+      var c = document.getElementById("confirm"); if (c) c.focus();
+    };
+    nav.appendChild(pass);
+  }
+  app.appendChild(nav);
+  if (problem) app.appendChild(el("div", { class: "msg", role: "alert" }, [el("b", { text: "Attenzione: " }), problem]));
+  if (confirming) {
+    var yes = el("button", { type: "button", id: "confirm", text: "Sì, passo alla Fase 2" });
+    yes.onclick = function () { S.locked = true; go(2); };
+    var no = el("button", { type: "button", class: "sec", text: "Continua a scrivere" });
+    no.onclick = function () { confirming = false; render(); };
+    app.appendChild(el("div", { class: "msg", role: "alert" }, [
+      el("p", { text: "Passando alla Fase 2 vedrai il testo degli articoli e le risposte della Fase 1 non si potranno più modificare.", style: "margin:0 0 10px" }),
+      el("div", { class: "nav", style: "margin-top:0" }, [yes, no])
+    ]));
+  }
+}
+
+function pageF2() {
+  var F = C.fase2;
+  app.appendChild(el("p", { class: "step", text: "Passo 2 di 2" }));
+  app.appendChild(el("h2", { text: F.titolo }));
+  app.appendChild(el("p", { class: "meta", text: F.durata.replace(" · individuale", "") }));
+  app.appendChild(box("tint", [
+    el("h3", { text: F.richiamo.titolo, style: "margin-top:0" }),
+    el("ul", null, F.richiamo.punti.map(function (p) { return el("li", { text: p }); }))
+  ]));
+  app.appendChild(el("p", { class: "meta", text: "Nota sulla traduzione: " + F.notaTraduzione }));
+  app.appendChild(el("h3", { text: F.preambolo.titolo }));
+  app.appendChild(el("p", { text: F.preambolo.testo }));
+  app.appendChild(el("h3", { text: F.articoliTitolo }));
+  F.articoli.forEach(function (a) {
+    app.appendChild(el("div", { class: "art" }, [el("b", { text: "Art. " + a.n + " — " }), a.testo]));
+  });
+  app.appendChild(el("h3", { text: "Domande di analisi" }));
+  app.appendChild(el("p", { text: "1. " + F.gruppo1Testo, style: "margin-bottom:0" }));
+  F.domande.forEach(function (q) {
+    app.appendChild(question(q, READONLY));
+    if (q.id === "f2_ipotesi") {
+      var d = el("details");
+      d.appendChild(el("summary", { text: "Rileggi le tue risposte della Fase 1" }));
+      d.appendChild(box("", [summaryList(Q1)]));
+      app.appendChild(d);
+    }
+  });
+  var nav = el("div", { class: "nav" });
+  var back = el("button", { type: "button", class: "sec", text: "Rileggi la Fase 1" });
+  back.onclick = function () { go(1); };
+  nav.appendChild(back);
+  var send = el("button", { type: "button", id: "send", text: sending ? "Invio in corso…" : (problem && problem.indexOf("non è stato registrato") >= 0 ? "Riprova la consegna" : "Consegna") });
+  send.disabled = sending || READONLY;
+  send.onclick = function () {
+    var m = missing(Q2);
+    if (m.length) { problem = "Manca la risposta alle domande: " + m.map(function (q) { return q.n; }).join(", ") + ". Se non sai rispondere, scrivilo e spiega che cosa ti manca."; render(); return; }
+    problem = ""; sending = true; render();
+    PortaleLab.complete().then(function (ok) {
+      sending = false;
+      if (ok) { S.done = true; S.i = 3; render(); window.scrollTo(0, 0); }
+      else { problem = "Il lavoro non è stato registrato. Controlla la connessione e riprova."; render(); }
+    });
+  };
+  nav.appendChild(send);
+  app.appendChild(nav);
+  if (problem) app.appendChild(el("div", { class: "msg", role: "alert" }, [el("b", { text: "Attenzione: " }), problem]));
+}
+
+function pageDone() {
+  app.appendChild(el("h1", { text: C.chiusura.titolo }));
+  app.appendChild(el("p", { text: C.chiusura.testo }));
+  app.appendChild(el("h3", { text: "Fase 1 — Sourcing alla cieca" }));
+  app.appendChild(box("", [summaryList(Q1)]));
+  app.appendChild(el("h3", { text: "Fase 2 — Il testo" }));
+  app.appendChild(box("", [summaryList(Q2)]));
+  app.appendChild(el("p", { class: "meta", text: C.plenaria.testo }));
+}
+
+function render() {
+  app.innerHTML = "";
+  if (S.i === 3) pageDone();
+  else if (S.i === 2) pageF2();
+  else if (S.i === 1) pageF1();
+  else pageIntro();
+}
+
+PortaleLab.start({
+  stateVersion: 1,
+  getState: function () { return { i: S.i, a: S.a, locked: S.locked, done: S.done }; },
+  restoreState: function (st, ctx) {
+    st = st || {};
+    S = { i: st.i | 0, a: st.a || {}, locked: !!st.locked, done: !!st.done };
+  },
+  getAnswers: answers,
+  getProgress: function () { return S.done ? 1 : Math.min(S.i, 2) / 3; },
+  getScore: function () { return null; },
+  onReady: function (ctx) {
+    READONLY = !!ctx.completed;
+    if (ctx.completed) { S.done = true; S.i = 3; }
+    else if (S.done) { S.done = false; S.i = 2; }
+    render();
+  }
+});
+</script>
+</body>
+</html>
