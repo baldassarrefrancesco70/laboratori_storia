@@ -421,6 +421,206 @@
 
 </script>
 <script>
+/* Ponte di emergenza: quando questo file gira DA SOLO (fuori dal Portale), raccoglie nome e
+ * classe, salva su Realtime Database (lo stesso già usato dagli altri laboratori, percorsi
+ * "studenti_*", regole aperte) e offre un'area docente protetta da PIN. Quando invece gira
+ * DENTRO il Portale, questo blocco non fa nulla: PortaleLab.start parte normalmente. */
+(function () {
+  "use strict";
+  var inIframe = window.parent && window.parent !== window;
+  if (inIframe) return; // dentro il Portale: nessuna modifica al comportamento standard
+
+  var FIREBASE_BASE = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
+  var FIREBASE_PATH = "studenti_storiaIV_cipolla";
+  var LAB_TITLE = "Cipolla e la decadenza italiana — pesare le cause";
+  var TEACHER_PIN = "1970";
+  var ID_KEY = FIREBASE_PATH + "-id";
+
+  function slugify(s) {
+    return (s || "").toString().normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "") || "anon";
+  }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  function url(key) { return FIREBASE_BASE + "/" + FIREBASE_PATH + (key ? "/" + key : "") + ".json"; }
+
+  var student = null, studentKey = "", alreadyCompleted = false, soonTimer = null;
+  var badge = null, badgeTimer = null;
+  function showBadge(text, ok) {
+    if (!badge) {
+      badge = document.createElement("div");
+      badge.style.cssText = "position:fixed;right:12px;bottom:12px;z-index:999999;padding:6px 12px;border-radius:999px;font:14px -apple-system,sans-serif;color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3)";
+      document.body.appendChild(badge);
+    }
+    badge.style.background = ok ? "#14532d" : "#8a1c1c";
+    badge.textContent = text;
+    badge.style.display = "block";
+    clearTimeout(badgeTimer);
+    if (ok) badgeTimer = setTimeout(function () { badge.style.display = "none"; }, 2500);
+  }
+
+  function push(cfg, final) {
+    if (!studentKey) return Promise.resolve(false);
+    if (alreadyCompleted && !final) return Promise.resolve(true); // non retrocedere un lavoro già consegnato
+    if (final) alreadyCompleted = true;
+    var payload = {
+      nome: student.nome, classe: student.classe, timestamp: new Date().toISOString(),
+      completato: !!final,
+      progresso: (function () { try { return cfg.getProgress(); } catch (e) { return null; } })(),
+      punteggio: (function () { try { return cfg.getScore ? cfg.getScore() : null; } catch (e) { return null; } })(),
+      stato: (function () { try { return cfg.getState(); } catch (e) { return null; } })(),
+      risposte: (function () { try { return cfg.getAnswers(); } catch (e) { return []; } })()
+    };
+    showBadge("Salvataggio…", true);
+    return fetch(url(studentKey), { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+      .then(function (r) { var ok = r.ok; showBadge(ok ? "Salvato ✓" : "Non salvato", ok); return ok; })
+      .catch(function () { showBadge("Non salvato (rete)", false); return false; });
+  }
+
+  // ---------- Cancello nome/classe ----------
+  function gateHtml() {
+    return '<div style="max-width:480px;margin:40px auto;padding:20px;font:16px/1.5 -apple-system,sans-serif">' +
+      '<p style="font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:#666;margin:0 0 6px">Copia di emergenza · fuori dal Portale</p>' +
+      '<h1 style="font-family:Georgia,serif;margin:0 0 12px">' + esc(LAB_TITLE) + '</h1>' +
+      '<p style="color:#666">Le risposte vengono salvate con nome e classe per il docente. Non passano dal Portale.</p>' +
+      '<label style="display:block;font-weight:600;margin:14px 0 4px">Nome e cognome</label>' +
+      '<input id="gNome" type="text" style="width:100%;min-height:44px;padding:8px 10px;font:inherit;border:1px solid #ccc;border-radius:8px;box-sizing:border-box">' +
+      '<label style="display:block;font-weight:600;margin:14px 0 4px">Classe</label>' +
+      '<input id="gClasse" type="text" style="width:100%;min-height:44px;padding:8px 10px;font:inherit;border:1px solid #ccc;border-radius:8px;box-sizing:border-box" placeholder="es. 4A">' +
+      '<p id="gErr" style="color:#b91c1c;display:none;margin-top:10px">Scrivi nome e classe.</p>' +
+      '<button id="gBtn" type="button" style="margin-top:16px;min-height:44px;padding:8px 20px;font:inherit;font-weight:600;border-radius:10px;border:0;background:#1e6b45;color:#fff;cursor:pointer">Inizia</button>' +
+      '</div>';
+  }
+
+  function showGate(onDone) {
+    var appEl = document.getElementById("app");
+    appEl.innerHTML = gateHtml();
+    appEl.querySelector("#gBtn").onclick = function () {
+      var n = appEl.querySelector("#gNome").value.trim();
+      var c = appEl.querySelector("#gClasse").value.trim();
+      if (!n || !c) { appEl.querySelector("#gErr").style.display = "block"; return; }
+      appEl.innerHTML = "";
+      onDone(n, c);
+    };
+  }
+
+  // ---------- Area docente (PIN) ----------
+  function dashHtml() {
+    return '<div style="max-width:900px;margin:24px auto;padding:0 16px;font:16px/1.5 -apple-system,sans-serif">' +
+      '<button id="dBack" type="button" style="margin-bottom:14px;background:transparent;border:1px solid #ccc;border-radius:8px;padding:6px 12px;cursor:pointer;font:inherit">← Torna al laboratorio</button>' +
+      '<h1 style="font-family:Georgia,serif">Area docente — ' + esc(LAB_TITLE) + '</h1>' +
+      '<div id="dLogin"><label style="display:block;font-weight:600;margin-bottom:6px">PIN</label>' +
+      '<input id="dPin" type="text" style="min-height:44px;padding:8px 10px;font:inherit;border:1px solid #ccc;border-radius:8px">' +
+      '<p id="dErr" style="color:#b91c1c;display:none">PIN errato.</p>' +
+      '<button id="dEnter" type="button" style="margin-top:10px;min-height:44px;padding:8px 20px;font:inherit;font-weight:600;border-radius:10px;border:0;background:#1e6b45;color:#fff;cursor:pointer">Entra</button></div>' +
+      '<div id="dTable" style="display:none"><p><button id="dRefresh" type="button" style="min-height:40px;padding:6px 14px;font:inherit;border-radius:8px;border:1px solid #1e6b45;background:transparent;color:#1e6b45;cursor:pointer">Aggiorna</button></p>' +
+      '<div id="dRows"></div></div></div>';
+  }
+
+  function renderRows(data) {
+    var wrap = document.getElementById("dRows");
+    var rows = data ? Object.keys(data).map(function (k) { return data[k]; }) : [];
+    rows.sort(function (a, b) { return (a.timestamp || "").localeCompare(b.timestamp || ""); });
+    if (!rows.length) { wrap.innerHTML = "<p>Nessuna risposta ancora.</p>"; return; }
+    wrap.innerHTML = rows.map(function (r) {
+      var risp = (r.risposte || []).map(function (a) {
+        var mark = a.correct === true ? " ✓" : a.correct === false ? " ✗" : "";
+        return "<div style=\"margin:8px 0\"><b>" + esc(a.prompt) + mark + "</b><div style=\"white-space:pre-wrap;background:#f4f9f5;border-radius:6px;padding:6px 8px;margin-top:2px\">" + esc(a.answer) + "</div></div>";
+      }).join("");
+      return "<div style=\"border:1px solid #ddd;border-radius:12px;padding:14px;margin:0 0 12px\">" +
+        "<div style=\"display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px\">" +
+        "<b>" + esc(r.nome) + " · " + esc(r.classe) + "</b>" +
+        "<span>" + (r.completato ? "Consegnato" : "In corso · " + Math.round((r.progresso || 0) * 100) + "%") +
+        (typeof r.punteggio === "number" ? " · punteggio " + r.punteggio : "") + "</span></div>" +
+        "<div style=\"color:#666;font-size:.85rem;margin:4px 0 10px\">" + (r.timestamp ? new Date(r.timestamp).toLocaleString("it-IT") : "") + "</div>" +
+        risp + "</div>";
+    }).join("");
+  }
+
+  function loadDash() {
+    document.getElementById("dRows").textContent = "Caricamento…";
+    fetch(url()).then(function (r) { return r.json(); }).then(renderRows)
+      .catch(function () { document.getElementById("dRows").textContent = "Errore nel caricamento."; });
+  }
+
+  window.__apriAreaDocente = function () {
+    var appEl = document.getElementById("app");
+    appEl.innerHTML = dashHtml();
+    appEl.querySelector("#dBack").onclick = function () { if (typeof window.render === "function") window.render(); };
+    appEl.querySelector("#dEnter").onclick = function () {
+      if (appEl.querySelector("#dPin").value.trim() !== TEACHER_PIN) { appEl.querySelector("#dErr").style.display = "block"; return; }
+      appEl.querySelector("#dLogin").style.display = "none";
+      appEl.querySelector("#dTable").style.display = "";
+      loadDash();
+    };
+    appEl.querySelector("#dRefresh").onclick = loadDash;
+  };
+
+  function wireFooter() {
+    if (document.getElementById("plEmergFooter")) return;
+    var f = document.createElement("div");
+    f.id = "plEmergFooter";
+    f.style.cssText = "position:fixed;left:0;right:0;bottom:0;text-align:center;padding:8px;background:rgba(244,249,245,.9);backdrop-filter:blur(4px)";
+    f.innerHTML = '<button type="button" style="min-height:36px;padding:4px 14px;font:14px inherit;border-radius:999px;border:1px solid #999;background:transparent;color:#555;cursor:pointer">Area docente</button>';
+    f.querySelector("button").onclick = window.__apriAreaDocente;
+    document.body.appendChild(f);
+  }
+
+  // ---------- Innesto in PortaleLab ----------
+  var realStart = PortaleLab.start;
+  var realSave = PortaleLab.save, realSaveSoon = PortaleLab.saveSoon, realComplete = PortaleLab.complete;
+  var currentCfg = null;
+
+  PortaleLab.save = function () { var p = realSave.apply(PortaleLab, arguments); if (currentCfg) push(currentCfg, false); return p; };
+  PortaleLab.saveSoon = function () { realSaveSoon.apply(PortaleLab, arguments); if (currentCfg) { clearTimeout(soonTimer); soonTimer = setTimeout(function () { push(currentCfg, false); }, 2000); } };
+  PortaleLab.complete = function () {
+    clearTimeout(soonTimer); // altrimenti un salvataggio in sospeso potrebbe arrivare dopo e retrocedere la consegna
+    var p = realComplete.apply(PortaleLab, arguments);
+    // Rinviato a un macrotask: il laboratorio aggiorna il proprio stato interno (S.done = true)
+    // nel .then() che aggancia SUBITO DOPO questa chiamata; leggere lo stato adesso lo coglierebbe
+    // ancora "in corso". setTimeout gira dopo i microtask (le promesse), quindi arriva più tardi.
+    if (currentCfg) { var cfg = currentCfg; setTimeout(function () { push(cfg, true); }, 0); }
+    return p;
+  };
+
+  PortaleLab.start = function (config) {
+    currentCfg = config;
+    var savedId = null;
+    try { savedId = JSON.parse(localStorage.getItem(ID_KEY) || "null"); } catch (e) {}
+
+    function begin(nome, classe) {
+      student = { nome: nome, classe: classe };
+      studentKey = slugify(nome) + "_" + slugify(classe);
+      try { localStorage.setItem(ID_KEY, JSON.stringify(student)); } catch (e) {}
+      fetch(url(studentKey)).then(function (r) { return r.json(); }).then(function (existing) {
+        if (existing) alreadyCompleted = !!existing.completato;
+        if (existing && existing.stato && config.restoreState) {
+          try { config.restoreState(existing.stato, { completed: !!existing.completato }); } catch (e) {}
+        }
+        // Fuori dal Portale l'adattatore segnala sempre completed:false (non ha modo di saperlo).
+        // Se qui risulta già consegnato, si forza il flag: altrimenti il laboratorio lo scambia
+        // per una riapertura del docente e torna modificabile.
+        var realOnReady = config.onReady;
+        var startCfg = config;
+        if (alreadyCompleted && typeof realOnReady === "function") {
+          startCfg = Object.assign({}, config, { onReady: function (ctx) { realOnReady(Object.assign({}, ctx, { completed: true })); } });
+        }
+        realStart.call(PortaleLab, startCfg);
+        wireFooter();
+      }).catch(function () {
+        realStart.call(PortaleLab, config);
+        wireFooter();
+      });
+    }
+
+    if (savedId && savedId.nome && savedId.classe) begin(savedId.nome, savedId.classe);
+    else showGate(begin);
+  };
+})();
+
+</script>
+<script>
 var C = {"title":"Cipolla e la decadenza italiana — pesare le cause","eyebrow":"STORIA · QUARTO ANNO · MODULO DI APERTURA: L’EUROPA NEL ’600 · SEZIONE 4, L’ITALIA NEL ’600","istruzioni":["Questo laboratorio lavora su un testo storiografico: uno storico del Novecento spiega un fenomeno, non è una fonte del Seicento. Il compito non è riassumerlo, ma vedere come Cipolla costruisce il suo argomento causale.","Presuppone che tu abbia già letto il testo e risposto alle tre domande «Per la comprensione del testo» in fondo. Se non l’hai fatto, fallo prima.","Il testo resta aperto accanto al laboratorio: nelle risposte rimanda alle parole di Cipolla. Il paragrafo in corsivo all’inizio è dei curatori del manuale, non di Cipolla: non usarlo come prova.","Non c’è correzione automatica. Scrivi con parole tue."],"testoUrl":"https://docs.google.com/document/d/1rPy_AP0yjW74HsHva33T3U8Pf04kJ3_0W5Z_HaJQ5Lw/edit?usp=sharing","testoLink":"Apri il testo di Cipolla","testoCitazione":"C.M. Cipolla, «La decadenza italiana», da I decenni del declino (1620-1680), in Storia facile dell’economia italiana dal Medioevo a oggi, Mondadori, Milano 1995, pp. 69-73.","sezioni":[{"n":"1","titolo":"Le spiegazioni che Cipolla rifiuta","durata":5,"intro":"Nel testo gli italiani attribuivano «tradizionalmente» la propria crisi ad altri. Individua le due spiegazioni tradizionali e, per ciascuna, scrivi con quale prova Cipolla la confuta.","campi":[{"id":"c1_spieg1","label":"Prima spiegazione tradizionale","prompt":"1. Prima spiegazione tradizionale della crisi italiana","righe":3},{"id":"c1_conf1","label":"Perché, secondo Cipolla, non regge (con quale prova)","prompt":"1. Con quale prova Cipolla confuta la prima spiegazione","righe":4},{"id":"c1_spieg2","label":"Seconda spiegazione tradizionale","prompt":"1. Seconda spiegazione tradizionale della crisi italiana","righe":3},{"id":"c1_conf2","label":"Perché, secondo Cipolla, non regge (con quale prova)","prompt":"1. Con quale prova Cipolla confuta la seconda spiegazione","righe":4}]},{"n":"2","titolo":"La tesi che Cipolla propone","durata":3,"intro":"In una frase: qual è la causa che Cipolla considera decisiva? Non dare per scontato che sia «la crisi economica generale»: individua il meccanismo preciso che descrive, cioè che cosa provoca che cosa e in che ordine.","campi":[{"id":"c2_tesi","label":"La causa decisiva e il meccanismo, in una frase","prompt":"2. La causa che Cipolla considera decisiva e il meccanismo che descrive","righe":4,"max":600}]},{"n":"3","titolo":"Cause esterne e cause interne","durata":7,"intro":"Cipolla distingue fattori che gli italiani non potevano controllare da fattori di cui, scrive, erano pienamente responsabili. Elenca almeno due voci per ciascun gruppo. Poi indica quale causa Cipolla presenta come la principale.","campi":[{"id":"c3_esterne","label":"Cause esterne (non imputabili agli italiani): almeno due","prompt":"3. Cause esterne indicate da Cipolla (almeno due)","righe":4},{"id":"c3_interne","label":"Cause interne (responsabilità italiana): almeno due","prompt":"3. Cause interne indicate da Cipolla (almeno due)","righe":4},{"id":"c3_prima","label":"Quale causa Cipolla presenta come la principale? Indica le parole del testo su cui ti basi.","prompt":"3. Quale causa Cipolla presenta come la principale e su quali parole del testo","righe":4}]},{"n":"4","titolo":"Le prove","durata":6,"intro":"Cipolla non si limita ad affermare la tesi: cita dati. Poi guarda con attenzione che cosa sostiene con dati e che cosa soltanto afferma.","campi":[{"id":"c4_cifre","label":"Trova nel testo almeno due cifre di esportazione. Per ciascuna scrivi la cifra, di quale città si tratta, che cosa dimostra e che cosa non dimostra.","prompt":"4. Due cifre di esportazione: che cosa dimostrano e che cosa non dimostrano","righe":6},{"id":"c4_cause","label":"Per le cause interne che hai elencato, Cipolla porta dati a sostegno oppure le afferma soltanto? Con quale grado di sicurezza le formula?","prompt":"4. Le cause interne sono sostenute con dati o solo affermate, e con quale sicurezza","righe":5}]},{"n":"5","titolo":"Un’eccezione: la seta","durata":5,"intro":"Il settore della seta si salva in parte nel racconto di Cipolla: le esportazioni di tessuti di seta crollano, ma la domanda di filati di seta italiani aumenta.","campi":[{"id":"c5_seta","label":"Perché succede? Spiegalo con il testo.","prompt":"5. Perché crollano i tessuti di seta ma cresce la domanda di filati","righe":4},{"id":"c5_argomento","label":"Che cosa ti dice questo caso sul modo in cui Cipolla spiega il declino?","prompt":"5. Che cosa dice il caso della seta sul tipo di argomento di Cipolla","righe":5}]}],"plenaria":{"titolo":"Plenaria in classe","durata":"6 minuti","domande":["Il paragrafo in corsivo del manuale elenca tra le cause le rotte atlantiche e la supremazia spagnola, cioè le spiegazioni che Cipolla rifiuta. Come si concilia con il testo di Cipolla? Che tipo di testo è quel paragrafo?","Dove pesano le cause esterne e dove le interne? Si può dire che Cipolla propone una causa unica?"]},"chiusura":{"titolo":"Lavoro consegnato","testo":"Le tue risposte sono state registrate. La plenaria si svolge in classe. Qui sotto puoi rileggerle."}};
 var DEFMAX = 1500, NS = C.sezioni.length;     // pagine: 0 intro, 1..NS sezioni, NS+1 consegnato
 var S = { i: 0, a: {}, done: false };

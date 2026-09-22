@@ -411,6 +411,206 @@
 
 </script>
 <script>
+/* Ponte di emergenza: quando questo file gira DA SOLO (fuori dal Portale), raccoglie nome e
+ * classe, salva su Realtime Database (lo stesso già usato dagli altri laboratori, percorsi
+ * "studenti_*", regole aperte) e offre un'area docente protetta da PIN. Quando invece gira
+ * DENTRO il Portale, questo blocco non fa nulla: PortaleLab.start parte normalmente. */
+(function () {
+  "use strict";
+  var inIframe = window.parent && window.parent !== window;
+  if (inIframe) return; // dentro il Portale: nessuna modifica al comportamento standard
+
+  var FIREBASE_BASE = "https://laboratorio-vico-default-rtdb.europe-west1.firebasedatabase.app";
+  var FIREBASE_PATH = "studenti_storiaIV_billofrights";
+  var LAB_TITLE = "Sourcing sul Bill of Rights (1689)";
+  var TEACHER_PIN = "1970";
+  var ID_KEY = FIREBASE_PATH + "-id";
+
+  function slugify(s) {
+    return (s || "").toString().normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "") || "anon";
+  }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  function url(key) { return FIREBASE_BASE + "/" + FIREBASE_PATH + (key ? "/" + key : "") + ".json"; }
+
+  var student = null, studentKey = "", alreadyCompleted = false, soonTimer = null;
+  var badge = null, badgeTimer = null;
+  function showBadge(text, ok) {
+    if (!badge) {
+      badge = document.createElement("div");
+      badge.style.cssText = "position:fixed;right:12px;bottom:12px;z-index:999999;padding:6px 12px;border-radius:999px;font:14px -apple-system,sans-serif;color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3)";
+      document.body.appendChild(badge);
+    }
+    badge.style.background = ok ? "#14532d" : "#8a1c1c";
+    badge.textContent = text;
+    badge.style.display = "block";
+    clearTimeout(badgeTimer);
+    if (ok) badgeTimer = setTimeout(function () { badge.style.display = "none"; }, 2500);
+  }
+
+  function push(cfg, final) {
+    if (!studentKey) return Promise.resolve(false);
+    if (alreadyCompleted && !final) return Promise.resolve(true); // non retrocedere un lavoro già consegnato
+    if (final) alreadyCompleted = true;
+    var payload = {
+      nome: student.nome, classe: student.classe, timestamp: new Date().toISOString(),
+      completato: !!final,
+      progresso: (function () { try { return cfg.getProgress(); } catch (e) { return null; } })(),
+      punteggio: (function () { try { return cfg.getScore ? cfg.getScore() : null; } catch (e) { return null; } })(),
+      stato: (function () { try { return cfg.getState(); } catch (e) { return null; } })(),
+      risposte: (function () { try { return cfg.getAnswers(); } catch (e) { return []; } })()
+    };
+    showBadge("Salvataggio…", true);
+    return fetch(url(studentKey), { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+      .then(function (r) { var ok = r.ok; showBadge(ok ? "Salvato ✓" : "Non salvato", ok); return ok; })
+      .catch(function () { showBadge("Non salvato (rete)", false); return false; });
+  }
+
+  // ---------- Cancello nome/classe ----------
+  function gateHtml() {
+    return '<div style="max-width:480px;margin:40px auto;padding:20px;font:16px/1.5 -apple-system,sans-serif">' +
+      '<p style="font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:#666;margin:0 0 6px">Copia di emergenza · fuori dal Portale</p>' +
+      '<h1 style="font-family:Georgia,serif;margin:0 0 12px">' + esc(LAB_TITLE) + '</h1>' +
+      '<p style="color:#666">Le risposte vengono salvate con nome e classe per il docente. Non passano dal Portale.</p>' +
+      '<label style="display:block;font-weight:600;margin:14px 0 4px">Nome e cognome</label>' +
+      '<input id="gNome" type="text" style="width:100%;min-height:44px;padding:8px 10px;font:inherit;border:1px solid #ccc;border-radius:8px;box-sizing:border-box">' +
+      '<label style="display:block;font-weight:600;margin:14px 0 4px">Classe</label>' +
+      '<input id="gClasse" type="text" style="width:100%;min-height:44px;padding:8px 10px;font:inherit;border:1px solid #ccc;border-radius:8px;box-sizing:border-box" placeholder="es. 4A">' +
+      '<p id="gErr" style="color:#b91c1c;display:none;margin-top:10px">Scrivi nome e classe.</p>' +
+      '<button id="gBtn" type="button" style="margin-top:16px;min-height:44px;padding:8px 20px;font:inherit;font-weight:600;border-radius:10px;border:0;background:#1e6b45;color:#fff;cursor:pointer">Inizia</button>' +
+      '</div>';
+  }
+
+  function showGate(onDone) {
+    var appEl = document.getElementById("app");
+    appEl.innerHTML = gateHtml();
+    appEl.querySelector("#gBtn").onclick = function () {
+      var n = appEl.querySelector("#gNome").value.trim();
+      var c = appEl.querySelector("#gClasse").value.trim();
+      if (!n || !c) { appEl.querySelector("#gErr").style.display = "block"; return; }
+      appEl.innerHTML = "";
+      onDone(n, c);
+    };
+  }
+
+  // ---------- Area docente (PIN) ----------
+  function dashHtml() {
+    return '<div style="max-width:900px;margin:24px auto;padding:0 16px;font:16px/1.5 -apple-system,sans-serif">' +
+      '<button id="dBack" type="button" style="margin-bottom:14px;background:transparent;border:1px solid #ccc;border-radius:8px;padding:6px 12px;cursor:pointer;font:inherit">← Torna al laboratorio</button>' +
+      '<h1 style="font-family:Georgia,serif">Area docente — ' + esc(LAB_TITLE) + '</h1>' +
+      '<div id="dLogin"><label style="display:block;font-weight:600;margin-bottom:6px">PIN</label>' +
+      '<input id="dPin" type="text" style="min-height:44px;padding:8px 10px;font:inherit;border:1px solid #ccc;border-radius:8px">' +
+      '<p id="dErr" style="color:#b91c1c;display:none">PIN errato.</p>' +
+      '<button id="dEnter" type="button" style="margin-top:10px;min-height:44px;padding:8px 20px;font:inherit;font-weight:600;border-radius:10px;border:0;background:#1e6b45;color:#fff;cursor:pointer">Entra</button></div>' +
+      '<div id="dTable" style="display:none"><p><button id="dRefresh" type="button" style="min-height:40px;padding:6px 14px;font:inherit;border-radius:8px;border:1px solid #1e6b45;background:transparent;color:#1e6b45;cursor:pointer">Aggiorna</button></p>' +
+      '<div id="dRows"></div></div></div>';
+  }
+
+  function renderRows(data) {
+    var wrap = document.getElementById("dRows");
+    var rows = data ? Object.keys(data).map(function (k) { return data[k]; }) : [];
+    rows.sort(function (a, b) { return (a.timestamp || "").localeCompare(b.timestamp || ""); });
+    if (!rows.length) { wrap.innerHTML = "<p>Nessuna risposta ancora.</p>"; return; }
+    wrap.innerHTML = rows.map(function (r) {
+      var risp = (r.risposte || []).map(function (a) {
+        var mark = a.correct === true ? " ✓" : a.correct === false ? " ✗" : "";
+        return "<div style=\"margin:8px 0\"><b>" + esc(a.prompt) + mark + "</b><div style=\"white-space:pre-wrap;background:#f4f9f5;border-radius:6px;padding:6px 8px;margin-top:2px\">" + esc(a.answer) + "</div></div>";
+      }).join("");
+      return "<div style=\"border:1px solid #ddd;border-radius:12px;padding:14px;margin:0 0 12px\">" +
+        "<div style=\"display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px\">" +
+        "<b>" + esc(r.nome) + " · " + esc(r.classe) + "</b>" +
+        "<span>" + (r.completato ? "Consegnato" : "In corso · " + Math.round((r.progresso || 0) * 100) + "%") +
+        (typeof r.punteggio === "number" ? " · punteggio " + r.punteggio : "") + "</span></div>" +
+        "<div style=\"color:#666;font-size:.85rem;margin:4px 0 10px\">" + (r.timestamp ? new Date(r.timestamp).toLocaleString("it-IT") : "") + "</div>" +
+        risp + "</div>";
+    }).join("");
+  }
+
+  function loadDash() {
+    document.getElementById("dRows").textContent = "Caricamento…";
+    fetch(url()).then(function (r) { return r.json(); }).then(renderRows)
+      .catch(function () { document.getElementById("dRows").textContent = "Errore nel caricamento."; });
+  }
+
+  window.__apriAreaDocente = function () {
+    var appEl = document.getElementById("app");
+    appEl.innerHTML = dashHtml();
+    appEl.querySelector("#dBack").onclick = function () { if (typeof window.render === "function") window.render(); };
+    appEl.querySelector("#dEnter").onclick = function () {
+      if (appEl.querySelector("#dPin").value.trim() !== TEACHER_PIN) { appEl.querySelector("#dErr").style.display = "block"; return; }
+      appEl.querySelector("#dLogin").style.display = "none";
+      appEl.querySelector("#dTable").style.display = "";
+      loadDash();
+    };
+    appEl.querySelector("#dRefresh").onclick = loadDash;
+  };
+
+  function wireFooter() {
+    if (document.getElementById("plEmergFooter")) return;
+    var f = document.createElement("div");
+    f.id = "plEmergFooter";
+    f.style.cssText = "position:fixed;left:0;right:0;bottom:0;text-align:center;padding:8px;background:rgba(244,249,245,.9);backdrop-filter:blur(4px)";
+    f.innerHTML = '<button type="button" style="min-height:36px;padding:4px 14px;font:14px inherit;border-radius:999px;border:1px solid #999;background:transparent;color:#555;cursor:pointer">Area docente</button>';
+    f.querySelector("button").onclick = window.__apriAreaDocente;
+    document.body.appendChild(f);
+  }
+
+  // ---------- Innesto in PortaleLab ----------
+  var realStart = PortaleLab.start;
+  var realSave = PortaleLab.save, realSaveSoon = PortaleLab.saveSoon, realComplete = PortaleLab.complete;
+  var currentCfg = null;
+
+  PortaleLab.save = function () { var p = realSave.apply(PortaleLab, arguments); if (currentCfg) push(currentCfg, false); return p; };
+  PortaleLab.saveSoon = function () { realSaveSoon.apply(PortaleLab, arguments); if (currentCfg) { clearTimeout(soonTimer); soonTimer = setTimeout(function () { push(currentCfg, false); }, 2000); } };
+  PortaleLab.complete = function () {
+    clearTimeout(soonTimer); // altrimenti un salvataggio in sospeso potrebbe arrivare dopo e retrocedere la consegna
+    var p = realComplete.apply(PortaleLab, arguments);
+    // Rinviato a un macrotask: il laboratorio aggiorna il proprio stato interno (S.done = true)
+    // nel .then() che aggancia SUBITO DOPO questa chiamata; leggere lo stato adesso lo coglierebbe
+    // ancora "in corso". setTimeout gira dopo i microtask (le promesse), quindi arriva più tardi.
+    if (currentCfg) { var cfg = currentCfg; setTimeout(function () { push(cfg, true); }, 0); }
+    return p;
+  };
+
+  PortaleLab.start = function (config) {
+    currentCfg = config;
+    var savedId = null;
+    try { savedId = JSON.parse(localStorage.getItem(ID_KEY) || "null"); } catch (e) {}
+
+    function begin(nome, classe) {
+      student = { nome: nome, classe: classe };
+      studentKey = slugify(nome) + "_" + slugify(classe);
+      try { localStorage.setItem(ID_KEY, JSON.stringify(student)); } catch (e) {}
+      fetch(url(studentKey)).then(function (r) { return r.json(); }).then(function (existing) {
+        if (existing) alreadyCompleted = !!existing.completato;
+        if (existing && existing.stato && config.restoreState) {
+          try { config.restoreState(existing.stato, { completed: !!existing.completato }); } catch (e) {}
+        }
+        // Fuori dal Portale l'adattatore segnala sempre completed:false (non ha modo di saperlo).
+        // Se qui risulta già consegnato, si forza il flag: altrimenti il laboratorio lo scambia
+        // per una riapertura del docente e torna modificabile.
+        var realOnReady = config.onReady;
+        var startCfg = config;
+        if (alreadyCompleted && typeof realOnReady === "function") {
+          startCfg = Object.assign({}, config, { onReady: function (ctx) { realOnReady(Object.assign({}, ctx, { completed: true })); } });
+        }
+        realStart.call(PortaleLab, startCfg);
+        wireFooter();
+      }).catch(function () {
+        realStart.call(PortaleLab, config);
+        wireFooter();
+      });
+    }
+
+    if (savedId && savedId.nome && savedId.classe) begin(savedId.nome, savedId.classe);
+    else showGate(begin);
+  };
+})();
+
+</script>
+<script>
 var C = {"title":"Sourcing sul Bill of Rights (1689)","eyebrow":"STORIA · QUARTO ANNO · MODULO DI APERTURA: L’EUROPA NEL ’600","istruzioni":["Rispondi prima alle domande della Fase 1, leggendo solo l’intestazione della fonte. Passa alla Fase 2 — e al testo degli articoli — solo dopo aver scritto le tue risposte.","L’obiettivo è esercitarsi a ricavare informazioni da una fonte prima di conoscerne il contenuto, non indovinare le risposte giuste. Un’ipotesi vale per il ragionamento che la sostiene: scrivi sempre su quale elemento dell’intestazione ti basi.","Se non sai rispondere, scrivilo e spiega che cosa ti manca."],"richiamoSourcing":{"titolo":"Che cosa vuol dire fare sourcing","testo":"Fare sourcing significa chiedersi, prima di leggere che cosa dice un documento, da dove viene: chi lo ha prodotto, a chi si rivolge, quando, che genere di testo è e che scopo ha. Alcune risposte si ricavano dai dati che hai davanti; altre sono solo ipotesi, e va detto che lo sono."},"fonte":{"titolo":"Dichiarazione dei diritti (Bill of Rights)","intestazione":"Presentata il 13 febbraio 1689 dai Lord spirituali e temporali e dai Comuni riuniti in Parlamento a Guglielmo e Maria, principe e principessa d’Orange."},"fase1":{"titolo":"Fase 1 — Sourcing alla cieca","durata":"8 minuti · individuale","consegna":"Rispondi alle domande usando solo l’intestazione qui sopra. Non leggere ancora oltre.","domande":[{"id":"f1_produttore","n":"1","testo":"Chi produce questo documento? Che genere di soggetto è (non un singolo autore)?","prompt":"Fase 1, 1. Chi produce il documento? Che genere di soggetto è?"},{"id":"f1_destinatario","n":"2","testo":"A chi è indirizzato?","prompt":"Fase 1, 2. A chi è indirizzato il documento?"},{"id":"f1_data","n":"3","testo":"In che data? Che cosa era appena accaduto in Inghilterra pochi mesi prima? (Richiama quanto visto a lezione sulle rivoluzioni inglesi.)","prompt":"Fase 1, 3. In che data? Che cosa era accaduto in Inghilterra pochi mesi prima?"},{"id":"f1_tipo","n":"4","testo":"Che tipo di testo è, a giudicare solo dall’intestazione? Una legge, una lettera, un trattato, una dichiarazione politica? Indica quale parola dell’intestazione ti fa pensare così.","prompt":"Fase 1, 4. Che tipo di testo è? Quale parola dell’intestazione lo suggerisce?"},{"id":"f1_scopo","n":"5","testo":"Qual è lo scopo dichiarato di chi scrive? E quale altro scopo puoi ipotizzare, anche se non è dichiarato? Per l’ipotesi, indica su che cosa la basi.","prompt":"Fase 1, 5. Quale scopo dichiara chi scrive? Quale altro scopo ipotizzi, e su che base?"}]},"fase2":{"titolo":"Fase 2 — Il testo","durata":"7 minuti · individuale","richiamo":{"titolo":"Che cosa era successo, in breve","punti":["Giacomo II Stuart era re d’Inghilterra dal 1685. Era cattolico, in un regno a maggioranza protestante, e in contrasto con il Parlamento.","Nel novembre 1688 Guglielmo d’Orange, marito di Maria (figlia di Giacomo II), sbarcò in Inghilterra con un esercito; a dicembre Giacomo II lasciò il paese e riparò in Francia.","Tra gennaio e febbraio 1689 un’assemblea di Lord e Comuni dichiarò vacante il trono e offrì la corona a Guglielmo e Maria, presentando loro la Dichiarazione."]},"notaTraduzione":"Il testo che segue è una resa italiana curata per uso didattico a partire dall’originale inglese del 1689 (atto del Parlamento, di pubblico dominio). Non è la traduzione di un’edizione specifica.","preambolo":{"titolo":"Preambolo (sintesi)","testo":"I Lord e i Comuni dichiarano che il precedente re, Giacomo II, con l’aiuto di cattivi consiglieri, giudici e ministri, aveva tentato di sovvertire la religione protestante e le leggi e le libertà del regno. Riuniti ora in piena rappresentanza della nazione, dichiarano — come già fecero i loro antenati in casi simili — quali sono gli antichi diritti e libertà da riaffermare."},"articoliTitolo":"Tre articoli della Dichiarazione","articoli":[{"n":"1","testo":"È illegale il preteso potere della Corona di sospendere le leggi, o la loro esecuzione, senza il consenso del Parlamento."},{"n":"5","testo":"È diritto dei sudditi rivolgere petizioni al re; ed è illegale ogni arresto o procedimento contro chi lo fa."},{"n":"6","testo":"È contrario alla legge tenere un esercito permanente nel regno in tempo di pace, senza il consenso del Parlamento."}],"domande":[{"id":"f2_art1","n":"1a","gruppo":"1","testo":"Articolo 1. Quale pratica del sovrano pensi che venga vietata? Su quali parole del testo ti basi?","prompt":"Fase 2, 1a. Articolo 1: quale pratica del sovrano viene vietata e su quali parole si basa la risposta?"},{"id":"f2_art5","n":"1b","gruppo":"1","testo":"Articolo 5. Quale pratica del sovrano pensi che venga vietata? Su quali parole del testo ti basi?","prompt":"Fase 2, 1b. Articolo 5: quale pratica del sovrano viene vietata e su quali parole si basa la risposta?"},{"id":"f2_art6","n":"1c","gruppo":"1","testo":"Articolo 6. Quale pratica del sovrano pensi che venga vietata? Su quali parole del testo ti basi?","prompt":"Fase 2, 1c. Articolo 6: quale pratica del sovrano viene vietata e su quali parole si basa la risposta?"},{"id":"f2_ipotesi","n":"2","testo":"Rileggi le tue risposte della Fase 1. Quali tue ipotesi sullo scopo del documento il testo conferma e quali corregge? Che cosa ti ha sorpreso, confrontando l’intestazione con il testo?","prompt":"Fase 2, 2. Quali ipotesi della Fase 1 il testo conferma o corregge? Che cosa ti ha sorpreso?"}],"gruppo1Testo":"Una norma che vieta una pratica di solito presuppone che quella pratica sia stata seguita, o temuta. Per ciascun articolo ricostruisci quale."},"plenaria":{"titolo":"Plenaria","durata":"8 minuti · in classe","testo":"La plenaria si svolge dal vivo: porta con te le risposte delle due fasi."},"chiusura":{"titolo":"Lavoro consegnato","testo":"Le tue risposte sono state registrate. La plenaria si svolge in classe: porta con te ciò che hai scritto. Qui sotto puoi rileggerle."}};
 var MAXLEN = 1500;
 
