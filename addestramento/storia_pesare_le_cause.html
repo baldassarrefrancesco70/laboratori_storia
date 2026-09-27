@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pesare le cause</title>
+<meta name="portale:titolo" content="Pesare le cause">
+<meta name="portale:materia" content="storia">
+<meta name="portale:tipologia" content="analizzare">
+<meta name="portale:descrizione" content="Cinque esercizi per leggere un argomento storiografico: quanto pesa una causa, che cosa provoca che cosa, che cosa l'autore respinge, come si cita, che cosa dimostra un dato.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--ink:#17261d;--muted:#50645a;--card:#fff;--line:#d5e4d9;--pri:#1e6b45;--pri-ink:#fff;--acc:#2b6cb0;--ok:#1e6b45;--ok-bg:#e3f3ea;--ko:#a33a1a;--ko-bg:#fbe9e2;--quote:#eef4f0;--warn:#b4531b;--peso:#F1D27A;--peso-ink:#5A4300;--cert:#BFD3F2;--cert-ink:#1D3F75}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--ink:#e6f1ea;--muted:#a3b8ac;--card:#16241c;--line:#2a3e32;--pri:#4fb583;--pri-ink:#0f1a14;--acc:#7fb2f0;--ok:#6fd19e;--ok-bg:#16301f;--ko:#f3a07e;--ko-bg:#3a2016;--quote:#1b2c22;--warn:#f0a36a;--peso:#6B5418;--peso-ink:#FBE7AE;--cert:#27416B;--cert-ink:#D3E2FA}}
+*{box-sizing:border-box}
+body{margin:0;padding:16px 16px 80px;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+main{max-width:680px;margin:0 auto}
+h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:normal;line-height:1.25}
+h1{font-size:1.6rem;margin:.1em 0 .3em}
+h2{font-size:1.3rem;margin:.2em 0 .6em;color:var(--acc)}
+.eyebrow{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0}
+.chip{display:inline-block;font-size:.8rem;border:1px solid var(--acc);color:var(--acc);border-radius:999px;padding:2px 10px;margin:0 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:0 0 14px}
+.fase{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:0 0 4px}
+.skill{color:var(--muted);margin:0 0 12px}
+.progress{height:6px;background:var(--line);border-radius:3px;margin:10px 0 16px;overflow:hidden}
+.progress>div{height:100%;background:var(--pri);transition:width .2s}
+.passo p{margin:0 0 .8em}
+.passo{background:var(--quote);border-left:4px solid var(--acc);border-radius:8px;padding:12px 14px;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem;line-height:1.7;margin:0 0 12px}
+.passo .src{display:block;font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;line-height:1.4}
+.quote{font-family:Georgia,"Times New Roman",serif;font-style:italic;border-left:3px solid var(--acc);padding:2px 0 2px 12px}
+.warn{color:var(--warn);font-size:.9rem;font-style:italic}
+details{border:1px solid var(--line);border-radius:10px;margin:0 0 14px;background:var(--card)}
+summary{cursor:pointer;min-height:44px;display:flex;align-items:center;padding:0 14px;font-weight:600;color:var(--acc)}
+details .inner{padding:0 14px 12px}
+button{font:inherit;min-height:44px;border-radius:10px;cursor:pointer}
+.btn{padding:10px 18px;border:1px solid var(--pri);background:var(--pri);color:var(--pri-ink);font-weight:600}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.nav{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-top:6px}
+.nav .sp{flex:1}
+.item{border-top:1px solid var(--line);padding:14px 0 6px}
+.item:first-of-type{border-top:0;padding-top:4px}
+.item .q{margin:0 0 8px;font-weight:600}
+.item .q.quote{font-weight:normal}
+.opt{display:block;width:100%;text-align:left;margin:0 0 8px;padding:10px 12px;border:1px solid var(--line);background:transparent;color:var(--ink)}
+.opt:hover:not(:disabled){border-color:var(--acc)}
+.opt[aria-pressed=true]{border:2px solid var(--acc)}
+.opt:disabled{cursor:default}
+.opt.right{border:2px solid var(--ok);background:var(--ok-bg)}
+.opt.wrong{border:2px solid var(--ko);background:var(--ko-bg)}
+.fb{border-radius:10px;padding:10px 12px;margin:4px 0 8px;font-size:.95rem}
+.fb.ok{background:var(--ok-bg)}.fb.ko{background:var(--ko-bg)}.fb.neutral,.fb.mid{background:var(--quote)}
+.fb b{display:block;margin-bottom:2px}
+.fb p{margin:4px 0 0}
+textarea{width:100%;min-height:110px;font:inherit;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+.count{font-size:.85rem;color:var(--muted);text-align:right;margin:4px 0 10px}
+.notice{border:1px dashed var(--muted);border-radius:10px;padding:8px 12px;font-size:.9rem;color:var(--muted);margin:0 0 12px}
+.score{font-size:1.2rem;font-family:Georgia,serif}
+.rev{border-top:1px solid var(--line);padding:10px 0}
+.rev .mine{white-space:pre-wrap;background:var(--quote);border-radius:8px;padding:8px 10px}
+.tag{font-weight:600}.tag.ok{color:var(--ok)}.tag.ko{color:var(--ko)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+/* evidenziatore */
+.pens{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.pen{display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid var(--line);background:transparent;color:var(--ink)}
+.pen[aria-pressed=true]{border:2px solid var(--ink);font-weight:600}
+.sw{width:14px;height:14px;border-radius:3px;display:inline-block}
+.sw.peso{background:var(--peso)}.sw.cert{background:var(--cert)}
+.seg{border-radius:3px}
+.seg.live{cursor:pointer}
+.seg.m-peso{background:var(--peso);color:var(--peso-ink)}
+.seg.m-cert{background:var(--cert);color:var(--cert-ink)}
+.seg.bad{text-decoration:underline wavy var(--ko);text-underline-offset:4px}
+.seg.miss{outline:2px dashed var(--acc);outline-offset:1px}
+/* ordinamento */
+ul.order{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:8px}
+ul.order li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+ul.order .pos{font-weight:600;color:var(--muted);width:1.4em;text-align:center}
+ul.order .mv{display:flex;gap:4px}
+ul.order .mv button{min-width:44px;padding:0 8px;border:1px solid var(--line);background:transparent;color:var(--ink)}
+ul.order .mv button:disabled{opacity:.35;cursor:default}
+ul.order li.good{border:2px solid var(--ok)}
+ul.order li.wrong{border:2px solid var(--ko)}
+/* tabella dati */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card);margin:0 0 12px}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{font-weight:600;background:var(--quote);font-size:.82rem}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+<noscript><p>Questa esercitazione richiede JavaScript.</p></noscript>
+
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function(){
+"use strict";
+
+// Brano dell'esercizio 1, diviso in segmenti: [testo, tipo]. Tipi: peso, cert = da evidenziare;
+// ordine = trappola (ordina l'elenco, non pesa); libero = segno accettato ma non richiesto; "" = neutro.
+var HL = [
+  ["Il declino della Castiglia nel Seicento",""],[" ha molte cause.",""],
+  [" Un fattore secondario, spesso sopravvalutato,","peso"],[" fu l’argento americano:",""],[" è possibile che","cert"],[" abbia contribuito all’aumento dei prezzi,",""],[" ma la sua incidenza",""],[" resta discussa","cert"],[" tra gli storici.",""],
+  [" La causa decisiva, quella senza la quale le altre non basterebbero a spiegare il declino,","peso"],[" fu il peso delle imposte",""],[" che la Corona scaricò sulla Castiglia per finanziare le guerre,",""],[" come i millones, un’imposta sui generi di largo consumo introdotta nel 1590.",""],
+  [" Le imposte agirono in tre modi.",""],[" Anzitutto","ordine"],[" colpivano i produttori;",""],[" in secondo luogo","ordine"],[" scoraggiavano gli investimenti;",""],[" infine,","ordine"],[" e questo fu",""],[" forse","cert"],[" l’effetto più grave,","libero"],[" spingevano i contadini ad abbandonare le terre.",""],
+  [" Che le finanze della Corona fossero al collasso",""],[" è certo: lo provano","cert"],[" le bancarotte del 1607, del 1627 e del 1647.",""],
+  [" Più dell’argento, pur senza essere decisiva,","peso"],[" pesò la crisi demografica.",""],[" È documentato che","cert"],[" le pestilenze di fine Cinquecento e di metà Seicento ridussero la popolazione;",""],
+  [" a questo si aggiunse l’espulsione dei moriscos (1609-1614), circa 300.000 persone, che",""],[" probabilmente","cert"],[" danneggiò soprattutto l’agricoltura di Valencia e dell’Aragona.",""]
+];
+
+var PASSI = {
+  castiglia: { src: "Testo di esercitazione · Il declino della Castiglia nel Seicento", text: HL.map(function(s){ return s[0]; }).join("") },
+  cipolla: { src: "Sintesi da C.M. Cipolla, «La decadenza italiana», in Storia facile dell'economia italiana dal Medioevo a oggi, 1995", text: "Tra la fine del Cinquecento e il Seicento le esportazioni italiane di manufatti crollarono: Venezia, che all'inizio del secolo vendeva in Medio Oriente circa 25.000 pannilani l'anno, alla fine ne vendeva un centinaio. Per un Paese povero di materie prime, che viveva vendendo all'estero merci e servizi, fu un colpo durissimo. In parte il crollo non dipese dagli italiani: alcuni Paesi che compravano i loro prodotti entrarono in crisi, come la Germania devastata dalla guerra dei Trent'anni e la Spagna in declino. La ragione principale, però, fu che le merci italiane non erano più competitive sul mercato internazionale: si vendevano a prezzi troppo alti. I prezzi erano alti perché produrre in Italia costava molto, e i costi erano elevati per responsabilità degli stessi italiani: salari più alti che all'estero senza una maggiore produttività, un carico fiscale più pesante sulle aziende, prodotti di ottima qualità ma costosi e fuori moda, che le corporazioni impedivano di rinnovare." },
+  fluyt: { src: "Testo di esercitazione · Il fluyt olandese", text: "Nel corso del Seicento Amsterdam divenne il principale centro di smistamento delle merci in Europa. Ci arrivò perché molti mercanti stranieri preferivano affidare le proprie merci agli olandesi, che offrivano noli più bassi dei concorrenti. Quei noli erano possibili grazie al fluyt, una nave introdotta dai cantieri olandesi alla fine del Cinquecento: costruita in serie, con una stiva molto capiente e un equipaggio ridotto, costava meno da costruire e da gestire." },
+  venezia: { src: "Testo di esercitazione · Venezia e il commercio delle spezie", text: "Si è a lungo ripetuto che l'apertura della rotta portoghese intorno all'Africa, nel 1498, avesse rovinato subito il commercio veneziano delle spezie. L'affermazione non regge: verso la metà del Cinquecento le spezie che giungevano a Venezia attraverso il Levante erano tornate a quantità vicine a quelle di fine Quattrocento. Altri hanno invocato un presunto declino dello spirito d'impresa dei veneziani. Anche questa spiegazione convince poco, perché negli stessi decenni molte famiglie veneziane investivano con successo in terraferma e nelle manifatture cittadine; semmai, può valere per alcuni rami del grande commercio marittimo. Il colpo decisivo venne più tardi, all'inizio del Seicento, quando olandesi e inglesi raggiunsero direttamente l'Asia con le loro compagnie commerciali e presero il controllo dei luoghi di produzione delle spezie." },
+  marisca: { src: "Dati di Marisca, città portuale immaginaria", table: { head: ["Dato", "1600", "1650"], rows: [
+    ["Panni di lana esportati (pezze all'anno)", "12.000", "3.000"],
+    ["Valore dei tessuti di seta esportati (ducati)", "900.000", "450.000"],
+    ["Salario giornaliero di un tessitore (soldi)", "20", "24"],
+    ["Prezzo di una pezza sul mercato di Marisca nel 1650 (ducati)", "locale 30", "inglese 21"]
+  ] } }
+};
+
+var POS = ["Sostenuta", "Respinta", "Respinta con una riserva"];
+var PROVA = ["Cronologica", "Comparativa", "È la tesi dell'autore"];
+
+var L = {
+  labId: "storia_pesare_cause", title: "Pesare le cause", eyebrow: "Storia · Quarto anno · Lettura storiografica",
+  tempoAtteso: 3000, caratteriAttesi: 700,
+  richiamo: { title: "Prima di cominciare", paras: [
+    "Cinque esercizi per leggere un argomento storiografico: quanto pesa una causa, che cosa provoca che cosa, che cosa l'autore respinge, come si cita, che cosa dimostra un dato.",
+    "Circa 10 minuti per esercizio. Le risposte a scelta, gli ordinamenti e le evidenziazioni si correggono subito, e una volta verificati non si cambiano più. Le soluzioni delle risposte aperte le vedi alla consegna, insieme alla correzione completa.",
+    "I brani degli esercizi 1, 2 e 3 sono testi di esercitazione scritti per questa scheda, non citazioni di storici reali; i dati dell'esercizio 5 riguardano una città immaginaria."
+  ] },
+  sections: [
+    { kind: "info", id: "richiamo", title: "Prima di cominciare", fromRichiamo: true },
+
+    { kind: "highlight", id: "es1_hl", fase: "Esercizio 1 · Le parole che pesano · a", title: "Evidenzia il testo",
+      skill: "Uno storico dice quali sono le cause, ma anche quanto pesa ciascuna e quanto è sicuro di ciò che afferma. Lo fa con parole precise.",
+      intro: "Scegli un evidenziatore, poi tocca le espressioni del brano. Tocca di nuovo per togliere il segno. Quando hai finito, premi «Verifica»: dopo la verifica i segni non si cambiano più." },
+    { kind: "choice", id: "es1_peso", fase: "Esercizio 1 · b", title: "Quanto pesa ogni causa?", passage: "castiglia",
+      consegna: "Colloca ciascuna causa sulla scala.",
+      categories: ["Secondaria", "Concorrente", "Decisiva"],
+      items: [
+        { id: "e1s0", text: "L’argento americano", correct: 0, spieg: "«Un fattore secondario, spesso sopravvalutato». Nota che l’argento è nominato per primo ma pesa meno di tutte: l’ordine del testo non è il peso." },
+        { id: "e1s1", text: "Il peso delle imposte", correct: 2, spieg: "«La causa decisiva, quella senza la quale le altre non basterebbero»." },
+        { id: "e1s2", text: "La crisi demografica", correct: 1, spieg: "«Più dell’argento, pur senza essere decisiva»: pesa più di una causa e meno di un’altra." }
+      ] },
+    { kind: "choice", id: "es1_cert", fase: "Esercizio 1 · c", title: "Quanto è sicuro l'autore?", passage: "castiglia",
+      consegna: "Colloca ciascuna affermazione sulla scala della certezza.",
+      categories: ["Certo", "Probabile", "Possibile o discusso"],
+      items: [
+        { id: "e1c0", text: "Le pestilenze ridussero la popolazione.", correct: 0, spieg: "«È documentato che»." },
+        { id: "e1c1", text: "L’espulsione dei moriscos danneggiò l’agricoltura di Valencia e dell’Aragona.", correct: 1, spieg: "«Probabilmente»." },
+        { id: "e1c2", text: "L’argento americano contribuì all’aumento dei prezzi.", correct: 2, spieg: "«È possibile che», «resta discussa»." },
+        { id: "e1c3", text: "L’abbandono delle terre fu l’effetto più grave delle imposte.", correct: 2, spieg: "«Forse»: l’effetto è indicato come il più grave, ma con prudenza." },
+        { id: "e1c4", text: "Le finanze della Corona erano al collasso.", correct: 0, spieg: "«È certo: lo provano le bancarotte»." },
+        { id: "e1p0", text: "Quale affermazione è certa perché l’autore porta anche una prova?", options: ["Le pestilenze", "Il collasso delle finanze", "L’argento americano"], correct: 1, spieg: "Il collasso delle finanze: le bancarotte del 1607, 1627 e 1647 sono la prova." }
+      ] },
+
+    { kind: "order", id: "es2_a", fase: "Esercizio 2 · Dalla lista alla catena · a", title: "Il declino italiano del Seicento", passage: "cipolla", passageOpen: true,
+      skill: "Spiegare un fenomeno non vuol dire elencare fattori, ma dire che cosa provoca che cosa e in quale ordine.",
+      intro: "Il testo parte dall'effetto e risale alle cause. Metti le schede in ordine con le frecce, dalla prima causa all'effetto finale.",
+      cards: { a: "Prezzi elevati delle merci italiane", b: "Crollo delle esportazioni di manufatti", c: "Salari alti, carico fiscale pesante, prodotti costosi e fuori moda", d: "Costi di produzione elevati", e: "Perdita di competitività sul mercato internazionale" },
+      right: ["c", "d", "a", "e", "b"], initial: ["a", "b", "c", "d", "e"],
+      sol: "Salari, fisco e prodotti fuori moda → costi elevati → prezzi elevati → perdita di competitività → crollo delle esportazioni, che è l'effetto finale." },
+    { kind: "order", id: "es2_b", fase: "Esercizio 2 · b", title: "Un caso nuovo", passage: "fluyt", passageOpen: true,
+      intro: "Il testo racconta la catena partendo dalla fine. Rimetti le schede in ordine con le frecce, dalla prima causa all'effetto finale.",
+      cards: { n: "Gli olandesi offrono noli più bassi dei concorrenti", m: "Amsterdam diventa il principale centro di smistamento delle merci in Europa", f: "I cantieri olandesi introducono il fluyt: costruito in serie, stiva capiente, equipaggio ridotto", s: "I mercanti stranieri affidano le proprie merci agli olandesi", c: "Costruire e gestire le navi costa meno" },
+      right: ["f", "c", "n", "s", "m"], initial: ["n", "m", "f", "s", "c"],
+      sol: "Fluyt costruito in serie, con stiva capiente ed equipaggio ridotto → costi di costruzione e gestione più bassi → noli più bassi → i mercanti stranieri scelgono le navi olandesi → Amsterdam diventa il centro di smistamento europeo." },
+    { kind: "essay", id: "es2_bq", fase: "Esercizio 2 · c", title: "Una risposta incompleta", passage: "fluyt", min: 20, max: 1500,
+      items: [ { id: "e2q3", prompt: "Uno studente scrive: «La causa del successo olandese sono i noli bassi». Perché la risposta è incompleta?", sol: "I noli bassi sono un anello intermedio: la risposta non dice da che cosa dipendono né che cosa producono." } ] },
+    { kind: "choice", id: "es2_c", fase: "Esercizio 2 · d", title: "Causa o effetto?", passage: "cipolla",
+      consegna: "Nel testo sul declino italiano, che posto occupa ciascun elemento?",
+      categories: ["Causa", "Anello intermedio", "Effetto finale"],
+      items: [
+        { id: "e2cl0", text: "La perdita di competitività delle merci italiane", correct: 1, spieg: "È tra i prezzi alti e il crollo." },
+        { id: "e2cl1", text: "Il conservatorismo delle corporazioni", correct: 0, spieg: "Blocca i cambiamenti e tiene alti i costi." },
+        { id: "e2cl2", text: "Il crollo delle esportazioni di manufatti", correct: 2, spieg: "È ciò che il testo vuole spiegare." },
+        { id: "e2cl3", text: "I salari più alti che all’estero", correct: 0, spieg: "Fa salire i costi di produzione." },
+        { id: "e2cl4", text: "Il declino economico della Spagna", correct: 0, spieg: "È una causa esterna: riduce gli acquisti." }
+      ] },
+
+    { kind: "choice", id: "es3_tab", fase: "Esercizio 3 · Sostiene o respinge · a", title: "Posizione dell'autore e tipo di prova", passage: "venezia", passageOpen: true,
+      skill: "Un testo storiografico nomina spesso spiegazioni che poi scarta. Se le confondi con quelle che sostiene, rovesci il senso del testo.",
+      consegna: "Per ciascuna spiegazione, indica la posizione dell'autore e il tipo di prova.",
+      items: [
+        { id: "e3p1", text: "Rotta portoghese del 1498 · posizione dell'autore", options: POS, correct: 1, spieg: "Guarda «L’affermazione non regge»." },
+        { id: "e3t1", text: "Rotta portoghese del 1498 · tipo di prova", options: PROVA, correct: 0, spieg: "La prova riguarda il momento in cui il danno arrivò." },
+        { id: "e3p2", text: "Declino dello spirito d'impresa · posizione dell'autore", options: POS, correct: 2, spieg: "L’autore la respinge ma concede qualcosa: «semmai…»." },
+        { id: "e3t2", text: "Declino dello spirito d'impresa · tipo di prova", options: PROVA, correct: 1, spieg: "La prova mette a confronto il commercio con altri settori." },
+        { id: "e3p3", text: "Arrivo diretto di olandesi e inglesi in Asia · posizione dell'autore", options: POS, correct: 0, spieg: "«Il colpo decisivo»: è la spiegazione dell’autore." },
+        { id: "e3t3", text: "Arrivo diretto di olandesi e inglesi in Asia · tipo di prova", options: PROVA, correct: 2, spieg: "Non è una confutazione." }
+      ] },
+    { kind: "essay", id: "es3_prove", fase: "Esercizio 3 · b", title: "Con quale prova?", passage: "venezia", min: 20, max: 1500,
+      intro: "Per ciascuna spiegazione, scrivi con quale prova l'autore la respinge o la sostiene.",
+      items: [
+        { id: "e3r1", prompt: "Rotta portoghese del 1498", sol: "A metà Cinquecento le spezie a Venezia erano tornate ai livelli di fine Quattrocento, quindi il colpo non fu immediato." },
+        { id: "e3r2", prompt: "Declino dello spirito d'impresa", sol: "Le famiglie veneziane investivano con successo in terraferma e nelle manifatture, quindi lo spirito d'impresa c'era, altrove." },
+        { id: "e3r3", prompt: "Arrivo diretto di olandesi e inglesi in Asia", sol: "Controllo diretto dei luoghi di produzione delle spezie." }
+      ] },
+    { kind: "essay", id: "es3_q", fase: "Esercizio 3 · c", title: "Rispondi", passage: "venezia", min: 20, max: 1500,
+      items: [
+        { id: "e3q2", prompt: "A quale spiegazione l'autore riconosce una validità parziale? Con quali parole?", sol: "Allo spirito d'impresa: «semmai, può valere per alcuni rami del grande commercio marittimo»." },
+        { id: "e3q3", prompt: "Uno studente scrive: «Secondo l'autore, tra le cause del declino veneziano ci fu la rotta portoghese del Capo». Che cosa ha sbagliato?", sol: "Ha preso per causa una spiegazione che l'autore respinge." }
+      ] },
+
+    { kind: "choice", id: "es4_a", fase: "Esercizio 4 · Citare e parafrasare · a", title: "Quale parafrasi è fedele?", quoteItems: true,
+      skill: "La citazione mostra dove il testo lo dice; la parafrasi mostra che l'hai capito. Devono dire la stessa cosa, senza aggiungere né spostare l'accento.",
+      consegna: "Citazioni da C.M. Cipolla, «La decadenza italiana», 1995.",
+      items: [
+        { id: "e4a0", text: "«Anzitutto si può provare che lo spostamento delle vie di traffico fu fenomeno più tardo: ancora per tutto il Seicento i prosperi Paesi del Nord trafficavano più con i Paesi del Mediterraneo che con le Indie occidentali.»", correct: 1,
+          options: ["a) I Paesi del Nord commerciavano sia con il Mediterraneo sia con le Indie, quindi le rotte non erano cambiate.", "b) Le rotte si spostarono verso l’Atlantico dopo la crisi italiana, perché nel Seicento il Nord commerciava ancora soprattutto con il Mediterraneo.", "c) Lo spostamento delle rotte avvenne più tardi rispetto alla scoperta dell’America."],
+          whys: ["Perde il «più» e ne ricava una conclusione che il testo non dice.", "Fedele: tiene il confronto («più») e la conclusione cronologica.", "Sbaglia il termine di confronto: più tardi della crisi italiana, non della scoperta."] },
+        { id: "e4a1", text: "«La ragione prima consisteva nel fatto che le merci e i servizi italiani non erano più competitivi sul mercato internazionale per quanto riguardava i loro prezzi.»", correct: 1,
+          options: ["a) La causa principale fu l’arretratezza degli italiani.", "b) La causa principale fu che le merci italiane costavano troppo rispetto a quelle dei concorrenti.", "c) La causa principale fu la rigidità delle corporazioni."],
+          whys: ["Sostituisce una parola generica alla causa precisa, i prezzi.", "Fedele: la causa sono i prezzi non competitivi.", "Le corporazioni spiegano i prezzi alti, ma non sono la «ragione prima»."] },
+        { id: "e4a2", text: "«Last but not least il carico fiscale sopportato dalle aziende italiane pare sia stato molto più elevato del corrispondente carico che pesava sulle aziende straniere.»", correct: 2,
+          options: ["a) La causa più importante fu il carico fiscale.", "b) È certo che le aziende italiane pagavano più tasse di quelle straniere.", "c) Un ultimo fattore, non meno importante degli altri: le aziende italiane sembra pagassero molte più tasse di quelle straniere."],
+          whys: ["Scambia l’ordine dell’elenco per un ordine di importanza.", "Cancella la prudenza del «pare».", "Fedele: conserva sia «last but not least» sia la prudenza del «pare»."] }
+      ] },
+    { kind: "essay", id: "es4_b", fase: "Esercizio 4 · b", title: "Scrivi tu", min: 20, max: 1500, solLabel: "Esempio di parafrasi accettabile",
+      intro: "Parafrasa ogni citazione in una frase, senza riusare le parole del testo tranne i nomi. Poi rileggi coprendo la citazione: chi legge solo la tua frase capisce la stessa cosa?",
+      items: [
+        { id: "e4b1", quote: true, prompt: "«Quanto agli effetti dell'occupazione spagnola l'argomento potrebbe valere per Milano ma non tiene per Venezia e Firenze che non furono mai occupate dalla Spagna.»", sol: "La spiegazione spagnola funziona forse per Milano, ma non per Venezia e Firenze, che decaddero senza essere mai state spagnole." },
+        { id: "e4b2", quote: true, prompt: "«Una delle ragioni del crollo delle esportazioni fu che taluni dei Paesi tradizionalmente importatori di prodotti italiani entrarono in crisi per ragioni varie e conseguentemente il loro potere d'acquisto diminuì.»", sol: "Un fattore fu la crisi di alcuni Paesi clienti dell'Italia, che potevano comprare meno." }
+      ] },
+
+    { kind: "choice", id: "es5_dim", fase: "Esercizio 5 · I numeri · a", title: "Dimostrata o no?", passage: "marisca", passageOpen: true,
+      skill: "Un dato dimostra solo ciò che misura. Per descrivere un crollo servono il valore iniziale e quello finale; per spiegarlo servono altri elementi.",
+      consegna: "Per ciascuna affermazione, decidi se i dati della tabella la dimostrano.",
+      categories: ["Dimostrata dai dati", "Compatibile ma non dimostrata", "Non dimostrata"],
+      items: [
+        { id: "e5cl0", text: "Le esportazioni di panni di lana di Marisca calarono di tre quarti.", correct: 0, spieg: "Da 12.000 a 3.000 pezze: meno 75%." },
+        { id: "e5cl1", text: "Nel 1650 Marisca vendeva all’estero metà della seta che vendeva nel 1600.", correct: 2, spieg: "Il dato è in ducati: il calo può dipendere da meno seta venduta o da prezzi più bassi." },
+        { id: "e5cl2", text: "Il panno inglese costava meno di quello locale.", correct: 0, spieg: "21 contro 30 ducati, nel 1650 e sul mercato di Marisca." },
+        { id: "e5cl3", text: "Le esportazioni di panni calarono perché i salari erano troppo alti.", correct: 1, spieg: "Salari in aumento e crollo convivono, ma i dati non provano il legame." },
+        { id: "e5cl4", text: "Nel 1600 Marisca esportava molti panni di lana.", correct: 0, spieg: "Vero, ma da solo non dice nulla del declino." }
+      ] },
+    { kind: "essay", id: "es5_q", fase: "Esercizio 5 · b", title: "Rispondi", passage: "marisca", passageOpen: true, min: 20, max: 1500,
+      items: [
+        { id: "e5q2", prompt: "Un compagno cita soltanto il dato «12.000 pezze nel 1600» come prova del declino. Che cosa manca?", sol: "Manca il valore finale: senza il 1650 il dato mostra la prosperità, non il crollo." },
+        { id: "e5q3", prompt: "Quali altri dati ti servirebbero per sostenere che il declino dipese dai prezzi troppo alti? Indicane almeno due.", sol: "Per esempio: i costi di produzione di Marisca confrontati con quelli dei concorrenti; i prezzi dei panni sui mercati di esportazione; la prova che gli acquirenti passarono ai panni più economici; il confronto con un mercato dove Marisca non aveva concorrenti." }
+      ] }
+  ]
+};
+
+var KEY = "addestr_state_" + L.labId;
+var TIP = "Analizzare testi";
+var SECS = L.sections;
+var S = load() || { i:0, a:{}, done:false };
+if (!S.a) S.a = {};
+var app = document.getElementById("app");
+var registered = true;
+var PEN = "peso";
+
+function load(){ try { var v = localStorage.getItem(KEY); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
+function persist(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+function el(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+
+function header(){
+  var h = el("header");
+  h.appendChild(el("p","eyebrow",L.eyebrow));
+  h.appendChild(el("h1",null,L.title));
+  h.appendChild(el("span","chip",TIP));
+  var p = el("div","progress"); var bar = el("div"); p.appendChild(bar);
+  var pct = S.done ? 100 : Math.round(100*S.i/SECS.length);
+  bar.style.width = pct + "%";
+  p.setAttribute("role","progressbar"); p.setAttribute("aria-label","Avanzamento");
+  p.setAttribute("aria-valuemin","0"); p.setAttribute("aria-valuemax","100"); p.setAttribute("aria-valuenow", pct);
+  h.appendChild(p);
+  return h;
+}
+
+// ---------- brani ----------
+function passageBlock(pid){
+  var P = PASSI[pid];
+  if (P.table){
+    var d = el("div");
+    d.appendChild(el("p","fase",P.src));
+    var w = el("div","tbl"), t = el("table"), th = el("thead"), tr = el("tr");
+    P.table.head.forEach(function(x){ tr.appendChild(el("th",null,x)); }); th.appendChild(tr); t.appendChild(th);
+    var tb = el("tbody");
+    P.table.rows.forEach(function(r){ var row = el("tr"); r.forEach(function(x,k){ row.appendChild(el("td", k ? "num" : null, x)); }); tb.appendChild(row); });
+    t.appendChild(tb); w.appendChild(t); d.appendChild(w);
+    return d;
+  }
+  var q = el("div","passo"); q.appendChild(el("span","src",P.src)); q.appendChild(document.createTextNode(P.text));
+  return q;
+}
+function rereadBox(pid){
+  var d = el("details"); d.appendChild(el("summary",null, PASSI[pid].table ? "Rivedi i dati" : "Rileggi il testo"));
+  var i = el("div","inner"); i.appendChild(passageBlock(pid)); d.appendChild(i); return d;
+}
+
+// ---------- evidenziatore (esercizio 1a) ----------
+function hlEval(){
+  var marks = S.a.hl_marks || {}, r = { fp:0, fc:0, TP:0, TC:0, wrong:0, ordine:false, altro:false };
+  HL.forEach(function(sg,i){
+    var k = sg[1], m = marks[i];
+    if (k==="peso"){ r.TP++; if (m==="peso") r.fp++; }
+    if (k==="cert"){ r.TC++; if (m==="cert") r.fc++; }
+    if (!m || k==="libero") return;
+    if (k==="ordine"){ r.wrong++; r.ordine = true; return; }
+    if (k!==m){ r.wrong++; r.altro = true; }
+  });
+  return r;
+}
+function hlPassage(live, onChange){
+  var marks = S.a.hl_marks || {}, done = !!S.a.hl_done;
+  var box = el("div","passo"); box.appendChild(el("span","src",PASSI.castiglia.src));
+  HL.forEach(function(sg,i){
+    var sp = el("span","seg",sg[0]);
+    if (marks[i]) sp.classList.add("m-"+marks[i]);
+    if (done){
+      var k = sg[1], m = marks[i];
+      if (m && k!=="libero" && k!==m) sp.classList.add("bad");
+      if ((k==="peso"||k==="cert") && m!==k) sp.classList.add("miss");
+    }
+    if (live){
+      sp.classList.add("live"); sp.tabIndex = 0; sp.setAttribute("role","button");
+      var tog = function(){
+        var mk = S.a.hl_marks = S.a.hl_marks || {};
+        if (mk[i]===PEN){ delete mk[i]; sp.classList.remove("m-"+PEN); }
+        else { if (mk[i]) sp.classList.remove("m-"+mk[i]); mk[i] = PEN; sp.classList.add("m-"+PEN); }
+        sp.setAttribute("aria-pressed", mk[i] ? "true" : "false");
+        persist(); onChange();
+      };
+      sp.setAttribute("aria-pressed", marks[i] ? "true" : "false");
+      sp.addEventListener("click", tog);
+      sp.addEventListener("keydown", function(e){ if (e.key==="Enter"||e.key===" "){ e.preventDefault(); tog(); } });
+    }
+    box.appendChild(sp);
+  });
+  return box;
+}
+function hlFeedback(){
+  var r = hlEval(), all = (r.fp===r.TP && r.fc===r.TC && !r.wrong);
+  var f = el("div","fb "+(all ? "ok" : (r.fp+r.fc>=5 ? "mid" : "ko"))); f.setAttribute("role","status");
+  f.appendChild(el("b",null,"Peso: "+r.fp+" su "+r.TP+" · Certezza: "+r.fc+" su "+r.TC));
+  if (r.ordine) f.appendChild(el("p",null,"«Anzitutto», «in secondo luogo», «infine» ordinano l’elenco, non dicono quale effetto conta di più: sono sottolineati con l’onda."));
+  if (r.altro) f.appendChild(el("p",null,"Alcuni segni sono su espressioni che non indicano né peso né certezza, o sono del colore sbagliato: guarda quelle sottolineate con l’onda."));
+  if (r.fp<r.TP) f.appendChild(el("p",null,"Le parole che collocano una causa o un effetto su una scala: secondario, più importante, decisivo."));
+  if (r.fc<r.TC) f.appendChild(el("p",null,"Le parole che dicono quanto l’autore è sicuro: ce ne sono di prudenti e di sicure."));
+  if (r.fp<r.TP || r.fc<r.TC) f.appendChild(el("p",null,"Le espressioni che dovevi evidenziare e non hai segnato (o hai segnato con il colore sbagliato) sono riquadrate con il tratteggio."));
+  return f;
+}
+function renderHighlight(card, s, refresh){
+  card.appendChild(el("p",null,s.intro));
+  var done = !!S.a.hl_done, vb = null;
+  if (!done){
+    var pens = el("div","pens"); pens.setAttribute("role","group"); pens.setAttribute("aria-label","Evidenziatore");
+    [["peso","Peso delle cause"],["cert","Grado di certezza"]].forEach(function(p){
+      var b = el("button","pen"); b.type="button"; b.setAttribute("aria-pressed", PEN===p[0] ? "true" : "false");
+      var sw = el("span","sw "+p[0]); b.appendChild(sw); b.appendChild(document.createTextNode(p[1]));
+      b.onclick = function(){ PEN = p[0]; Array.prototype.forEach.call(pens.children, function(x){ x.setAttribute("aria-pressed", x===b ? "true" : "false"); }); };
+      pens.appendChild(b);
+    });
+    card.appendChild(pens);
+  }
+  var upd = function(){ if (vb) vb.disabled = !Object.keys(S.a.hl_marks||{}).length; refresh(); };
+  card.appendChild(hlPassage(!done, upd));
+  if (!done){
+    vb = el("button","btn","Verifica le evidenziazioni"); vb.type="button";
+    vb.disabled = !Object.keys(S.a.hl_marks||{}).length;
+    vb.onclick = function(){ S.a.hl_done = true; persist(); render("hl"); };
+    var row = el("div","nav"); row.appendChild(vb); card.appendChild(row);
+  } else {
+    var f = hlFeedback(); f.id = "it_hl"; card.appendChild(f);
+  }
+}
+
+// ---------- ordinamento (esercizio 2) ----------
+function orderOf(s){
+  var o = S.a["ord_"+s.id];
+  return (o && o.length===s.right.length && o.every(function(k){ return s.cards[k]; })) ? o : s.initial.slice();
+}
+function renderOrder(card, s){
+  card.appendChild(el("p",null,s.intro));
+  var ord = orderOf(s), done = !!S.a["ordv_"+s.id];
+  var ul = el("ul","order");
+  ord.forEach(function(k,i){
+    var li = el("li"); li.appendChild(el("span","pos",String(i+1))); li.appendChild(el("span",null,s.cards[k]));
+    if (done){ li.classList.add(ord[i]===s.right[i] ? "good" : "wrong"); }
+    else {
+      var mv = el("span","mv");
+      var up = el("button",null,"↑"); up.type="button"; up.id="mv_"+s.id+"_"+k+"_u"; up.setAttribute("aria-label","Sposta su: "+s.cards[k]); up.disabled = i===0;
+      var dn = el("button",null,"↓"); dn.type="button"; dn.id="mv_"+s.id+"_"+k+"_d"; dn.setAttribute("aria-label","Sposta giù: "+s.cards[k]); dn.disabled = i===ord.length-1;
+      up.onclick = function(){ var t=ord[i-1]; ord[i-1]=ord[i]; ord[i]=t; S.a["ord_"+s.id]=ord; persist(); render(null, up.disabled ? null : (i-1===0 ? dn.id : up.id)); };
+      dn.onclick = function(){ var t=ord[i+1]; ord[i+1]=ord[i]; ord[i]=t; S.a["ord_"+s.id]=ord; persist(); render(null, i+1===ord.length-1 ? up.id : dn.id); };
+      mv.appendChild(up); mv.appendChild(dn); li.appendChild(mv);
+    }
+    ul.appendChild(li);
+  });
+  card.appendChild(ul);
+  if (!done){
+    var vb = el("button","btn","Verifica l'ordine"); vb.type="button";
+    vb.onclick = function(){ S.a["ord_"+s.id] = ord; S.a["ordv_"+s.id] = true; persist(); render(s.id); };
+    var row = el("div","nav"); row.appendChild(vb); card.appendChild(row);
+  } else {
+    var n = ord.filter(function(k,i){ return k===s.right[i]; }).length, N = s.right.length;
+    var f = el("div","fb "+(n===N ? "ok" : (n>=3 ? "mid" : "ko"))); f.setAttribute("role","status"); f.id = "it_"+s.id;
+    f.appendChild(el("b",null,n+" schede su "+N+" al posto giusto."));
+    f.appendChild(el("p",null,"La catena: "+s.sol));
+    card.appendChild(f);
+  }
+}
+
+// ---------- scelte (classificazioni e domande a risposta chiusa) ----------
+function renderChoiceItem(card, it, prompt, labels, quote){
+  var box = el("div","item");
+  box.appendChild(el("p", quote ? "q quote" : "q", prompt));
+  var chosen = S.a[it.id];
+  labels.forEach(function(lab,k){
+    var b = el("button","opt",lab); b.type="button";
+    b.setAttribute("aria-pressed", chosen===k ? "true":"false");
+    if (chosen !== undefined){ b.disabled = true; if (k===it.correct) b.classList.add("right"); else if (k===chosen) b.classList.add("wrong"); }
+    b.onclick = function(){ if (S.a[it.id]!==undefined) return; S.a[it.id]=k; persist(); render(it.id); };
+    box.appendChild(b);
+  });
+  if (chosen !== undefined){
+    var ok = chosen===it.correct;
+    var fb = el("div","fb "+(ok?"ok":"ko")); fb.setAttribute("role","status");
+    fb.appendChild(el("b",null, ok ? "Giusto." : "Non proprio: la risposta è «"+labels[it.correct]+"»."));
+    if (it.whys){
+      if (!ok) fb.appendChild(el("p",null,"La tua: "+it.whys[chosen]));
+      fb.appendChild(el("p",null,(ok ? "" : "Quella giusta: ")+it.whys[it.correct]));
+    } else fb.appendChild(document.createTextNode(it.spieg));
+    box.appendChild(fb);
+  }
+  box.id = "it_"+it.id;
+  card.appendChild(box);
+}
+function labelsOf(s, it){ return it.options || s.categories; }
+
+// ---------- risposte aperte ----------
+function essayOk(s){ return s.items.every(function(it){ return (S.a[it.id]||"").trim().length >= s.min; }); }
+
+function sectionComplete(s){
+  if (s.kind==="choice") return s.items.every(function(it){ return S.a[it.id]!==undefined; });
+  if (s.kind==="highlight") return !!S.a.hl_done;
+  if (s.kind==="order") return !!S.a["ordv_"+s.id];
+  if (s.kind==="essay") return essayOk(s);
+  return true;
+}
+
+function render(focusId, focusBtn){
+  app.innerHTML = "";
+  app.appendChild(header());
+  if (!registered) app.appendChild(el("div","notice","Registro non raggiungibile: puoi svolgere comunque l'esercitazione."));
+  if (S.done) return renderDone();
+  var s = SECS[S.i];
+  var nx = null;
+  var refresh = function(){ if (nx) nx.disabled = !sectionComplete(s); };
+  var card = el("section","card");
+  if (s.fase) card.appendChild(el("p","fase",s.fase));
+  card.appendChild(el("h2",null,s.title));
+  if (s.skill) card.appendChild(el("p","skill",s.skill));
+
+  if (s.kind==="info"){
+    L.richiamo.paras.forEach(function(t){ card.appendChild(el("p",null,t)); });
+  } else if (s.kind==="highlight"){
+    renderHighlight(card, s, refresh);
+  } else {
+    if (s.passage) card.appendChild(s.passageOpen ? passageBlock(s.passage) : rereadBox(s.passage));
+    if (s.kind==="order"){
+      renderOrder(card, s);
+    } else if (s.kind==="choice"){
+      if (s.consegna) card.appendChild(el("p",null,s.consegna));
+      var many = s.items.length > 1;
+      s.items.forEach(function(it,n){ renderChoiceItem(card, it, (many ? (n+1)+". " : "")+it.text, labelsOf(s,it), s.quoteItems); });
+    } else if (s.kind==="essay"){
+      if (s.intro) card.appendChild(el("p",null,s.intro));
+      s.items.forEach(function(it,n){
+        var box = el("div","item");
+        var lab = el("label", it.quote ? "q quote" : "q", (s.items.length>1 ? (n+1)+". " : "")+it.prompt); lab.setAttribute("for","ta_"+it.id); lab.style.display="block"; lab.style.marginBottom="8px";
+        box.appendChild(lab);
+        var t = el("textarea"); t.id="ta_"+it.id; t.maxLength=s.max; t.value=S.a[it.id]||"";
+        var c = el("div","count");
+        var upd = function(){ c.textContent = t.value.length+" / "+s.max+" caratteri" + (t.value.trim().length < s.min ? " · scrivi almeno "+s.min+" caratteri per proseguire" : ""); refresh(); };
+        t.oninput = function(){ S.a[it.id]=t.value; persist(); upd(); };
+        box.appendChild(t); box.appendChild(c); card.appendChild(box);
+        upd();
+      });
+      card.appendChild(el("p","warn","Le soluzioni le vedi alla consegna, insieme alla correzione."));
+    }
+  }
+
+  var nav = el("div","nav");
+  if (S.i>0){ var bk = el("button","btn sec","Indietro"); bk.type="button"; bk.onclick=function(){ S.i--; persist(); render(); window.scrollTo(0,0); }; nav.appendChild(bk); }
+  nav.appendChild(el("span","sp"));
+  var last = S.i===SECS.length-1;
+  nx = el("button","btn", last ? "Consegna" : "Avanti"); nx.type="button";
+  nx.disabled = !sectionComplete(s);
+  nx.onclick = function(){ if (!sectionComplete(s)) return; if (last) return consegna(); S.i++; persist(); render(); window.scrollTo(0,0); };
+  nav.appendChild(nx);
+  if (!sectionComplete(s) && (s.kind==="highlight" || s.kind==="order")) card.appendChild(el("div","notice","Per proseguire, premi prima «Verifica»."));
+  card.appendChild(nav);
+  app.appendChild(card);
+  if (focusBtn){ var fbn = document.getElementById(focusBtn); if (fbn) fbn.focus({preventScroll:false}); }
+  else if (focusId){ var f2 = document.getElementById("it_"+focusId); if (f2){ var b2 = f2.querySelector(".fb") || f2; b2.scrollIntoView({block:"nearest"}); } }
+}
+
+// ---------- consegna ----------
+function answers(){
+  var out = [];
+  SECS.forEach(function(s){
+    if (s.kind==="choice") s.items.forEach(function(it){ if (S.a[it.id]!==undefined) out.push({id:it.id, prompt:it.text.slice(0,300), type:"mc", answer:labelsOf(s,it)[S.a[it.id]], correct:S.a[it.id]===it.correct}); });
+    if (s.kind==="highlight" && S.a.hl_done){
+      var marks = S.a.hl_marks || {};
+      HL.forEach(function(sg,i){
+        var k = sg[1], m = marks[i];
+        if (k==="peso"||k==="cert") out.push({id:"hl"+i, prompt:sg[0].trim().slice(0,300), type:"mc", answer:m||"", correct:m===k});
+        else if (m && k!=="libero") out.push({id:"hl"+i, prompt:("Segno fuori posto: "+sg[0].trim()).slice(0,300), type:"mc", answer:m, correct:false});
+      });
+    }
+    if (s.kind==="order" && S.a["ordv_"+s.id]){
+      var ord = orderOf(s);
+      ord.forEach(function(k,i){ out.push({id:s.id+"_"+(i+1), prompt:("Posizione "+(i+1)+" · "+s.title).slice(0,300), type:"mc", answer:s.cards[k], correct:k===s.right[i]}); });
+    }
+    if (s.kind==="essay") s.items.forEach(function(it){ if ((S.a[it.id]||"").trim()) out.push({id:it.id, prompt:it.prompt.slice(0,300), type:"essay", answer:String(S.a[it.id]).slice(0,4000), correct:null}); });
+  });
+  return out;
+}
+function score(){ var a = answers().filter(function(x){return x.type==="mc";}); if (!a.length) return null; return Math.round(100*a.filter(function(x){return x.correct;}).length/a.length); }
+
+function consegna(){
+  S.done = true; S.score = score(); persist();
+  try { if (window.Addestramento && Addestramento.completa) Addestramento.completa(answers(), S.score); } catch(e){ registered = false; }
+  render(); window.scrollTo(0,0);
+}
+
+function renderDone(){
+  var card = el("section","card");
+  card.appendChild(el("h2",null,"Consegnato: ecco la correzione"));
+  var mcs = answers().filter(function(x){return x.type==="mc";});
+  var ok = mcs.filter(function(x){return x.correct;}).length;
+  card.appendChild(el("p","score","Risposte corrette nelle parti a correzione automatica: "+ok+" su "+mcs.length));
+  SECS.forEach(function(s){
+    if (s.kind==="info") return;
+    var h = el("p","fase",(s.fase||"")+" · "+s.title); h.style.marginTop="14px"; card.appendChild(h);
+    if (s.kind==="highlight"){
+      var r0 = el("div","rev"); r0.appendChild(hlPassage(false)); r0.appendChild(hlFeedback()); card.appendChild(r0);
+    } else if (s.kind==="order"){
+      var ord = orderOf(s), r1 = el("div","rev"), ul = el("ul","order");
+      ord.forEach(function(k,i){ var li = el("li", k===s.right[i] ? "good" : "wrong"); li.appendChild(el("span","pos",String(i+1))); li.appendChild(el("span",null,s.cards[k])); li.appendChild(el("span","tag "+(k===s.right[i]?"ok":"ko"), k===s.right[i] ? "✓" : "✗")); ul.appendChild(li); });
+      r1.appendChild(ul); r1.appendChild(el("p",null,"La catena: "+s.sol)); card.appendChild(r1);
+    } else if (s.kind==="choice"){
+      s.items.forEach(function(it){
+        var labels = labelsOf(s,it), mine = S.a[it.id], good = mine===it.correct;
+        var r = el("div","rev");
+        r.appendChild(el("p", s.quoteItems ? "q quote" : "q", it.text));
+        var p = el("p"); p.appendChild(el("span","tag "+(good?"ok":"ko"), good?"✓ Giusto. ":"✗ Non proprio. "));
+        p.appendChild(document.createTextNode("Tua risposta: «"+labels[mine]+"»"+(good?"":" · Risposta attesa: «"+labels[it.correct]+"»")));
+        r.appendChild(p);
+        r.appendChild(el("p",null, it.whys ? it.whys[it.correct] : it.spieg));
+        card.appendChild(r);
+      });
+    } else if (s.kind==="essay"){
+      s.items.forEach(function(it){
+        var r2 = el("div","rev");
+        r2.appendChild(el("p", it.quote ? "q quote" : "q", it.prompt));
+        r2.appendChild(el("div","mine",S.a[it.id]||""));
+        var sp = el("p"); sp.appendChild(el("span","tag",(s.solLabel||"Soluzione")+": ")); sp.appendChild(document.createTextNode(it.sol));
+        r2.appendChild(sp);
+        card.appendChild(r2);
+      });
+    }
+  });
+  var nav = el("div","nav"); nav.appendChild(el("span","sp"));
+  var again = el("button","btn sec","Ricomincia da capo"); again.type="button";
+  again.onclick = function(){ S = {i:0,a:{},done:false}; persist(); render(); window.scrollTo(0,0); };
+  nav.appendChild(again); card.appendChild(nav);
+  app.appendChild(card);
+}
+
+function start(){
+  if (window.Addestramento && typeof Addestramento.start === "function"){
+    try {
+      Addestramento.start({ labId:L.labId, title:L.title, tempoAtteso:L.tempoAtteso, caratteriAttesi:L.caratteriAttesi, onReady:function(){ render(); } });
+      return;
+    } catch(e){}
+  }
+  registered = false; render();
+}
+start();
+})();
+</script>
+</body>
+</html>
