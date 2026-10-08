@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il re e la corte: Luigi XIV a Versailles</title>
+<meta name="portale:titolo" content="Il re e la corte: Luigi XIV a Versailles">
+<meta name="portale:materia" content="storia">
+<meta name="portale:tipologia" content="comprendere">
+<meta name="portale:descrizione" content="Quattro domande a scelta multipla e due risposte aperte sull'assolutismo di Luigi XIV, con correzione immediata.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--ok:#1e6b45;--okbg:#e3f3e8;--ko:#a32020;--kobg:#fbe7e7}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--ok:#6fd6a0;--okbg:#17382a;--ko:#f19a9a;--kobg:#3a1c1c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:680px;margin:0 auto;padding:16px}
+h1,h2{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.45rem;margin:.2rem 0 .2rem}
+.sub{color:var(--muted);margin:0 0 1rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:#0f766e;border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+@media (prefers-color-scheme:dark){.tag{color:#5fcfc4}}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0}
+.bar>i{display:block;height:100%;background:var(--pri)}
+.opt{display:block;width:100%;text-align:left;min-height:48px;margin:8px 0;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.opt[aria-pressed=true]{border-color:var(--pri);background:var(--okbg)}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+textarea{width:100%;min-height:150px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;resize:vertical}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.note{font-size:.9rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.res{border-radius:10px;padding:10px 14px;margin:8px 0}
+.res.ok{background:var(--okbg);border-left:5px solid var(--ok)}
+.res.ko{background:var(--kobg);border-left:5px solid var(--ko)}
+.lbl{font-weight:700}
+ul.chk{margin:.4rem 0 0 1.1rem;padding:0}
+.score{font-family:Georgia,serif;font-size:1.6rem;margin:.2rem 0}
+.err{color:var(--ko);font-size:.9rem;min-height:1.3em}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var LAB_ID = "storia_assolutismo_versailles";
+  var KEY = "addestr_state_" + LAB_ID;
+  var MAXC = 1500, MINC = 20;
+
+  // Domande a scelta multipla: la risposta corretta cambia posizione; i distrattori non sono più corti.
+  var MC = [
+    { id: "q1", prompt: "Dove Luigi XIV trasferì stabilmente la corte e il governo nel 1682?",
+      opts: ["A Fontainebleau, nella foresta dove i re di Francia andavano a caccia da secoli",
+             "A Versailles, nel palazzo ampliato dal re fuori Parigi",
+             "A Lione, grande centro commerciale lungo il Rodano e la Saona",
+             "A Marsiglia, il porto sul Mediterraneo che dava accesso alle colonie"], ok: 1,
+      why: "Versailles, a pochi chilometri da Parigi: un palazzo costruito per ospitare insieme la corte e il governo." },
+    { id: "q2", prompt: "Che cosa si chiedeva ai grandi nobili che vivevano a Versailles?",
+      opts: ["Governare da soli le province, riunendosi negli Stati generali per limitare il re",
+             "Guidare l'esercito in campagna, rinunciando a ogni incarico presso la corte reale",
+             "Restare nei propri castelli, versando al re soltanto un tributo annuale in denaro",
+             "Vivere a corte, in una dipendenza quotidiana dai favori e dalle cariche del re"], ok: 3,
+      why: "La nobiltà viveva a corte e dipendeva dai favori del re (cariche, pensioni, cerimoniale), lontana dai propri territori: era così più controllabile. Gli Stati generali non furono convocati dal 1614 al 1789." },
+    { id: "q3", prompt: "Quale politica economica portò avanti Colbert, controllore generale delle finanze?",
+      opts: ["Abolire i dazi sulle merci, lasciando ai mercanti stranieri piena libertà di vendere in Francia",
+             "Sostenere le manifatture francesi e limitare le importazioni di merci straniere",
+             "Chiudere i porti al commercio per vivere soltanto dei prodotti dell'agricoltura interna",
+             "Affidare la riscossione di tutte le imposte ai nobili, in cambio della loro fedeltà al re"], ok: 1,
+      why: "È il mercantilismo: manifatture di Stato e privilegiate, dazi sui prodotti importati, compagnie commerciali, per far entrare più denaro nel regno." },
+    { id: "q4", prompt: "Che cosa stabilì nel 1685 la revoca dell'editto di Nantes?",
+      opts: ["Concesse per la prima volta libertà di culto ai protestanti, ponendo fine alle guerre di religione",
+             "Obbligò i cattolici a convertirsi al calvinismo per ottenere cariche pubbliche e titoli nobiliari",
+             "Tolse la tolleranza ai protestanti ugonotti, molti dei quali lasciarono la Francia",
+             "Separò la Chiesa francese da Roma, affidando la nomina dei vescovi alle assemblee dei fedeli"], ok: 2,
+      why: "La libertà di culto era stata concessa da Enrico IV nel 1598 (editto di Nantes); Luigi XIV la tolse: un solo re, una sola fede. Molti ugonotti, spesso artigiani e mercanti, emigrarono." }
+  ];
+  var OPEN = [
+    { id: "q5", prompt: "Spiega con parole tue perché trasferire la corte a Versailles rafforzava il potere del re.",
+      model: "Una buona risposta contiene almeno tre di questi punti:",
+      chk: ["i nobili vivevano vicino al re e lontano dai propri territori, quindi avevano meno potere locale",
+            "dipendevano dai suoi favori (cariche, pensioni, cerimoniale) e competevano per ottenerli",
+            "il re li poteva tenere sotto controllo, invece di temere rivolte di nobili in armi",
+            "governo e corte nello stesso luogo: decisioni più rapide e accentrate",
+            "il palazzo era anche un simbolo della grandezza e del prestigio della monarchia"] },
+    { id: "q6", prompt: "Il potere del re «assoluto» era davvero senza limiti? Indica almeno un limite concreto e spiegalo.",
+      model: "Va bene qualunque limite spiegato bene, per esempio:",
+      chk: ["le «leggi fondamentali» del regno e la religione: il re non poteva, ad esempio, cambiare le regole della successione",
+            "i privilegi di nobili, clero, città e parlamenti, che resistevano alle novità, soprattutto in materia di tasse",
+            "i mezzi finanziari: le guerre costose obbligavano a vendere cariche e a imporre nuove tasse",
+            "l'apparato amministrativo: per applicare gli ordini serviva un'amministrazione (come gli intendenti) che non sempre arrivava ovunque"] }
+  ];
+  var N = MC.length + OPEN.length;
+
+  var S = { i: 0, a: {}, t: {}, sub: false, ok: null };
+  var app;
+
+  try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") S = Object.assign(S, p); } } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", "Comprendere fenomeni"));
+    h.appendChild(el("h1", null, "Il re e la corte: Luigi XIV a Versailles"));
+    return h;
+  }
+
+  function render() {
+    clear();
+    app.appendChild(header());
+    if (S.sub) return renderReview();
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Domanda " + (S.i + 1) + " di " + N));
+    var bar = el("div", "bar"); var fill = el("i"); fill.style.width = Math.round(S.i / N * 100) + "%"; bar.appendChild(fill); c.appendChild(bar);
+    var back = el("button", "btn sec", "Indietro"); back.type = "button";
+    var next = el("button", "btn", S.i === N - 1 ? "Consegna" : "Avanti"); next.type = "button";
+    var err = el("div", "err");
+
+    if (S.i < MC.length) {
+      var q = MC[S.i];
+      c.appendChild(el("h2", null, q.prompt));
+      q.opts.forEach(function (t, k) {
+        var b = el("button", "opt", t); b.type = "button";
+        b.setAttribute("aria-pressed", S.a[q.id] === k ? "true" : "false");
+        b.onclick = function () { S.a[q.id] = k; persist(); render(); };
+        c.appendChild(b);
+      });
+      back.disabled = S.i === 0;
+      next.disabled = S.a[q.id] == null;
+    } else {
+      var o = OPEN[S.i - MC.length];
+      c.appendChild(el("h2", null, o.prompt));
+      var ta = el("textarea"); ta.maxLength = MAXC; ta.value = S.t[o.id] || "";
+      ta.setAttribute("aria-label", "La tua risposta");
+      var cnt = el("div", "cnt");
+      function upd() { cnt.textContent = ta.value.length + " / " + MAXC; next.disabled = ta.value.trim().length < MINC; }
+      ta.oninput = function () { S.t[o.id] = ta.value; persist(); upd(); };
+      c.appendChild(ta); c.appendChild(cnt);
+      if (S.i === MC.length) {
+        c.appendChild(el("div", "note", "Da qui in poi non si torna più alle domande a scelta multipla: le tue risposte sono definitive."));
+        back.disabled = true;
+      }
+      upd();
+      c.appendChild(el("div", "note", "Scrivi almeno " + MINC + " caratteri, con parole tue. Dopo la consegna vedrai una risposta modello."));
+    }
+    c.appendChild(err);
+    var row = el("div", "row"); row.appendChild(back); row.appendChild(next); c.appendChild(row);
+    back.onclick = function () { if (S.i > 0) { S.i--; persist(); render(); } };
+    next.onclick = function () {
+      if (S.i < N - 1) { S.i++; persist(); render(); } else consegna(next, err);
+    };
+    app.appendChild(c);
+    window.scrollTo(0, 0);
+  }
+
+  function buildAnswers() {
+    var list = [], right = 0;
+    MC.forEach(function (q) {
+      var k = S.a[q.id]; if (k == null) return;
+      var good = k === q.ok; if (good) right++;
+      list.push({ id: q.id, prompt: q.prompt, type: "mc", answer: q.opts[k], correct: good });
+    });
+    OPEN.forEach(function (o) {
+      var t = (S.t[o.id] || "").trim(); if (!t) return;
+      list.push({ id: o.id, prompt: o.prompt, type: "essay", answer: t, correct: null });
+    });
+    return { list: list, right: right, score: Math.round(right / MC.length * 100) };
+  }
+
+  var sending = false;
+  function consegna(btn, err) {
+    if (sending) return; sending = true; btn.disabled = true; err.textContent = "Consegna in corso…";
+    var r = buildAnswers();
+    S.sub = true; persist();
+    Promise.resolve(window.Addestramento.completa(r.list, r.score)).catch(function () { return false; }).then(function (ok) {
+      S.ok = ok !== false; persist(); sending = false; render();
+    });
+  }
+
+  function renderReview() {
+    var r = buildAnswers();
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Esercitazione consegnata"));
+    c.appendChild(el("div", "score", r.right + " su " + MC.length + " corrette"));
+    c.appendChild(el("p", null, "Ecco la correzione. Rileggila con calma: serve a capire cosa ti manca, non a prendere un voto."));
+    app.appendChild(c);
+    MC.forEach(function (q, n) {
+      var k = S.a[q.id], good = k === q.ok;
+      var d = el("div", "card");
+      d.appendChild(el("h2", null, (n + 1) + ". " + q.prompt));
+      var m = el("div", "res " + (good ? "ok" : "ko"));
+      m.appendChild(el("span", "lbl", good ? "Corretto — " : "Non corretto — "));
+      m.appendChild(document.createTextNode("la tua risposta: " + (k == null ? "(nessuna)" : q.opts[k])));
+      d.appendChild(m);
+      if (!good) { var g = el("div", "res ok"); g.appendChild(el("span", "lbl", "Risposta giusta: ")); g.appendChild(document.createTextNode(q.opts[q.ok])); d.appendChild(g); }
+      d.appendChild(el("p", null, q.why));
+      app.appendChild(d);
+    });
+    OPEN.forEach(function (o, n) {
+      var d = el("div", "card");
+      d.appendChild(el("h2", null, (MC.length + n + 1) + ". " + o.prompt));
+      d.appendChild(el("div", "lbl", "La tua risposta"));
+      d.appendChild(el("p", null, S.t[o.id] || "(nessuna)"));
+      d.appendChild(el("div", "lbl", o.model));
+      var ul = el("ul", "chk"); o.chk.forEach(function (t) { ul.appendChild(el("li", null, t)); }); d.appendChild(ul);
+      d.appendChild(el("p", "note", "Confronta: cosa avevi già scritto? Cosa ti è sfuggito?"));
+      app.appendChild(d);
+    });
+  }
+
+  window.Addestramento.start({
+    labId: LAB_ID,
+    title: "Il re e la corte: Luigi XIV a Versailles",
+    salvaRisposte: true,
+    tempoAtteso: 300,
+    caratteriAttesi: 450,
+    onReady: function () { app = document.getElementById("app"); render(); }
+  });
+})();
+</script>
+</body>
+</html>
