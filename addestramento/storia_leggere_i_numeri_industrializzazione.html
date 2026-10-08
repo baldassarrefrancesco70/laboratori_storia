@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leggere i numeri dell'industrializzazione</title>
+<meta name="portale:titolo" content="Leggere i numeri dell'industrializzazione">
+<meta name="portale:materia" content="storia">
+<meta name="portale:tipologia" content="analizzare">
+<meta name="portale:descrizione" content="Due tabelle di dati (il consumo di cotone in Gran Bretagna, la crescita di Manchester e Norwich): ricavare tendenze e confrontarle, con correzione immediata.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--ok:#1e6b45;--okbg:#e3f3e8;--ko:#a32020;--kobg:#fbe7e7;--tag:#2b6cb0;--th:#2c5266;--thfg:#fff;--zebra:#eef4f0}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--ok:#6fd6a0;--okbg:#17382a;--ko:#f19a9a;--kobg:#3a1c1c;--tag:#7fb2f0;--th:#24404f;--thfg:#e6f0e9;--zebra:#1b2d24}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:680px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.45rem;margin:.2rem 0 .2rem}
+h2{font-size:1.2rem}
+h3{font-size:1.05rem;margin:.9rem 0 .3rem}
+.sub{color:var(--muted);margin:0 0 .6rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--tag);border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0}
+.bar>i{display:block;height:100%;background:var(--pri)}
+.opt{display:block;width:100%;text-align:left;min-height:48px;margin:8px 0;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.opt[aria-pressed=true]{border-color:var(--pri);background:var(--okbg)}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+textarea{width:100%;min-height:130px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;resize:vertical}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.note{font-size:.9rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.res{border-radius:10px;padding:10px 14px;margin:8px 0}
+.res.ok{background:var(--okbg);border-left:5px solid var(--ok)}
+.res.ko{background:var(--kobg);border-left:5px solid var(--ko)}
+.lbl{font-weight:700}
+ul.chk{margin:.4rem 0 0 1.1rem;padding:0}
+.score{font-family:Georgia,serif;font-size:1.6rem;margin:.2rem 0}
+.err{color:var(--ko);font-size:.9rem;min-height:1.3em}
+.src{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+.src h3{margin:0 0 6px;font-size:.95rem}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th{background:var(--th);color:var(--thfg);text-align:left;padding:6px 8px}
+td{padding:6px 8px}
+tr:nth-child(even) td{background:var(--zebra)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.cap{font-size:.8rem;color:var(--muted);font-style:italic;margin-top:6px}
+.bars{margin:8px 0 2px}
+.bars div{display:flex;align-items:center;gap:8px;margin:3px 0;font-size:.85rem}
+.bars span.y{width:2.6em;flex:none}
+.bars i{display:block;height:14px;background:var(--pri);border-radius:3px;min-width:2px}
+.bars span.v{flex:none;color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var LAB_ID = "storia_leggere_numeri_industrializzazione";
+  var KEY = "addestr_state_" + LAB_ID;
+  var MAXC = 1500, MINC = 20;
+
+  // ---- Le due fonti (cifre indicative e arrotondate) ----
+  var COT = [[1770, 4], [1790, 31], [1800, 52], [1820, 141], [1830, 264], [1850, 588]];
+  var CITY = [["Manchester", 70000, 142000, 303000], ["Norwich", 36000, 61000, 68000]];
+
+  function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+
+  var INTRO = [
+    { h: "Parte 1 — La curva del cotone",
+      p: ["Nella prima rivoluzione industriale il cotone è il settore che tira tutti gli altri. È una fibra che arriva dalle colonie, si presta a essere filata e tessuta a macchina meglio della lana, e trova un mercato enorme. Quando, nella seconda metà del Settecento, una serie di macchine per filare (la spinning jenny, il water frame, il mule) moltiplica quanto un solo lavoratore riesce a produrre, è soprattutto il cotone a partire: attorno a Manchester, la «Cottonopolis», nasce il primo grande distretto di fabbriche del mondo.",
+          "Gli storici usano come termometro dell'industrializzazione quante libbre di cotone grezzo le fabbriche britanniche lavorano ogni anno: è il cotone importato meno quello riesportato, cioè quello che le macchine hanno davvero filato in Gran Bretagna. Più il numero cresce, più quelle macchine stanno girando.",
+          "Non devi imparare i numeri a memoria: conta la forma della crescita. Prendi due o tre valori, confrontali, e guarda che cosa fanno."] },
+    { h: "Parte 2 — Crescita di una città industriale",
+      p: ["L'industrializzazione non fa crescere tutto allo stesso modo: sposta. Le persone si muovono verso le fabbriche, e le città che le ospitano si gonfiano in pochi decenni, mentre altre, un tempo importanti, restano indietro.",
+          "Le due città della tabella raccontano storie opposte. Manchester è la capitale del cotone: attorno alle sue filande arriva una marea di lavoratori dalle campagne. Norwich era, prima, uno dei maggiori centri tessili d'Inghilterra, ma legato alla lana e al lavoro tradizionale: quando il baricentro dell'industria si sposta sul cotone e sulla fabbrica, resta ai margini. I numeri sono i censimenti, presi ogni dieci anni a partire dal 1801.",
+          "Anche qui non contano le cifre esatte, ma il confronto: guarda di quanto cresce ciascuna città e mettile una accanto all'altra."] }
+  ];
+
+  function srcCot(withBars) {
+    var d = el("div", "src");
+    d.appendChild(el("h3", null, "La fonte — cotone grezzo lavorato in Gran Bretagna"));
+    var t = el("table"), hd = el("tr");
+    var h1 = el("th", null, "Anno"), h2 = el("th", "n", "Milioni di libbre");
+    hd.appendChild(h1); hd.appendChild(h2); t.appendChild(hd);
+    COT.forEach(function (r) { var tr = el("tr"); tr.appendChild(el("td", null, String(r[0]))); tr.appendChild(el("td", "n", "≈ " + r[1])); t.appendChild(tr); });
+    d.appendChild(t);
+    d.appendChild(el("div", "cap", "Consumo di cotone grezzo (importazioni al netto delle riesportazioni), Gran Bretagna. Cifre indicative e arrotondate; serie di T. Ellison (1886) e B. R. Mitchell, Abstract of British Historical Statistics. 1 libbra ≈ 0,45 kg."));
+    if (withBars) {
+      d.appendChild(el("h3", null, "Per vederne la forma (stessi numeri, in barre)"));
+      var b = el("div", "bars"); b.setAttribute("aria-hidden", "true");
+      COT.forEach(function (r) {
+        var row = el("div"), bar = el("i"); bar.style.width = (r[1] / 588 * 70) + "%";
+        row.appendChild(el("span", "y", String(r[0]))); row.appendChild(bar); row.appendChild(el("span", "v", String(r[1])));
+        b.appendChild(row);
+      });
+      d.appendChild(b);
+    }
+    return d;
+  }
+  function srcCity() {
+    var d = el("div", "src");
+    d.appendChild(el("h3", null, "La fonte — popolazione delle due città"));
+    var t = el("table"), hd = el("tr");
+    ["Città", "1801", "1831", "1851"].forEach(function (x, k) { hd.appendChild(el("th", k ? "n" : null, x)); });
+    t.appendChild(hd);
+    CITY.forEach(function (r) { var tr = el("tr"); r.forEach(function (x, k) { tr.appendChild(el("td", k ? "n" : null, k ? fmt(x) : x)); }); t.appendChild(tr); });
+    d.appendChild(t);
+    d.appendChild(el("div", "cap", "Popolazione (censimenti del Regno Unito), cifre arrotondate; censimenti 1801-1851, Vision of Britain / B. R. Mitchell, Abstract of British Historical Statistics."));
+    return d;
+  }
+
+  // ---- Domande. Prima le tre a scelta multipla (calcoli), poi le quattro aperte (interpretazione). ----
+  // La risposta corretta cambia posizione; i distrattori non sono più corti della risposta giusta.
+  var STEPS = [
+    { kind: "mc", id: "m1", src: "cot", part: "Parte 1",
+      prompt: "Prendi solo il 1770 e il 1850. Di quante volte, all'incirca, è cresciuto il consumo di cotone in questi ottant'anni?",
+      opts: ["Circa 15 volte, da 4 a circa 60 milioni di libbre",
+             "Circa 584 volte, cioè la differenza fra 588 e 4 milioni",
+             "Circa 150 volte, da 4 a 588 milioni di libbre",
+             "Circa 1.500 volte, da 4 milioni a circa 6.000 milioni di libbre"], ok: 2,
+      why: "588 ÷ 4 ≈ 147: il consumo si moltiplica per circa 150. Attenzione a non confondere il rapporto (quante volte) con la differenza (quanto in più): 588 − 4 = 584 sono milioni di libbre in più, non «584 volte»." },
+    { kind: "mc", id: "m2", src: "cot", part: "Parte 1",
+      prompt: "Fra il 1790 e il 1800 il consumo aumenta di circa 21 milioni di libbre (da 31 a 52). Di quanto aumenta fra il 1830 e il 1850?",
+      opts: ["Circa 588 milioni di libbre, il valore raggiunto nel 1850 senza sottrarre il 1830",
+             "Circa 123 milioni di libbre, la differenza fra il consumo del 1830 e quello del 1820",
+             "Circa 32 milioni di libbre, cioè l'aumento diviso per dieci",
+             "Circa 324 milioni di libbre, da 264 a 588"], ok: 3,
+      why: "588 − 264 = 324 milioni di libbre in più. Gli altri numeri sono errori tipici: il valore finale senza sottrarre l'iniziale (588), l'intervallo sbagliato (264 − 141 = 123), una divisione che nessuno ha chiesto (32)." },
+    { kind: "mc", id: "m3", src: "city", part: "Parte 2",
+      prompt: "Fra il 1801 e il 1851, per quante volte si moltiplica la popolazione di ciascuna città?",
+      opts: ["Manchester per circa 233 e Norwich per circa 32, cioè la differenza in migliaia di abitanti",
+             "Manchester per circa 1,9 e Norwich per circa 4,3, scambiando i dati delle due città",
+             "Manchester per circa 4,3 e Norwich per circa 1,9 volte",
+             "Manchester e Norwich per circa 4,3 ciascuna, perché le due città crescono nello stesso periodo"], ok: 2,
+      why: "Manchester: 303.000 ÷ 70.000 ≈ 4,3. Norwich: 68.000 ÷ 36.000 ≈ 1,9. Il rapporto dice di quanto cresce ciascuna città rispetto a sé stessa, e permette di confrontare due città di dimensioni diverse." },
+    { kind: "open", id: "o1", src: "cot", part: "Parte 1",
+      prompt: "Confronta i due aumenti (1790-1800 e 1830-1850): la crescita rallenta o accelera? Attenzione: uno dei due intervalli dura 10 anni, l'altro 20.",
+      model: "Una buona risposta contiene almeno due di questi punti:",
+      chk: ["in valore assoluto la crescita accelera molto: +21 milioni di libbre contro +324",
+            "i due intervalli hanno durate diverse, quindi conviene ragionare «per anno»: circa 2 milioni di libbre l'anno contro circa 16",
+            "in proporzione il quadro è diverso: il consumo si moltiplica per 1,7 in 10 anni (1790-1800) e per 2,2 in 20 anni (1830-1850), cioè per circa 1,5 ogni dieci anni: in percentuale la crescita non accelera, anzi è un po' più lenta",
+            "la curva sale sempre più ripida perché la base su cui si cresce è sempre più grande: dire se «accelera» dipende da come si misura, e va detto"] },
+    { kind: "open", id: "o2", src: "cot", part: "Parte 1",
+      prompt: "In una riga: questo numero conta le libbre di cotone lavorate dalle macchine. Che cosa non ti dice di chi quel cotone lo filava e lo tesseva?",
+      model: "Una buona risposta nomina almeno uno di questi aspetti:",
+      chk: ["quanti erano i lavoratori e chi erano (uomini, donne, bambini)",
+            "in quali condizioni lavoravano: orari, salari, sicurezza, disciplina di fabbrica",
+            "che fine facevano i filatori e i tessitori a mano, il cui lavoro veniva sostituito dalle macchine",
+            "da dove arrivava il cotone: la materia prima veniva dalle colonie e da lavoro schiavile, che la tabella non mostra"] },
+    { kind: "open", id: "o3", src: "city", part: "Parte 2",
+      prompt: "Le due città partono da dimensioni non lontanissime. Alla fine sono ancora vicine? Che cosa è successo tra loro?",
+      model: "Una buona risposta contiene almeno tre di questi punti:",
+      chk: ["nel 1801 Manchester ha circa il doppio degli abitanti di Norwich (70.000 contro 36.000); nel 1851 ne ha più di quattro volte (303.000 contro 68.000): la distanza si allarga molto",
+            "Manchester si moltiplica per circa 4,3, Norwich per circa 1,9",
+            "tra il 1831 e il 1851 Norwich quasi si ferma (da 61.000 a 68.000), mentre Manchester più che raddoppia (da 142.000 a 303.000)",
+            "la spiegazione è nel testo: Manchester è legata al cotone e alla fabbrica e attira lavoratori dalle campagne; Norwich, legata alla lana e al lavoro tradizionale, resta ai margini"] },
+    { kind: "open", id: "o4", src: "city", part: "Parte 2",
+      prompt: "In una riga: se la popolazione si concentra dove ci sono le fabbriche, che cosa possiamo dire dei luoghi dove le fabbriche non c'erano?",
+      model: "Una buona risposta contiene almeno un punto, meglio due:",
+      chk: ["crescono poco, o si spopolano, perché le persone si spostano altrove in cerca di lavoro",
+            "le attività tradizionali (come la lana a Norwich) perdono peso rispetto all'industria",
+            "l'industrializzazione crea squilibri territoriali: alcune aree si arricchiscono e si affollano, altre restano indietro",
+            "con prudenza: due città non bastano a provare una regola generale, ma mostrano una tendenza da verificare su altri casi"] }
+  ];
+  var NMC = 3, N = STEPS.length;
+
+  var S = { started: false, i: 0, a: {}, t: {}, sub: false, ok: null };
+  var app;
+  try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") S = Object.assign(S, p); } } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", "Analizzare fonti e documenti"));
+    h.appendChild(el("h1", null, "Leggere i numeri dell'industrializzazione"));
+    h.appendChild(el("p", "sub", "Allenamento sulle fonti: non è una verifica. Rispondi in poche righe."));
+    return h;
+  }
+  function sourceFor(st) { return st.src === "cot" ? srcCot(st.id === "m1" || st.id === "o1") : srcCity(); }
+
+  function render() {
+    clear();
+    app.appendChild(header());
+    if (S.sub) return renderReview();
+    if (!S.started) return renderIntro();
+    var st = STEPS[S.i];
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", st.part + " — domanda " + (S.i + 1) + " di " + N));
+    var bar = el("div", "bar"), fill = el("i"); fill.style.width = Math.round(S.i / N * 100) + "%"; bar.appendChild(fill); c.appendChild(bar);
+    c.appendChild(sourceFor(st));
+    var back = el("button", "btn sec", "Indietro"); back.type = "button";
+    var next = el("button", "btn", S.i === N - 1 ? "Consegna" : "Avanti"); next.type = "button";
+    var err = el("div", "err");
+    c.appendChild(el("h2", null, st.prompt));
+    if (st.kind === "mc") {
+      st.opts.forEach(function (t, k) {
+        var b = el("button", "opt", t); b.type = "button";
+        b.setAttribute("aria-pressed", S.a[st.id] === k ? "true" : "false");
+        b.onclick = function () { S.a[st.id] = k; persist(); render(); };
+        c.appendChild(b);
+      });
+      back.disabled = S.i === 0;
+      next.disabled = S.a[st.id] == null;
+    } else {
+      var ta = el("textarea"); ta.maxLength = MAXC; ta.value = S.t[st.id] || "";
+      ta.setAttribute("aria-label", "La tua risposta");
+      var cnt = el("div", "cnt");
+      var upd = function () { cnt.textContent = ta.value.length + " / " + MAXC; next.disabled = ta.value.trim().length < MINC; };
+      ta.oninput = function () { S.t[st.id] = ta.value; persist(); upd(); };
+      c.appendChild(ta); c.appendChild(cnt);
+      if (S.i === NMC) {
+        c.appendChild(el("div", "note", "Da qui in poi non si torna più ai calcoli a scelta multipla: le tue risposte sono definitive."));
+        back.disabled = true;
+      }
+      upd();
+      c.appendChild(el("div", "note", "Scrivi almeno " + MINC + " caratteri, con parole tue. Dopo la consegna vedrai gli elementi di una buona risposta."));
+    }
+    c.appendChild(err);
+    var row = el("div", "row"); row.appendChild(back); row.appendChild(next); c.appendChild(row);
+    back.onclick = function () { if (S.i > 0) { S.i--; persist(); render(); } };
+    next.onclick = function () { if (S.i < N - 1) { S.i++; persist(); render(); } else consegna(next, err); };
+    app.appendChild(c);
+    window.scrollTo(0, 0);
+  }
+
+  function renderIntro() {
+    INTRO.forEach(function (s, k) {
+      var c = el("div", "card");
+      c.appendChild(el("h2", null, s.h));
+      s.p.forEach(function (t) { c.appendChild(el("p", null, t)); });
+      c.appendChild(k === 0 ? srcCot(true) : srcCity());
+      app.appendChild(c);
+    });
+    var c2 = el("div", "card");
+    c2.appendChild(el("p", null, "Sono sette domande: tre a scelta multipla (calcoli) e quattro con risposta scritta. La fonte resta sempre sotto i tuoi occhi."));
+    var go = el("button", "btn", "Comincio"); go.type = "button";
+    go.onclick = function () { S.started = true; persist(); render(); };
+    c2.appendChild(go);
+    app.appendChild(c2);
+  }
+
+  function buildAnswers() {
+    var list = [], right = 0;
+    STEPS.forEach(function (st) {
+      if (st.kind === "mc") {
+        var k = S.a[st.id]; if (k == null) return;
+        var good = k === st.ok; if (good) right++;
+        list.push({ id: st.id, prompt: st.prompt, type: "mc", answer: st.opts[k], correct: good });
+      } else {
+        var t = (S.t[st.id] || "").trim(); if (!t) return;
+        list.push({ id: st.id, prompt: st.prompt, type: "essay", answer: t, correct: null });
+      }
+    });
+    return { list: list, right: right, score: Math.round(right / NMC * 100) };
+  }
+
+  var sending = false;
+  function consegna(btn, err) {
+    if (sending) return; sending = true; btn.disabled = true; err.textContent = "Consegna in corso…";
+    var r = buildAnswers();
+    S.sub = true; persist();
+    Promise.resolve(window.Addestramento.completa(r.list, r.score)).catch(function () { return false; }).then(function (ok) {
+      S.ok = ok !== false; persist(); sending = false; render();
+    });
+  }
+
+  function renderReview() {
+    var r = buildAnswers();
+    var c = el("div", "card");
+    c.appendChild(el("div", "sub", "Esercitazione consegnata"));
+    c.appendChild(el("div", "score", r.right + " su " + NMC + " calcoli corretti"));
+    c.appendChild(el("p", null, "Ecco la correzione. Rileggila con calma: serve a capire cosa ti manca, non a prendere un voto."));
+    app.appendChild(c);
+    STEPS.forEach(function (st, n) {
+      var d = el("div", "card");
+      d.appendChild(el("h2", null, (n + 1) + ". " + st.prompt));
+      if (st.kind === "mc") {
+        var k = S.a[st.id], good = k === st.ok;
+        var m = el("div", "res " + (good ? "ok" : "ko"));
+        m.appendChild(el("span", "lbl", good ? "Corretto — " : "Non corretto — "));
+        m.appendChild(document.createTextNode("la tua risposta: " + (k == null ? "(nessuna)" : st.opts[k])));
+        d.appendChild(m);
+        if (!good) { var g = el("div", "res ok"); g.appendChild(el("span", "lbl", "Risposta giusta: ")); g.appendChild(document.createTextNode(st.opts[st.ok])); d.appendChild(g); }
+        d.appendChild(el("p", null, st.why));
+      } else {
+        d.appendChild(el("div", "lbl", "La tua risposta"));
+        d.appendChild(el("p", null, S.t[st.id] || "(nessuna)"));
+        d.appendChild(el("div", "lbl", st.model));
+        var ul = el("ul", "chk"); st.chk.forEach(function (t) { ul.appendChild(el("li", null, t)); }); d.appendChild(ul);
+        d.appendChild(el("p", "note", "Confronta: cosa avevi già scritto? Cosa ti è sfuggito?"));
+      }
+      app.appendChild(d);
+    });
+  }
+
+  window.Addestramento.start({
+    labId: LAB_ID,
+    title: "Leggere i numeri dell'industrializzazione",
+    salvaRisposte: true,
+    tempoAtteso: 420,
+    caratteriAttesi: 500,
+    onReady: function () { app = document.getElementById("app"); render(); }
+  });
+})();
+</script>
+</body>
+</html>
