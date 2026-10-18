@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Piazza e palazzo · debriefing</title>
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--line:#c9dccf;--cl:#b45309;--cam:#2f4858;--pri:#1e6b45;--pri-fg:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--line:#2c4337;--cl:#f0b35a;--cam:#b9cddb;--pri:#4fb583;--pri-fg:#0f1a14}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1000px;margin:0 auto;padding:16px}
+h1,h2{font-family:Georgia,serif;line-height:1.2}
+h1{font-size:1.7rem;margin:.2rem 0}
+h2{font-size:1.35rem;margin:0 0 .8rem}
+.sub{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin:14px 0}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+label{display:block;font-weight:600;font-size:.95rem}
+input{width:100%;min-height:48px;font:inherit;font-size:1.3rem;padding:6px 10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg)}
+input:focus-visible,button:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+button{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer;margin-top:14px}
+button.sec{background:transparent;color:var(--pri)}
+.cmp{display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:760px){.cmp{grid-template-columns:1fr 1fr}}
+.who{font-weight:700;margin-bottom:6px}
+.who.cl{color:var(--cl)} .who.cam{color:var(--cam)}
+.track{display:flex;height:54px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.seg{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;white-space:nowrap;overflow:hidden}
+.si.cl{background:var(--cl);color:var(--bg)} .si.cam{background:var(--cam);color:var(--bg)}
+.no{background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(127,127,127,.18) 6px 12px);color:var(--fg)}
+.legend{font-size:1rem;margin-top:6px}
+.big{font-family:Georgia,serif;font-size:2.4rem;line-height:1.1}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;text-align:center}
+.nums .lab{color:var(--muted);font-size:.95rem}
+.q{font-family:Georgia,serif;font-size:1.5rem;text-align:center;margin:.4rem 0}
+.foot{font-size:.85rem;color:var(--muted)}
+.hide{display:none}
+</style>
+</head>
+<body>
+<main>
+  <div class="sub">Storia V · La piazza e il palazzo · debriefing in classe</div>
+  <h1>La classe e la Camera, maggio 1915</h1>
+
+  <section class="card" id="setup">
+    <h2>Inserisci i conteggi della classe</h2>
+    <p class="sub">Dal registro del Portale: risposte «voto» e «biglietto». Nessun nome, solo numeri. I dati restano in questa pagina.</p>
+    <div class="inputs">
+      <div><label for="vs">Voti «Sì» ai pieni poteri</label><input id="vs" type="number" min="0" inputmode="numeric" value="0"></div>
+      <div><label for="vn">Voti «No»</label><input id="vn" type="number" min="0" inputmode="numeric" value="0"></div>
+      <div><label for="bs">Biglietti lasciati a Giolitti</label><input id="bs" type="number" min="0" inputmode="numeric" value="0"></div>
+      <div><label for="bn">Biglietti non lasciati</label><input id="bn" type="number" min="0" inputmode="numeric" value="0"></div>
+    </div>
+    <button type="button" id="show">Mostra in grande</button>
+  </section>
+
+  <section id="view" class="hide">
+    <div class="card">
+      <h2>1 · Il voto del 20 maggio</h2>
+      <div class="cmp">
+        <div><div class="who cl">La classe</div><div class="track" id="tvc"></div><div class="legend" id="lvc"></div></div>
+        <div><div class="who cam">La Camera (scrutinio segreto, 481 votanti)</div><div class="track" id="tvr"></div><div class="legend" id="lvr"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>2 · I biglietti del 12 maggio</h2>
+      <div class="cmp">
+        <div><div class="who cl">La classe</div><div class="track" id="tbc"></div><div class="legend" id="lbc"></div></div>
+        <div><div class="who cam">La Camera (circa 320 biglietti su 508 deputati)</div><div class="track" id="tbr"></div><div class="legend" id="lbr"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>3 · Tre numeri, otto giorni</h2>
+      <div class="nums">
+        <div><div class="big">≈ 320</div><div class="lab">biglietti a Giolitti, 12 maggio</div></div>
+        <div><div class="big">74</div><div class="lab">voti contrari, 20 maggio</div></div>
+        <div><div class="big">47</div><div class="lab">socialisti messi a verbale da Turati</div></div>
+      </div>
+      <p class="q">Che cosa ha deciso il voto? Che cosa era già deciso?</p>
+    </div>
+    <p class="foot">Fonti: Portale storico della Camera dei deputati, Cronologia XXIV legislatura (12 maggio 1915); Camera dei deputati, Atti parlamentari, tornata del 20 maggio 1915, pp. 7914 e 7921.</p>
+    <button type="button" class="sec" id="edit">Modifica i conteggi</button>
+  </section>
+</main>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var KEY = "debrief_piazza_palazzo";
+  try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s) ["vs", "vn", "bs", "bn"].forEach(function (k) { if (s[k] != null) $(k).value = s[k]; }); } catch (e) {}
+  function n(id) { var v = parseInt($(id).value, 10); return isNaN(v) || v < 0 ? 0 : v; }
+  function pct(a, t) { return t ? Math.round(a / t * 100) : 0; }
+  function bar(track, legend, si, no, cls, lsi, lno) {
+    var t = si + no, p = pct(si, t);
+    track.innerHTML = "";
+    var a = document.createElement("div"); a.className = "seg si " + cls; a.style.width = p + "%"; a.textContent = p >= 12 ? p + "%" : "";
+    var b = document.createElement("div"); b.className = "seg no"; b.style.width = (100 - p) + "%"; b.textContent = (100 - p) >= 12 ? (100 - p) + "%" : "";
+    track.appendChild(a); track.appendChild(b);
+    track.setAttribute("role", "img");
+    track.setAttribute("aria-label", lsi + " " + si + ", " + lno + " " + no);
+    legend.textContent = t ? (lsi + ": " + si + " (" + p + "%) · " + lno + ": " + no + " (" + (100 - p) + "%)") : "Nessun dato inserito";
+  }
+  function show() {
+    var v = { vs: n("vs"), vn: n("vn"), bs: n("bs"), bn: n("bn") };
+    try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {}
+    bar($("tvc"), $("lvc"), v.vs, v.vn, "cl", "Sì", "No");
+    bar($("tvr"), $("lvr"), 407, 74, "cam", "Sì", "No");
+    bar($("tbc"), $("lbc"), v.bs, v.bn, "cl", "Lasciato", "Non lasciato");
+    bar($("tbr"), $("lbr"), 320, 188, "cam", "Lasciato", "Non lasciato");
+    $("setup").classList.add("hide"); $("view").classList.remove("hide"); window.scrollTo(0, 0);
+  }
+  $("show").onclick = show;
+  $("edit").onclick = function () { $("view").classList.add("hide"); $("setup").classList.remove("hide"); };
+})();
+</script>
+</body>
+</html>

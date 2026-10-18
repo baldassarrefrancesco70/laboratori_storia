@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La piazza e il palazzo</title>
+<meta name="portale:titolo" content="La piazza e il palazzo">
+<meta name="portale:materia" content="storia">
+<meta name="portale:tipologia" content="contestualizzare">
+<meta name="portale:descrizione" content="Laboratorio a casa: da deputato, nel maggio 1915 prendi posizione giorno per giorno, voti sui pieni poteri e solo dopo scopri che cosa accadeva nei palazzi.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--soft:#e3f3e8;--acc:#b45309;--accbg:#fdf3e6;--pal:#2f4858;--palbg:#e9eef2}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--soft:#17382a;--acc:#f0b35a;--accbg:#2e2412;--pal:#b9cddb;--palbg:#1b2a33}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:700px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.55rem;margin:.3rem 0 .1rem}
+h2{font-size:1.25rem;margin:.2rem 0 .6rem}
+h3{font-size:1.05rem;margin:1rem 0 .4rem}
+p{margin:.5rem 0}
+.sub{color:var(--muted);margin:0 0 .8rem}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--acc);border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.card.pal{background:var(--palbg);border-color:var(--pal)}
+.eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:8px 0 4px}
+.bar>i{display:block;height:100%;background:var(--pri)}
+blockquote{margin:.8rem 0 .2rem;padding:.2rem 0 .2rem .9rem;border-left:4px solid var(--acc);font-style:italic}
+.src{font-size:.82rem;color:var(--muted);margin:0 0 .6rem .9rem}
+.fonti{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:.5rem;margin-top:.8rem}
+.opt{display:block;width:100%;text-align:left;min-height:48px;margin:8px 0;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.opt[aria-pressed=true]{border-color:var(--pri);background:var(--soft);font-weight:600}
+.opt[aria-pressed=true]::before{content:"✓ ";}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;justify-content:flex-end;margin-top:14px}
+textarea{width:100%;min-height:110px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;resize:vertical}
+textarea.big{min-height:170px}
+label.q{display:block;font-weight:700;margin:.8rem 0 .3rem}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.note{font-size:.92rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.warn{font-size:.95rem;border-left:4px solid var(--acc);background:var(--accbg);padding:8px 12px;border-radius:6px;margin:10px 0}
+.secret{font-weight:700;background:var(--soft);border-radius:8px;padding:8px 12px}
+.err{color:#a32020;font-size:.9rem;min-height:1.3em}
+@media (prefers-color-scheme:dark){.err{color:#f19a9a}}
+.mine{font-style:italic;background:var(--soft);border-radius:8px;padding:8px 12px;margin:.3rem 0 .6rem}
+.lbl{font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+.lbl.pz{color:var(--pal)}
+.lbl.pi{color:var(--pri)}
+.res{font-family:Georgia,serif;font-size:1.15rem}
+ul,ol{padding-left:1.3rem;margin:.4rem 0}
+li{margin:.25rem 0}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var C = {"labId": "storia_piazza_e_palazzo", "titolo": "La piazza e il palazzo", "sottotitolo": "Maggio 1915: un deputato davanti alla guerra", "descrizione": "Laboratorio a casa: da deputato, nel maggio 1915 prendi posizione giorno per giorno, voti sui pieni poteri e solo dopo scopri che cosa accadeva nei palazzi.", "intestazione": [["Disciplina e anno", "Storia, V anno"], ["Collocazione", "Prima guerra mondiale, tappa 5: l'ingresso dell'Italia in guerra. Da svolgere prima di studiare il paragrafo; in classe, debriefing di 10 minuti"], ["Tipo e uso", "Laboratorio digitale individuale · esercitazione (le risposte finali arrivano al docente)"], ["Durata", "35-40 minuti, a casa"], ["Tipologia", "Contestualizzare e collegare"], ["Famiglia e indicatore", "C. Collocare nel tempo e nello spazio: collocare gli eventi nella giusta successione cronologica e riconoscere ciò che accade nello stesso periodo"], ["Operazione primaria", "Riconoscere ciò che accade nello stesso periodo (la piazza e il palazzo negli stessi giorni)"], ["Operazione secondaria", "D. Costruire e sostenere una propria tesi con prove (la posizione giorno per giorno e la motivazione del voto)"], ["Livello di guida", "Media"], ["Valutato", "No: formativo"]], "chiSei": "Sei un deputato liberale, eletto nel 1913. Non sei legato né a Giolitti né a Salandra: ti fai un'opinione giorno per giorno, con quello che leggi, senti e vedi a Roma. Il periodo va dal 26 aprile al 20 maggio 1915.", "comeFunziona": ["Leggerai otto date. A ogni data trovi solo quello che un deputato poteva sapere quel giorno: notizie, voci, discorsi pubblici.", "A ogni data scrivi in una o due righe la tua posizione: a favore o contro l'entrata in guerra, e perché. Puoi cambiare idea da una data all'altra, ma non puoi tornare indietro a correggere: anche un deputato vero non poteva.", "Il 12 maggio deciderai se lasciare il tuo biglietto da visita a casa di Giolitti. Il 20 maggio voterai.", "Solo dopo il voto vedrai che cosa accadeva, negli stessi giorni, dove il deputato non poteva guardare: nel governo, a corte, nelle ambasciate.", "Non studiare prima il paragrafo sull'ingresso in guerra e non cercare in rete: il laboratorio funziona solo se non sai come va a finire."], "tempi": [["Richiamo e istruzioni", "3 min"], ["Le sette date della piazza (26 aprile - 17 maggio)", "20 min"], ["Il voto del 20 maggio", "5 min"], ["Il palazzo", "5 min"], ["La domanda finale", "4 min"]], "richiamo": ["Nell'agosto 1914 il governo Salandra ha dichiarato l'Italia neutrale. La Triplice Alleanza con Germania e Austria-Ungheria è un patto difensivo, e a muoversi per primi sono stati proprio gli alleati.", "Da allora il paese è diviso. I neutralisti (liberali vicini a Giolitti, socialisti, gran parte dei cattolici) sono la maggioranza in Parlamento. Gli interventisti (nazionalisti, democratici irredentisti, sindacalisti rivoluzionari, ex socialisti come Mussolini, intellettuali come D'Annunzio) sono una minoranza, ma riempiono le piazze e hanno dalla loro una parte importante della stampa.", "Giolitti, che ha governato l'Italia per buona parte degli ultimi quindici anni, in una lettera pubblicata all'inizio del 1915 ha scritto che restando neutrale l'Italia potrebbe ottenere «parecchio». Il governo tratta con Vienna: chiede territori abitati da italiani in cambio della neutralità."], "promptPosizione": "La tua posizione oggi: a favore o contro l'entrata in guerra? Perché?", "date": [{"id": "d1", "data": "Lunedì 26 aprile 1915", "luogo": "Roma", "testo": ["La Camera non si riunisce dal 22 marzo: ha rinviato i lavori al 12 maggio. Le ultime fasi delle trattative con Vienna si svolgono quindi senza che il Parlamento ne discuta. I giornali sanno che si tratta, non su che cosa.", "Nelle città si alternano comizi a favore e contro l'intervento. A Milano, l'11 aprile, la polizia ha ucciso un operaio durante una manifestazione socialista contro la guerra; il 14 la città si è fermata per uno sciopero generale.", "Oggi il Partito socialista invita i lavoratori a fare del 1° maggio una giornata per la pace, anche se il governo ha vietato cortei e comizi."], "citazioni": [], "fonti": "Portale storico della Camera dei deputati, Cronologia della XXIV legislatura (22 marzo, 14 aprile, 26 aprile 1915)."}, {"id": "d2", "data": "Mercoledì 5 maggio 1915", "luogo": "Genova, scoglio di Quarto", "testo": ["Gabriele D'Annunzio, rientrato dalla Francia, inaugura il monumento ai Mille davanti a una folla enorme. Il re era atteso, ma non è venuto. La sera prima, salutando i genovesi, D'Annunzio aveva parlato della «notizia improvvisa di un'assenza». Il discorso comincia comunque con le parole «Maestà del Re d'Italia».", "Verso la fine, una serie di «beatitudini» rivolte agli italiani. Una riguarda proprio chi, come molti deputati, finora è stato contrario alla guerra:"], "citazioni": [["«Beati quelli che, avendo ieri gridato contro l'evento, accetteranno in silenzio l'alta necessità e non più vorranno essere gli ultimi ma i primi.»", "G. D'Annunzio, Orazione per la sagra dei Mille, 5 maggio 1915, in Per la più grande Italia, Treves, Milano, p. 33"]], "fonti": "G. D'Annunzio, Per la più grande Italia. Orazioni e messaggi, Treves, Milano 1915, pp. 7, 13, 33."}, {"id": "d3", "data": "Domenica 9 - lunedì 10 maggio 1915", "luogo": "Roma", "testo": ["Un decreto del 7 maggio ha rinviato la riapertura della Camera dal 12 al 20 maggio.", "Il 9 maggio Giolitti torna a Roma dopo tre mesi in Piemonte. Lo accolgono fischi e grida di gruppi nazionalisti, che lo seguono fino a casa.", "Il 10 maggio Giolitti è ricevuto dal re e incontra Salandra. Di che cosa abbiano parlato, i giornali possono solo fare ipotesi."], "citazioni": [], "fonti": "Portale storico della Camera dei deputati, Cronologia (7, 9 e 10 maggio 1915); E. Gentile, «Giolitti, Giovanni», Dizionario Biografico degli Italiani, vol. 55, Treccani, Roma 2001."}, {"id": "d4", "data": "Mercoledì 12 maggio 1915", "luogo": "Roma", "testo": ["Nella casa di Giolitti, in via Cavour, arrivano i biglietti da visita di circa 320 deputati e di un centinaio di senatori. È un modo per dire pubblicamente, senza un voto, che sono con lui e con la neutralità. La Camera conta 508 deputati.", "La sera D'Annunzio arriva a Roma e parla alla folla che lo aspetta. Pensa ai giorni trascorsi dal ritorno di Giolitti:"], "citazioni": [["«da tre giorni non so che odore di tradimento ricomincia a soffocarci»", "G. D'Annunzio, Arringa al popolo di Roma, 12 maggio 1915, in Per la più grande Italia, cit., p. 70"]], "scelta": {"id": "biglietto", "domanda": "Lasci anche tu il tuo biglietto da visita a casa di Giolitti?", "opzioni": ["Sì, lascio il mio biglietto", "No, non lo lascio"]}, "fonti": "Portale storico della Camera dei deputati, Cronologia (12 maggio 1915); D'Annunzio, Per la più grande Italia, cit., p. 70."}, {"id": "d5", "data": "Giovedì 13 maggio 1915", "luogo": "Roma", "testo": ["Il governo Salandra si dimette. Il comunicato spiega che «intorno alle direttive del Governo nella politica internazionale manca il concorde consenso dei partiti costituzionali». Ora tocca al re decidere a chi affidare il governo.", "La sera D'Annunzio parla di nuovo alla folla romana:"], "citazioni": [["«Ogni eccesso della forza è lecito, se vale a impedire che la Patria si perda.»", "G. D'Annunzio, Arringa al popolo di Roma in tumulto, 13 maggio 1915, in Per la più grande Italia, cit., p. 73"], ["«Formatevi in drappelli, formatevi in pattuglie civiche»", "Ivi, p. 78"]], "fonti": "Portale storico della Camera dei deputati, Cronologia (13 maggio 1915); D'Annunzio, Per la più grande Italia, cit., pp. 73, 78."}, {"id": "d6", "data": "Venerdì 14 maggio 1915", "luogo": "Roma", "testo": ["In mattinata alcune centinaia di dimostranti, in gran parte studenti, forzano l'ingresso di Montecitorio e arrivano nei corridoi della Camera, dove si scontrano con alcuni deputati neutralisti. La casa di Giolitti è presidiata dai carabinieri.", "La sera, in un'adunanza pubblica, D'Annunzio dice di avere notizie da fonte certa: il 4 maggio il governo avrebbe dichiarato all'Austria la Triplice Alleanza «decaduta e nulla», e avrebbe preso con un altro gruppo di nazioni «impegni gravi, definitivi». Aggiunge che Giolitti ne era al corrente. Nessuna conferma ufficiale, nessuna smentita."], "citazioni": [["«Questo è vero, questo è inoppugnabile. Di questo io ebbi comunicazione certa, prima di lasciare la Francia»", "G. D'Annunzio, L'accusa publica, 14 maggio 1915, in Per la più grande Italia, cit., p. 80"]], "fonti": "Radio Radicale, «I manifestanti interventisti entrano dentro Montecitorio la mattina del 14 maggio 1915», 7 gennaio 2021; D'Annunzio, Per la più grande Italia, cit., pp. 79-82."}, {"id": "d7", "data": "Domenica 16 - lunedì 17 maggio 1915", "luogo": "Roma e Bologna", "testo": ["Il 16 maggio il re respinge le dimissioni di Salandra: il governo resta al suo posto, senza che la Camera abbia discusso la crisi. Lo stesso giorno, a Bologna, il Partito socialista e la Confederazione del lavoro ribadiscono la loro fedeltà alla neutralità.", "Il 17 maggio D'Annunzio parla dalla ringhiera del Campidoglio, davanti a una piazza piena:"], "citazioni": [["«Fate la vostra lista di proscrizione, senza pietà.»", "G. D'Annunzio, Dalla ringhiera del Campidoglio, 17 maggio 1915, in Per la più grande Italia, cit., p. 96"], ["«O Romani, è questo il vero parlamento.»", "Ivi, p. 101"]], "fonti": "Portale storico della Camera dei deputati, Cronologia (13 e 16 maggio 1915); D'Annunzio, Per la più grande Italia, cit., pp. 96, 101."}], "voto": {"id": "d8", "data": "Giovedì 20 maggio 1915", "luogo": "Roma, Camera dei deputati", "testo": ["Il 18 maggio Giolitti ha lasciato Roma senza aspettare la seduta.", "La mattina D'Annunzio chiede ai romani di stringersi intorno a Montecitorio: «voi siate un cerchio di volontà coercitiva».", "Alle 14 si apre la seduta. Salandra presenta un disegno di legge che dà al governo, in caso di guerra, il potere di emanare disposizioni con valore di legge e di ordinare le spese necessarie. Nella relazione annuncia per la prima volta in Parlamento che il 4 maggio il governo ha notificato all'Austria-Ungheria la denuncia del trattato di alleanza. Il ministro degli Esteri Sonnino deposita i documenti diplomatici sui rapporti con l'Austria-Ungheria fino al 4 maggio. Nessun altro trattato viene presentato.", "Con una prima votazione segreta la Camera decide di discutere la legge subito: 367 sì, 54 no.", "Poi parlano, tra gli altri, due socialisti che arrivano a conclusioni opposte."], "citazioni": [["«Per la tutela, dunque, di tali supreme ragioni il Governo del Re si vide costretto a notificare al Governo Imperiale e Reale di Austria-Ungheria, il giorno 4 di questo mese, il ritiro di ogni sua proposta di accordo, la denunzia del trattato di alleanza e la dichiarazione della propria libertà di azione.»", "A. Salandra, Camera dei deputati, tornata del 20 maggio 1915, Atti parlamentari, p. 7908"], ["«È opportuno, signori del Governo, che vi sia qualcuno che, alla vostra domanda di pieni poteri per la guerra, risponda, semplicemente ma recisamente: No!»", "F. Turati, per il gruppo socialista, ivi, p. 7915"], ["«come cittadini e come socialisti, noi crediamo di non dovere opporre alcun impedimento all'azione del Governo in questo momento»", "E. Ciccotti, ivi, p. 7917"]], "segreto": "Alla Camera il voto è segreto: nessun collega saprà come hai votato. (Il docente, come per tutte le risposte di questo laboratorio, lo vedrà.)", "domanda": "Concedi al governo i pieni poteri in caso di guerra?", "opzioni": ["Sì", "No"], "promptMotivazione": "Motiva il tuo voto in due righe.", "fonti": "Camera dei deputati, Atti parlamentari, Legislatura XXIV, 1ª sessione, Discussioni, tornata del 20 maggio 1915, pp. 7907-7922; D'Annunzio, Per la più grande Italia, cit., p. 105."}, "risultato": ["Camera dei deputati, 20 maggio 1915, scrutinio segreto: presenti 482, votanti 481. Favorevoli 407, contrari 74, un astenuto. La legge passa.", "Turati aveva fatto mettere a verbale i nomi dei socialisti presenti: con lui, 47. Gli altri 27 voti contrari non hanno un nome, perché il voto era segreto.", "Il 12 maggio i biglietti da visita lasciati a casa di Giolitti erano circa 320.", "Il 21 maggio il Senato approva la stessa legge con 262 voti favorevoli e 2 contrari."], "palazzo": [{"rif": "d1", "data": "26 aprile", "testo": "A Londra l'ambasciatore italiano firma con Gran Bretagna, Francia e Russia un accordo segreto, il Patto di Londra. L'Italia si impegna a entrare in guerra entro un mese. In cambio, in caso di vittoria, otterrà il Trentino e il Tirolo fino al Brennero, Trieste, Gorizia, l'Istria, gran parte della Dalmazia, Valona e il protettorato sull'Albania, le isole del Dodecaneso. Ne sono al corrente il re, il presidente del Consiglio Salandra e il ministro degli Esteri Sonnino. Il testo resterà segreto fino al 1917."}, {"rif": "d2", "data": "3-4 maggio", "testo": "Sonnino invia a Vienna la nota che denuncia la Triplice Alleanza; viene consegnata il 4 maggio, il giorno prima di Quarto. Il Parlamento lo saprà dal governo solo il 20 maggio."}, {"rif": "d3", "data": "6-10 maggio", "testo": "Il 6 maggio l'Austria fa nuove offerte per tenere l'Italia neutrale. Il 7 il Consiglio dei ministri, dopo un lungo dibattito, approva la scelta dell'intervento e si impegna a dimettersi se la Camera votasse contro; lo stesso giorno la riapertura della Camera viene spostata al 20. Il 10 Giolitti propone al re e a Salandra di far votare alla Camera la ripresa delle trattative con l'Austria, per liberare l'Italia dagli impegni con l'Intesa."}, {"rif": "d4", "data": "12 maggio", "testo": "Il Consiglio dei ministri si riunisce di nuovo. Gli ambasciatori di Germania e di Austria-Ungheria, von Bülow e von Macchio, moltiplicano le offerte pur di evitare l'intervento italiano, spingendosi oltre le istruzioni ricevute dai loro governi."}, {"rif": "d5", "data": "13 maggio", "testo": "Salandra si dimette perché alla Camera non ha i numeri. Ma il governo che si dimette ha già firmato il Patto di Londra e ha già denunciato la Triplice: chiunque gli succeda dovrà fare i conti con impegni presi a nome dell'Italia."}, {"rif": "d6", "data": "14 maggio", "testo": "Quello che D'Annunzio ha detto in piazza era vero: la Triplice era stata denunciata il 4 maggio e gli «impegni gravi, definitivi» erano il Patto di Londra. Su Giolitti la questione è aperta: dopo la guerra sostenne di essere stato tenuto all'oscuro della firma del patto."}, {"rif": "d7", "data": "13-16 maggio", "testo": "Il re consulta i capi parlamentari. Giolitti rifiuta di formare un nuovo governo: ritiene che non possa guidarlo un uomo considerato contrario all'entrata in guerra. Il 16 maggio il re respinge le dimissioni di Salandra."}, {"rif": "d8", "data": "18-20 maggio", "testo": "Il 18 maggio l'Austria fa le sue ultime proposte. Il 20 maggio i documenti che Sonnino deposita alla Camera riguardano solo i rapporti con l'Austria-Ungheria: del Patto di Londra la Camera non vede il testo e non lo vota."}], "dopo": ["22 maggio: il comando delle operazioni è affidato al generale Cadorna; l'Italia rompe le relazioni diplomatiche con la Germania.", "23 maggio: l'ambasciatore italiano a Vienna comunica che l'Italia «si considera in istato di guerra con l'Austria-Ungheria da domani».", "24 maggio: l'Italia entra in guerra."], "rileggi": {"intro": "Prima della domanda finale, rileggi le tue righe accanto al palazzo. Non c'è una posizione giusta da ritrovare: guarda come hai ragionato.", "punti": ["Su quale informazione della giornata si appoggiava ogni tua riga?", "Hai distinto un fatto da una voce e da un discorso di parte?", "Il 14 maggio, quanto hai creduto a D'Annunzio, e perché?", "Se hai cambiato idea, che cosa te l'ha fatta cambiare?"]}, "finale": {"id": "finale", "domanda": "Che cosa ha deciso il tuo voto? Che cosa era già deciso?", "nota": "Questa domanda non ha una risposta pronta: ne parlerete in classe. Scrivi quello che pensi adesso, anche sotto forma di dubbio o di domanda."}, "fontiPalazzo": "Portale storico della Camera dei deputati, Cronologia della XXIV legislatura (26 aprile - 24 maggio 1915); Camera dei deputati, Atti parlamentari, tornata del 20 maggio 1915, pp. 7910-7921; Senato del Regno, Atti parlamentari, tornata del 21 maggio 1915, p. 1854; E. Gentile, «Giolitti, Giovanni», Dizionario Biografico degli Italiani, vol. 55, 2001; M. Rauchensteiner, The First World War and the End of the Habsburg Monarchy, 1914-1918, Böhlau, Wien 2014, pp. 378-380; testo della nota di dichiarazione di guerra del 23 maggio in D'Annunzio, Per la più grande Italia, cit., pp. 113-114."};
+  var LAB_ID = C.labId;
+  var KEY = "addestr_state_" + LAB_ID;
+  var MIN = 20, MAX_RIGA = 500, MAX_MOT = 600, MAX_FIN = 1500;
+  var DATE = C.date;                 // sette date della piazza
+  var NSTEP = 11;                    // 0 inizio, 1-7 date, 8 voto, 9 palazzo, 10 domanda finale
+  var S = { step: 0, pos: {}, big: null, voto: null, mot: "", fin: "", voted: false, sub: false, ok: null };
+  var app;
+
+  try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") S = Object.assign(S, p); } } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+  function shortDate(t) { return t.replace(/(lunedì|martedì|mercoledì|giovedì|venerdì|sabato|domenica)\s*/gi, "").replace(" - ", "-"); }
+  function paras(parent, list) { list.forEach(function (t) { parent.appendChild(el("p", null, t)); }); }
+  function quotes(parent, list) { list.forEach(function (q) { parent.appendChild(el("blockquote", null, q[0])); parent.appendChild(el("div", "src", q[1])); }); }
+  function fonti(parent, t) { parent.appendChild(el("div", "fonti", "Fonti: " + t)); }
+
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", "Contestualizzare e collegare"));
+    h.appendChild(el("h1", null, C.titolo));
+    h.appendChild(el("div", "sub", C.sottotitolo));
+    return h;
+  }
+  function progress(c) {
+    var lab = S.step <= 7 ? "La piazza · " + S.step + " di 7" : (S.step === 8 ? "Il voto" : (S.step === 9 ? "Il palazzo" : "La domanda finale"));
+    c.appendChild(el("div", "eyebrow", lab));
+    var bar = el("div", "bar"); var f = el("i"); f.style.width = Math.round(S.step / (NSTEP - 1) * 100) + "%"; bar.appendChild(f); c.appendChild(bar);
+  }
+  function textarea(parent, label, value, max, cls, onval) {
+    var id = "t" + Math.random().toString(36).slice(2, 8);
+    var l = el("label", "q", label); l.htmlFor = id; parent.appendChild(l);
+    var ta = el("textarea", cls || null); ta.id = id; ta.maxLength = max; ta.value = value || "";
+    var cnt = el("div", "cnt");
+    function upd() { cnt.textContent = ta.value.length + " / " + max; onval(ta.value); }
+    ta.oninput = upd;
+    parent.appendChild(ta); parent.appendChild(cnt);
+    setTimeout(upd, 0);
+    return ta;
+  }
+  function choice(parent, opts, current, onpick) {
+    opts.forEach(function (t, k) {
+      var b = el("button", "opt", t); b.type = "button";
+      b.setAttribute("aria-pressed", current === k ? "true" : "false");
+      b.onclick = function () { onpick(k); };
+      parent.appendChild(b);
+    });
+  }
+  function nextRow(parent, label, enabled, onclick) {
+    var row = el("div", "row"); var b = el("button", "btn", label); b.type = "button"; b.disabled = !enabled; b.onclick = onclick; row.appendChild(b); parent.appendChild(row); return b;
+  }
+  function go(n) { S.step = n; persist(); render(); }
+
+  function render() {
+    clear();
+    app.appendChild(header());
+    if (S.sub) return renderReview();
+    if (S.step === 0) return renderIntro();
+    if (S.step >= 1 && S.step <= 7) return renderDate(DATE[S.step - 1]);
+    if (S.step === 8) return renderVoto();
+    if (S.step === 9) return renderPalazzo(false);
+    return renderFinale();
+  }
+
+  function renderIntro() {
+    var c = el("div", "card");
+    c.appendChild(el("h2", null, "Chi sei"));
+    c.appendChild(el("p", null, C.chiSei));
+    c.appendChild(el("h3", null, "Come funziona"));
+    var ol = el("ol"); C.comeFunziona.forEach(function (t) { ol.appendChild(el("li", null, t)); }); c.appendChild(ol);
+    app.appendChild(c);
+    var r = el("div", "card");
+    r.appendChild(el("h2", null, "Prima di cominciare: il quadro al 26 aprile 1915"));
+    paras(r, C.richiamo);
+    r.appendChild(el("div", "warn", "Da qui in avanti non si torna indietro: ogni riga che scrivi resta com'è, come per un deputato vero."));
+    nextRow(r, "Comincia", true, function () { go(1); });
+    app.appendChild(r);
+    window.scrollTo(0, 0);
+  }
+
+  function renderDate(d) {
+    var c = el("div", "card");
+    progress(c);
+    c.appendChild(el("h2", null, d.data));
+    c.appendChild(el("div", "sub", d.luogo));
+    paras(c, d.testo);
+    quotes(c, d.citazioni);
+    fonti(c, d.fonti);
+    app.appendChild(c);
+    var a = el("div", "card");
+    var okRiga = (S.pos[d.id] || "").trim().length >= MIN, okSc = !d.scelta || S.big != null, btn;
+    if (d.scelta) {
+      a.appendChild(el("h3", null, d.scelta.domanda));
+      choice(a, d.scelta.opzioni, S.big, function (k) { S.big = k; persist(); render(); });
+    }
+    textarea(a, C.promptPosizione, S.pos[d.id], MAX_RIGA, null, function (v) {
+      S.pos[d.id] = v; persist(); okRiga = v.trim().length >= MIN; if (btn) btn.disabled = !(okRiga && okSc);
+    });
+    a.appendChild(el("div", "note", "Una o due righe, almeno " + MIN + " caratteri. Usa quello che sai oggi, non quello che sai di come è andata."));
+    btn = nextRow(a, S.step < 7 ? "Avanti al giorno dopo" : "Avanti al 20 maggio", okRiga && okSc, function () { go(S.step + 1); });
+    app.appendChild(a);
+    window.scrollTo(0, 0);
+  }
+
+  function renderVoto() {
+    var V = C.voto;
+    var c = el("div", "card");
+    progress(c);
+    c.appendChild(el("h2", null, V.data));
+    c.appendChild(el("div", "sub", V.luogo));
+    paras(c, V.testo);
+    quotes(c, V.citazioni);
+    fonti(c, V.fonti);
+    app.appendChild(c);
+    var a = el("div", "card");
+    a.appendChild(el("div", "secret", V.segreto));
+    a.appendChild(el("h3", null, V.domanda));
+    var okMot = (S.mot || "").trim().length >= MIN, btn;
+    choice(a, V.opzioni, S.voto, function (k) { S.voto = k; persist(); render(); });
+    textarea(a, V.promptMotivazione, S.mot, MAX_MOT, null, function (v) {
+      S.mot = v; persist(); okMot = v.trim().length >= MIN; if (btn) btn.disabled = !(okMot && S.voto != null);
+    });
+    a.appendChild(el("div", "warn", "Il voto è definitivo. Dopo il voto vedrai il risultato e il palazzo."));
+    btn = nextRow(a, "Vota", okMot && S.voto != null, function () { S.voted = true; go(9); });
+    app.appendChild(a);
+    window.scrollTo(0, 0);
+  }
+
+  function palazzoCards(parent) {
+    var r = el("div", "card");
+    r.appendChild(el("h2", null, "Il risultato"));
+    r.appendChild(el("p", "res", "Tu hai votato: " + (S.voto == null ? "(nessun voto)" : C.voto.opzioni[S.voto]) + ". Il 12 maggio " + (S.big === 0 ? "avevi lasciato" : "non avevi lasciato") + " il biglietto a Giolitti."));
+    var ul = el("ul"); C.risultato.forEach(function (t) { ul.appendChild(el("li", null, t)); }); r.appendChild(ul);
+    parent.appendChild(r);
+    parent.appendChild(el("h2", null, "Negli stessi giorni, nel palazzo"));
+    var all = DATE.concat([{ id: "d8", data: C.voto.data }]);
+    C.palazzo.forEach(function (pz) {
+      var d = all.filter(function (x) { return x.id === pz.rif; })[0];
+      var k = el("div", "card pal");
+      k.appendChild(el("div", "lbl pi", "La piazza · " + shortDate(d.data)));
+      var mine = pz.rif === "d8" ? ("Voto: " + (S.voto == null ? "-" : C.voto.opzioni[S.voto]) + ". " + (S.mot || "")) : (S.pos[pz.rif] || "(nessuna riga)");
+      if (pz.rif === "d4") mine = "Biglietto: " + (S.big == null ? "-" : C.date[3].scelta.opzioni[S.big]) + ". " + mine;
+      k.appendChild(el("div", "mine", mine));
+      k.appendChild(el("div", "lbl pz", "Il palazzo · " + pz.data));
+      k.appendChild(el("p", null, pz.testo));
+      parent.appendChild(k);
+    });
+    var e = el("div", "card");
+    e.appendChild(el("h3", null, "E poi"));
+    var ul2 = el("ul"); C.dopo.forEach(function (t) { ul2.appendChild(el("li", null, t)); }); e.appendChild(ul2);
+    fonti(e, C.fontiPalazzo);
+    parent.appendChild(e);
+  }
+
+  function renderPalazzo() {
+    var c = el("div", "card"); progress(c);
+    c.appendChild(el("p", null, "Accanto a ogni data trovi la riga che avevi scritto e, sotto, che cosa accadeva quel giorno dove il deputato non poteva guardare."));
+    app.appendChild(c);
+    palazzoCards(app);
+    var n = el("div", "card");
+    nextRow(n, "Avanti alla domanda finale", true, function () { go(10); });
+    app.appendChild(n);
+    window.scrollTo(0, 0);
+  }
+
+  function renderFinale() {
+    var c = el("div", "card"); progress(c);
+    c.appendChild(el("h2", null, "Rileggi"));
+    c.appendChild(el("p", null, C.rileggi.intro));
+    var ul = el("ul"); C.rileggi.punti.forEach(function (t) { ul.appendChild(el("li", null, t)); }); c.appendChild(ul);
+    app.appendChild(c);
+    var a = el("div", "card");
+    a.appendChild(el("h2", null, C.finale.domanda));
+    a.appendChild(el("p", "note", C.finale.nota));
+    var ok = (S.fin || "").trim().length >= MIN, btn;
+    textarea(a, "La tua risposta", S.fin, MAX_FIN, "big", function (v) { S.fin = v; persist(); ok = v.trim().length >= MIN; if (btn) btn.disabled = !ok || sending; });
+    var err = el("div", "err"); a.appendChild(err);
+    btn = nextRow(a, "Consegna", ok, function () { consegna(btn, err); });
+    var back = el("button", "btn", "Rileggi il palazzo"); back.type = "button"; back.style.background = "transparent"; back.style.color = "var(--pri)"; back.style.marginRight = "auto";
+    back.onclick = function () { go(9); };
+    btn.parentNode.insertBefore(back, btn);
+    app.appendChild(a);
+    window.scrollTo(0, 0);
+  }
+
+  function buildAnswers() {
+    var list = [];
+    DATE.forEach(function (d) {
+      var t = (S.pos[d.id] || "").trim();
+      if (d.scelta && S.big != null) list.push({ id: d.scelta.id, prompt: shortDate(d.data) + ": " + d.scelta.domanda, type: "essay", answer: d.scelta.opzioni[S.big], correct: null });
+      if (t) list.push({ id: d.id, prompt: shortDate(d.data) + ": la tua posizione (a favore o contro l'entrata in guerra, e perché)", type: "essay", answer: t, correct: null });
+    });
+    if (S.voto != null) list.push({ id: "voto", prompt: "20 maggio 1915: " + C.voto.domanda, type: "essay", answer: C.voto.opzioni[S.voto], correct: null });
+    if ((S.mot || "").trim()) list.push({ id: "voto_motivazione", prompt: "20 maggio 1915: motivazione del voto", type: "essay", answer: S.mot.trim(), correct: null });
+    if ((S.fin || "").trim()) list.push({ id: C.finale.id, prompt: C.finale.domanda, type: "essay", answer: S.fin.trim(), correct: null });
+    return list;
+  }
+
+  var sending = false, tentativi = 0;
+  function consegna(btn, err) {
+    if (sending) return; sending = true; btn.disabled = true; err.textContent = "Consegna in corso…";
+    var list = buildAnswers();
+    var invio = window.Addestramento ? Promise.resolve(window.Addestramento.completa(list, null)).catch(function () { return false; }) : Promise.resolve(false);
+    invio.then(function (ok) {
+      if (ok === false && window.Addestramento && ++tentativi < 2) {
+        sending = false; btn.disabled = false; err.textContent = "Invio non riuscito: controlla la connessione e premi di nuovo «Consegna»."; return;
+      }
+      S.sub = true; S.ok = (ok !== false); persist(); sending = false; render();
+    });
+  }
+
+  function renderReview() {
+    var c = el("div", "card");
+    c.appendChild(el("div", "eyebrow", "Laboratorio consegnato"));
+    c.appendChild(el("h2", null, "Grazie: ne parlerete in classe"));
+    c.appendChild(el("p", S.ok === false ? "warn" : "note", S.ok === false ? "Attenzione: le risposte NON sono state registrate (connessione assente o bloccata). Avvisa il docente." : "Risposte registrate: il docente le leggerà per preparare la discussione in classe."));
+    c.appendChild(el("h3", null, C.finale.domanda));
+    c.appendChild(el("div", "mine", S.fin || "(nessuna risposta)"));
+    c.appendChild(el("p", null, C.finale.nota));
+    app.appendChild(c);
+    palazzoCards(app);
+    window.scrollTo(0, 0);
+  }
+
+  function avvia() {
+    app = document.getElementById("app");
+    if (!window.Addestramento) { render(); return; }
+    window.Addestramento.start({
+      labId: LAB_ID,
+      title: C.titolo,
+      salvaRisposte: true,          // decisione del docente: le risposte finali arrivano al registro
+      tempoAtteso: 1800,            // 30 minuti per uno studente concentrato
+      caratteriAttesi: 1000,        // sette righe, motivazione, domanda finale
+      onReady: function () { app = document.getElementById("app"); render(); }
+    });
+  }
+  avvia();
+})();
+</script>
+</body>
+</html>
