@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il doppio tavolo</title>
+<meta name="portale:titolo" content="Il doppio tavolo">
+<meta name="portale:materia" content="storia">
+<meta name="portale:tipologia" content="contestualizzare">
+<meta name="portale:descrizione" content="Laboratorio a casa: da ministro degli Esteri, tra marzo e aprile 1915 tratti con Vienna e con l&#x27;Intesa, poi confronti le tue richieste con il Patto di Londra.">
+<meta name="portale:uso" content="addestramento">
+<style>
+:root{--bg:#f4f9f5;--card:#fff;--fg:#1c2a22;--muted:#4d6155;--pri:#1e6b45;--pri-fg:#fff;--line:#c9dccf;--soft:#e3f3e8;--acc:#b45309;--accbg:#fdf3e6;--pal:#2f4858;--palbg:#e9eef2}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#16251d;--fg:#e6f0e9;--muted:#a3b9ab;--pri:#4fb583;--pri-fg:#0f1a14;--line:#2c4337;--soft:#17382a;--acc:#f0b35a;--accbg:#2e2412;--pal:#b9cddb;--palbg:#1b2a33}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:700px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25}
+h1{font-size:1.55rem;margin:.3rem 0 .1rem}
+h2{font-size:1.25rem;margin:.2rem 0 .6rem}
+h3{font-size:1.05rem;margin:1rem 0 .4rem}
+p{margin:.5rem 0}
+.sub{color:var(--muted);margin:0 0 .8rem}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--acc);border:1px solid currentColor;border-radius:99px;padding:1px 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.card.pal{background:var(--palbg);border-color:var(--pal)}
+.eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:8px 0 4px}
+.bar>i{display:block;height:100%;background:var(--pri)}
+blockquote{margin:.8rem 0 .2rem;padding:.2rem 0 .2rem .9rem;border-left:4px solid var(--acc);font-style:italic}
+.src{font-size:.82rem;color:var(--muted);margin:0 0 .6rem .9rem}
+.fonti{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:.5rem;margin-top:.8rem}
+.opt{display:block;width:100%;text-align:left;min-height:48px;margin:8px 0;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+.opt[aria-pressed=true]{border-color:var(--pri);background:var(--soft);font-weight:600}
+.opt[aria-pressed=true]::before{content:"✓ ";}
+.btn{min-height:48px;padding:10px 20px;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:var(--pri-fg);font:inherit;font-weight:600;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.opt:focus-visible,.btn:focus-visible,textarea:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.row{display:flex;justify-content:flex-end;margin-top:14px}
+textarea{width:100%;min-height:110px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:inherit;resize:vertical}
+textarea.big{min-height:170px}
+label.q{display:block;font-weight:700;margin:.8rem 0 .3rem}
+.cnt{font-size:.85rem;color:var(--muted);text-align:right}
+.note{font-size:.92rem;color:var(--muted);border-left:4px solid var(--pri);padding:4px 10px;margin:10px 0}
+.warn{font-size:.95rem;border-left:4px solid var(--acc);background:var(--accbg);padding:8px 12px;border-radius:6px;margin:10px 0}
+.secret{font-weight:700;background:var(--soft);border-radius:8px;padding:8px 12px}
+.err{color:#a32020;font-size:.9rem;min-height:1.3em}
+@media (prefers-color-scheme:dark){.err{color:#f19a9a}}
+.mine{font-style:italic;background:var(--soft);border-radius:8px;padding:8px 12px;margin:.3rem 0 .6rem}
+.lbl{font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+.lbl.pz{color:var(--pal)}
+.lbl.pi{color:var(--pri)}
+.res{font-family:Georgia,serif;font-size:1.15rem}
+ul,ol{padding-left:1.3rem;margin:.4rem 0}
+li{margin:.25rem 0}
+</style>
+<style>
+.dossier dt{font-weight:700;color:var(--pal);margin-top:.6rem}
+.dossier dd{margin:.15rem 0 .2rem 0}
+.chk{display:grid;grid-template-columns:1fr;gap:6px;margin:.4rem 0}
+@media (min-width:560px){.chk{grid-template-columns:1fr 1fr}}
+.chk .opt{margin:0}
+.mine{white-space:pre-wrap}
+.row-cf{border-top:1px solid var(--line);padding:.6rem 0}
+.row-cf:first-of-type{border-top:0}
+.cf-name{font-weight:700}
+.cf-l{font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-top:.25rem}
+.yes{font-weight:700;color:var(--pri)}
+details{margin:.6rem 0}
+summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600;color:var(--pri)}
+summary:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script src="https://laboratorio-vico.web.app/addestramento.v1.js"></script>
+<script>
+(function () {
+  var C = {"labId": "storia_doppio_tavolo", "titolo": "Il doppio tavolo", "sottotitolo": "Marzo-aprile 1915: la trattativa di Sonnino con Vienna e con l'Intesa", "descrizione": "Laboratorio a casa: da ministro degli Esteri, tra marzo e aprile 1915 tratti con Vienna e con l'Intesa, poi confronti le tue richieste con il Patto di Londra.", "intestazione": [["Disciplina e anno", "Storia, V anno"], ["Collocazione", "Prima guerra mondiale, tappa 5: l'ingresso dell'Italia in guerra. Da svolgere dopo il laboratorio «La piazza e il palazzo»; in classe, discussione libera di 5-10 minuti"], ["Tipo e uso", "Laboratorio digitale individuale · esercitazione (le risposte finali arrivano al docente)"], ["Durata", "20-25 minuti, a casa"], ["Tipologia", "Contestualizzare e collegare"], ["Famiglie e indicatori", "C. Collocare nel tempo e nello spazio: riconoscere i legami di causa ed effetto tra gli eventi. A. Analizzare testi e fonti: analizzare una fonte, stabilirne tipo, data, provenienza, autore e destinatario. Le due famiglie sono sullo stesso piano"], ["Operazioni", "Riconoscere il legame tra ogni mossa e la risposta delle controparti; analizzare il Patto di Londra (chi firma, che cosa promette, chi deve saperlo)"], ["Livello di guida", "Media"], ["Valutato", "No: formativo"]], "chiSei": "Sei Sidney Sonnino, ministro degli Esteri dal novembre 1914 nel governo Salandra. L'Italia è neutrale. Da dicembre tratti con l'Austria-Ungheria, l'alleata della Triplice, per ottenere territori in cambio della neutralità; da febbraio prepari anche le condizioni per entrare in guerra con l'Intesa. Sono due tavoli, e ciascuno dei due interlocutori sa poco o nulla dell'altro.", "comeFunziona": ["Giocherai quattro turni, dal 4 marzo al 26 aprile 1915. A ogni turno leggi il dossier: che cosa offre Vienna, che cosa fa la Germania, a che punto è l'Intesa.", "Poi scegli la tua mossa e la motivi in una riga. Al primo turno scegli anche che cosa chiedere; al terzo puoi correggere la tua lista.", "Dopo ogni scelta vedi che cosa comporta (tempi, garanzie, rischi) e che cosa fece davvero Sonnino. Le risposte di Vienna, Berlino e Londra sono quelle storiche: le tue scelte cambiano il tuo dossier, non la storia.", "Alla fine confronti le tue richieste con quelle di Sonnino e con il testo del Patto di Londra.", "Le scelte non si correggono a posteriori: come in ogni trattativa, quello che hai detto resta detto."], "tempi": [["Ruolo e richiamo", "2 min"], ["Turno 1 · 4 marzo", "5 min"], ["Turno 2 · 17-27 marzo", "4 min"], ["Turno 3 · 2-9 aprile", "4 min"], ["Turno 4 · 16-21 aprile", "3 min"], ["Il confronto con il Patto", "4 min"], ["La domanda finale", "3 min"]], "richiamo": ["La Triplice Alleanza (1882) è un patto difensivo. Il suo articolo 7 prevede che, se l'Austria-Ungheria si espande nei Balcani, l'Italia abbia diritto a «compensi». Su questo articolo il governo italiano ha aperto la trattativa con Vienna: la guerra austriaca contro la Serbia, sostiene, dà all'Italia diritto a compensi.", "Salandra ha definito la linea del governo «sacro egoismo»: un freddo calcolo geopolitico, che misura ogni alleanza su un solo criterio, il consolidamento dell'Italia come grande potenza.", "La Camera ha aggiornato i lavori il 22 marzo e tornerà a riunirsi solo a maggio: le fasi decisive della trattativa si svolgeranno senza sedute parlamentari."], "territori": [{"id": "trentino", "nome": "Trentino"}, {"id": "brennero", "nome": "Alto Adige fino al Brennero"}, {"id": "gorizia", "nome": "Gorizia e Gradisca"}, {"id": "trieste", "nome": "Trieste all'Italia"}, {"id": "istria", "nome": "Istria"}, {"id": "fiume", "nome": "Fiume"}, {"id": "dalmazia", "nome": "Dalmazia intera"}, {"id": "isole", "nome": "Isole dalmate"}, {"id": "valona", "nome": "Valona"}, {"id": "albania", "nome": "Protettorato sull'Albania"}, {"id": "dodecaneso", "nome": "Dodecaneso"}, {"id": "asia", "nome": "Compensi in Asia Minore"}, {"id": "africa", "nome": "Compensi coloniali in Africa"}], "turni": [{"id": "t1", "data": "4 marzo 1915", "titolo": "Che cosa chiedere, e a chi", "dossier": [["Vienna", "Da dicembre tratti con il ministro degli Esteri austriaco, il barone Burián, sui compensi dell'articolo 7. Il 3 marzo Burián ha ripetuto all'ambasciatore Avarna che la cessione di territori austriaci all'Italia, per ora, «non aveva carattere di attualità»."], ["Berlino", "La Germania, alleata di Vienna, vuole tenere l'Italia neutrale. Il suo inviato a Roma, il principe von Bülow, preme su Vienna perché tratti."], ["Londra", "L'ambasciatore Imperiali ha in mano le condizioni che gli hai mandato il 16 febbraio per un'eventuale entrata in guerra con l'Intesa. Aspetta l'ordine per presentarle al ministro degli Esteri britannico Grey."]], "citazioni": [["«la questione dei compensi in generale, come quella posta dal R. Governo sul terreno della cessione di territori posseduti oggi dalla Monarchia, non aveva carattere di attualità»", "Avarna a Sonnino, Vienna, 3 marzo 1915, in Il libro verde"]], "lista": true, "domanda": "A chi presenti oggi le tue richieste?", "opzioni": [{"label": "Solo a Vienna: resto nel quadro della Triplice", "tipo": "accettare", "conseguenza": "Tempi: la trattativa resta quella di dicembre, con Burián che non si pronuncia sulle cessioni. Garanzie: nessuna, finché Vienna non accetta di discutere i propri territori. Rischi: senza un'alternativa, l'unica leva è la minaccia di una rottura che non hai preparato."}, {"label": "Solo a Londra: rompo con Vienna e tratto con l'Intesa", "tipo": "alzare", "conseguenza": "Tempi: l'Intesa è in difficoltà ai Dardanelli e in Russia, e vorrà l'Italia in guerra presto. Garanzie: un accordo scritto con tre grandi potenze. Rischi: rompere subito con Vienna chiude ogni via a ottenere qualcosa senza combattere, e mette in allarme Berlino."}, {"label": "A entrambi: apro il secondo tavolo senza chiudere il primo", "tipo": "tenere", "conseguenza": "Tempi: due trattative in parallelo, ciascuna usata per pesare l'altra. Garanzie: puoi confrontare le offerte. Rischi: tutto regge solo se resta segreto; se Vienna sapesse di Londra, o Londra di Vienna, ciascuno alzerebbe il prezzo o si ritirerebbe."}], "storia": ["Sonnino tiene aperti entrambi i tavoli. Il 4 marzo Imperiali consegna a Grey le sedici condizioni italiane: tra le altre, il confine al Brennero, Trieste e l'Istria senza Fiume, la Dalmazia fino alla Narenta con le isole, Valona e un protettorato sull'Albania, compensi in caso di spartizione dell'Impero ottomano.", "Lo stesso giorno Sonnino fissa per Vienna i suoi «punti fermi». Il 9 marzo Burián cede: l'Austria-Ungheria accetta di discutere la cessione di territori della Monarchia.", "Il 10 marzo Sonnino pone a Vienna le sue condizioni preliminari, fra cui l'«assoluto segreto dei negoziati» e la consegna immediata dei territori appena concluso l'accordo."], "citazioniStoria": [["«Che nessuna proposta o discussione di compensi può condurre ad un accordo se non prospetta la cessione di territori già posseduti dall'Austria-Ungheria»", "Sonnino ad Avarna, Roma, 4 marzo 1915, in Il libro verde"], ["«Non intendiamo fare nessuna comunicazione al Parlamento e al pubblico intorno all'avviamento dei negoziati.»", "Sonnino ad Avarna, Roma, 10 marzo 1915, in Il libro verde"]], "fonti": "Il libro verde, telegrammi del 3, 4, 9 e 10 marzo 1915; per Londra: C. J. Lowe, «Britain and Italian Intervention, 1914-1915», The Historical Journal, 12, 1969."}, {"id": "t2", "data": "17-27 marzo 1915", "titolo": "Subito o a fine guerra?", "dossier": [["Vienna", "Burián accetta di cedere territori, ma non subito: per lui nessun territorio può passare all'Italia prima della pace. Il 27 marzo fa la sua prima offerta: una parte del Tirolo meridionale con Trento. In cambio chiede neutralità benevola per tutta la guerra, mano libera nei Balcani e che l'Italia si accolli la quota di debito pubblico dei territori ceduti e paghi un indennizzo."], ["Berlino", "Il 17 marzo Bülow ti avverte che la tua condizione della consegna immediata rischia di far fallire tutto. Il 20 marzo la Germania offre la propria garanzia che l'accordo sarà eseguito a guerra finita."], ["Londra", "Grey trasforma le tue condizioni in una bozza di trattato. Ma la Russia si oppone: nessuna costa adriatica all'Italia a sud di Spalato, perché la Serbia deve avere uno sbocco sul mare."]], "citazioni": [["«sarebbe stato impossibile al Governo Imperiale e Reale di ammettere il trapasso di alcun territorio della Monarchia prima della conclusione della pace»", "Burián riferito da Avarna, Vienna, 13 marzo 1915, in Il libro verde"], ["«a meno che, egli diceva, siate già decisi a fare la guerra, ed entro il marzo»", "Bülow riferito da Sonnino, Roma, 17 marzo 1915, in Il libro verde"], ["«il Governo Imperiale Germanico assume di fronte al Governo Reale d'Italia la piena ed intiera garanzia che la convenzione da concludersi tra l'Italia e l'Austria-Ungheria sarà messa in esecuzione fedelmente e lealmente appena che la pace sarà conclusa»", "Bülow riferito da Sonnino, Roma, 20 marzo 1915, in Il libro verde"]], "subito": {"domanda": "Insisti perché i territori passino all'Italia subito, appena firmato l'accordo?", "opzioni": ["Sì, subito: è una condizione irrinunciabile", "No, accetto la consegna a fine guerra con la garanzia tedesca"]}, "domanda": "Che cosa rispondi all'offerta di Vienna del 27 marzo?", "opzioni": [{"label": "Alzo: l'offerta è insufficiente, chiedo di più", "tipo": "alzare", "conseguenza": "Tempi: Vienna dovrà riformulare, e ogni settimana conta. Garanzie: nessuna nuova finché Burián non cede. Rischi: se chiedi troppo a Vienna, rafforzi chi a Roma dice che con l'Austria non si arriva a niente; se chiedi poco, perdi peso a Londra."}, {"label": "Accetto: Trento a fine guerra, con la garanzia tedesca", "tipo": "accettare", "conseguenza": "Tempi: l'accordo si può chiudere presto. Garanzie: la firma dell'imperatore e quella tedesca, ma i territori arrivano solo a pace conclusa. Rischi: lo dice Sonnino stesso il 23 marzo, la garanzia della Germania vale se la Germania vince; e l'Italia resterebbe legata alla neutralità per una guerra di durata indefinita."}, {"label": "Tengo aperti i due tavoli: rispondo a Vienna e intanto premo a Londra", "tipo": "tenere", "conseguenza": "Tempi: guadagni settimane per confrontare le offerte. Garanzie: nessuna delle due trattative è chiusa. Rischi: Vienna e Berlino capiscono che qualcosa si muove (Bülow lo sospetta già), e a Londra la Russia frena sulla Dalmazia."}], "storia": ["Sonnino tiene aperti i due tavoli. Il 31 marzo giudica l'offerta austriaca troppo vaga e insufficiente; la questione della consegna immediata la lascia per il momento da parte, senza rinunciarvi. Nelle stesse settimane, a Londra, quando Grey riscrive la bozza per venire incontro alla Russia sulla Dalmazia, minaccia di interrompere i negoziati."], "citazioniStoria": [["«la prospettiva di una esecuzione immediata avvalorerebbe fortemente presso l'opinione Pubblica la tesi favorevole alla moderazione nelle domande di cessioni, mentre ogni differimento inciterebbe a maggiori esigenze»", "Sonnino ad Avarna, Roma, 22 marzo 1915, in Il libro verde"], ["«le trovo da un lato troppo vaghe ed incerte, dall'altro assolutamente insufficienti»", "Sonnino ad Avarna, Roma, 31 marzo 1915, in Il libro verde"]], "fonti": "Il libro verde, telegrammi del 13, 17, 20, 22, 27 e 31 marzo 1915; per Londra: Lowe, «Britain and Italian Intervention», cit."}, {"id": "t3", "data": "2-9 aprile 1915", "titolo": "Il compromesso", "dossier": [["Vienna", "Il 2 aprile Burián precisa l'offerta: i distretti di Trento, Rovereto, Riva, Tione e Borgo, con il confine sull'Adige fino a Lavis. Il 6 aprile ti chiede di formulare tu le tue richieste."], ["Berlino", "Il 2 aprile l'ambasciatore a Berlino riferisce, da fonte autorevole, che la Germania non rifiuterebbe di trattare la pace con la Russia: se accadesse, Vienna avrebbe meno bisogno della neutralità italiana."], ["Londra", "Il ministro degli Esteri francese Delcassé propone una via d'uscita: meno Dalmazia all'Italia, a favore della Serbia, in cambio del pieno possesso del Dodecaneso. La Russia accetta, ma a una condizione: l'Italia deve entrare in guerra entro la fine di aprile. Il 9 aprile il primo ministro britannico Asquith presenta la bozza finale."]], "citazioni": [["«i distretti (Politische Bezirke) di Trento, Rovereto, Riva, Tione (ad eccezione di Madonna di Campiglio e dei suoi dintorni), nonchè il Distretto di Borgo. Nella vallata dell'Adige il confine rimonterebbe fino a Lavis»", "Promemoria di Burián, Vienna, 2 aprile 1915, in Il libro verde"]], "lista": true, "listaDomanda": "Dopo il compromesso proposto a Londra, correggi se vuoi la tua lista: che cosa chiedi adesso?", "domanda": "Come rispondi ai due tavoli?", "opzioni": [{"label": "Alzo: a Vienna le richieste massime, a Londra nessuna rinuncia", "tipo": "alzare", "conseguenza": "Tempi: a Londra la Russia ha messo una scadenza, la fine di aprile. Garanzie: nessuna nuova. Rischi: se Londra rompe sulla Dalmazia resta solo Vienna, che finora ha offerto il Trentino a fine guerra."}, {"label": "Accetto la bozza di Londra: meno Dalmazia, più Dodecaneso", "tipo": "accettare", "conseguenza": "Tempi: la firma è vicina, e con la firma la scadenza per entrare in guerra. Garanzie: un trattato con tre potenze, ma i territori arriveranno solo con la vittoria. Rischi: rinunci a una parte della Dalmazia; e Vienna, se lo scoprisse, chiuderebbe ogni trattativa."}, {"label": "Tengo aperti i due tavoli: mando le mie richieste a Vienna e intanto rispondo a Londra", "tipo": "tenere", "conseguenza": "Tempi: Vienna risponderà in una settimana, Londra aspetta. Garanzie: puoi confrontare l'ultima offerta austriaca con la bozza di Asquith. Rischi: la scadenza russa corre, e un'indiscrezione su uno dei due tavoli brucerebbe l'altro."}], "storia": ["Sonnino fa entrambe le cose. L'8 aprile manda a Vienna undici articoli: il Trentino con i confini del 1811, fino a Chiusa sull'Isarco; Gorizia e Gradisca con il confine sull'Isonzo; Trieste, con Capodistria e Pirano, Stato autonomo e indipendente; le isole Curzolari; Valona; il disinteresse austriaco per l'Albania; 200 milioni di lire in oro a saldo della quota di debito pubblico e dei beni dello Stato nei territori ceduti; in cambio, neutralità per tutta la guerra. E all'articolo V: l'Italia occupa subito i territori ceduti.", "Il 14 aprile, sei giorni dopo, accetta con modifiche minori la bozza di Asquith."], "citazioniStoria": [["«L'Italia occuperà subito i territori cedutile»", "Sonnino ad Avarna, Roma, 8 aprile 1915, articolo V delle proposte, in Il libro verde"]], "fonti": "Il libro verde, telegrammi del 2, 6 e 8 aprile 1915; per Londra: Lowe, «Britain and Italian Intervention», cit."}, {"id": "t4", "data": "16-21 aprile 1915", "titolo": "Firmare?", "dossier": [["Vienna", "Il 16 aprile arriva la risposta di Burián. Gli articoli su Gorizia e l'Isonzo, su Trieste e sulle isole sono «inaccettabili». Sul Trentino Vienna si allarga: il confine scenderebbe fino a sud di Salorno. Sulla consegna immediata, no: si fa a pace conclusa, come per Nizza e Savoia nel 1860. Sull'Albania, no. Sull'indennizzo, si può andare all'arbitrato dell'Aia."], ["Berlino", "La Germania resta garante di un accordo da eseguire a guerra finita."], ["Londra", "Il testo è pronto e hai già detto sì. Firmandolo, l'Italia si impegna a entrare in guerra entro un mese."]], "citazioni": [["«il Mare Adriatico sarebbe divenuto un mare italiano qualora l'Italia avesse conservato il possesso di Valona»", "Burián riferito da Avarna, Vienna, 16 aprile 1915, in Il libro verde"]], "domanda": "Che cosa fai?", "opzioni": [{"label": "Firmo a Londra", "tipo": "accettare", "conseguenza": "Tempi: entro un mese l'Italia deve essere in guerra. Garanzie: i territori del trattato, a vittoria ottenuta. Rischi: la guerra; e il Parlamento, che non sa nulla, dovrà votare i mezzi per farla."}, {"label": "Accetto l'offerta di Vienna: Trentino fino a Salorno, neutralità", "tipo": "accettare", "conseguenza": "Tempi: neutralità per tutta la guerra. Garanzie: firma imperiale e garanzia tedesca, territori a pace conclusa. Rischi: se l'Austria perde, la garanzia vale poco; se vince, l'Italia ha avuto il Trentino e nient'altro. E l'Intesa, che aspetta la tua firma, saprà di essere stata usata."}, {"label": "Tengo aperti i due tavoli ancora qualche giorno", "tipo": "tenere", "conseguenza": "Tempi: la scadenza russa di fine aprile è vicina. Garanzie: nessuna nuova. Rischi: Londra potrebbe rivedere il compromesso; Vienna non ha più molto da offrire senza cedere sull'Isonzo e su Trieste."}], "storia": ["Il 21 aprile Sonnino risponde a Vienna che le offerte non bastano: il disaccordo insanabile è sulla data di esecuzione.", "Il 26 aprile, a Londra, Imperiali firma il Patto con Grey, l'ambasciatore francese Cambon e l'ambasciatore russo Benckendorff."], "citazioniStoria": [["«nessun Governo italiano potrebbe oggi farsi garante dell'esecuzione integrale di un impegno il cui corrispettivo fosse rimandato alla fine della guerra»", "Sonnino ad Avarna, Roma, 21 aprile 1915, in Il libro verde"]], "fonti": "Il libro verde, telegrammi del 16 e 21 aprile 1915; per Londra: Lowe, «Britain and Italian Intervention», cit."}], "confronto": {"intro": "Ecco le tue richieste accanto a quelle che Sonnino mandò a Vienna l'8 aprile e a quello che il Patto di Londra promette all'Italia.", "righe": [{"id": "trentino", "vienna": "Sì, con i confini del 1811, fino a Chiusa", "patto": "Sì (art. 4)"}, {"id": "brennero", "vienna": "No: il confine si ferma tra Merano e Bolzano", "patto": "Sì: «il Tirolo cisalpino con la sua frontiera geografica e naturale» (art. 4)"}, {"id": "gorizia", "vienna": "Sì, con il confine sull'Isonzo", "patto": "Sì (art. 4)"}, {"id": "trieste", "vienna": "No: Stato autonomo e indipendente", "patto": "Sì (art. 4)"}, {"id": "istria", "vienna": "Solo Capodistria e Pirano, dentro lo Stato di Trieste", "patto": "Sì: «tutta l'Istria fino al Quarnaro» (art. 4)"}, {"id": "fiume", "vienna": "No", "patto": "No"}, {"id": "dalmazia", "vienna": "No", "patto": "Solo la parte settentrionale, fino a Capo Planka (art. 5)"}, {"id": "isole", "vienna": "Le isole Curzolari", "patto": "«tutte le isole situate a nord e ad ovest della Dalmazia» (art. 5)"}, {"id": "valona", "vienna": "Sì", "patto": "Sì: «l'intiera sovranità su Valona» (art. 6)"}, {"id": "albania", "vienna": "L'Austria si disinteressa dell'Albania", "patto": "L'Italia rappresenta lo Stato d'Albania all'estero (art. 7)"}, {"id": "dodecaneso", "vienna": "Vienna rinuncia a compensi", "patto": "Sì: «l'intiera sovranità» (art. 8)"}, {"id": "asia", "vienna": "No", "patto": "«una parte equa» in caso di spartizione della Turchia d'Asia (art. 9)"}, {"id": "africa", "vienna": "No", "patto": "«qualche equo compenso» (art. 13)"}], "quando": {"label": "Quando l'Italia riceve i territori", "vienna": "Subito: «L'Italia occuperà subito i territori cedutile» (art. V)", "patto": "«Nel trattato di pace» (art. 4)"}, "cambio": {"label": "Che cosa dà l'Italia in cambio", "vienna": "Neutralità per tutta la guerra e 200 milioni di lire in oro", "patto": "La guerra entro un mese, impiegando «la totalità delle sue risorse» (artt. 2 e 16)"}, "notaDalmazia": "L'articolo 5, nel testo dell'edizione Anchieri, omette i confini dalmati: assegna all'Italia la Dalmazia settentrionale, con Zara e Sebenico, fino a una linea che parte da Capo Planka; il resto della costa va a Croazia, Serbia e Montenegro.", "fontiConfronto": "Il libro verde, telegramma dell'8 aprile 1915; Patto di Londra, in E. Anchieri, Antologia storico-diplomatica, Ispi, Milano 1941, pp. 359-361; per i confini dalmati dell'art. 5: Lowe, «Britain and Italian Intervention», cit."}, "segreto": {"intro": "Il Patto di Londra si chiude con queste parole:", "art16": "«Il presente accordo sarà tenuto segreto. L'adesione dell'Italia alla dichiarazione del 5 settembre 1914 sarà solo resa pubblica subito dopo la dichiarazione di guerra dell'Italia o contro di essa.»", "art16fonte": "Patto di Londra, art. 16, in Anchieri, Antologia storico-diplomatica, cit.", "memorandum": "«la Francia, la Gran Bretagna e la Russia, danno il loro pieno assenso al memorandum presentato dal governo Italiano»", "memorandumFonte": "Ivi, accordo finale", "chi": ["Il testo del trattato è il memorandum italiano, cioè le tue richieste, accettate e corrette dalle tre potenze.", "Lo firma a Londra l'ambasciatore Imperiali, autorizzato dal governo. Ne sono al corrente il re, il presidente del Consiglio Salandra e il ministro degli Esteri Sonnino.", "La dichiarazione del 5 settembre 1914 è l'impegno con cui Francia, Gran Bretagna e Russia si erano promesse di non fare pace separata: aderendovi, l'Italia si lega a loro fino alla fine della guerra.", "Il 20 maggio Sonnino depositerà alla Camera il Libro verde: i documenti della trattativa con Vienna. Il tavolo di Londra non ci sarà."]}, "finale": {"id": "finale", "domanda": "Che cosa hai ottenuto, e chi lo ha deciso?", "nota": "Questa domanda non ha una risposta pronta: se ne discuterà in classe. Scrivi quello che pensi adesso, anche sotto forma di dubbio."}};
+  var LAB_ID = C.labId, KEY = "addestr_state_" + LAB_ID;
+  var MIN = 20, MAX_MOT = 500, MAX_FIN = 1500;
+  var T = C.turni, NT = T.length;           // step 0 inizio, 1-4 turni, 5 confronto, 6 domanda finale
+  var S = { step: 0, phase: "scelta", lista1: [], lista3: null, subito: null, mossa: {}, mot: {}, fin: "", sub: false, ok: null };
+  var app;
+
+  try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") S = Object.assign(S, p); } } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function clear() { while (app.firstChild) app.removeChild(app.firstChild); }
+  function paras(parent, list) { list.forEach(function (t) { parent.appendChild(el("p", null, t)); }); }
+  function quotes(parent, list) { list.forEach(function (q) { parent.appendChild(el("blockquote", null, q[0])); parent.appendChild(el("div", "src", q[1])); }); }
+  function fonti(parent, t) { parent.appendChild(el("div", "fonti", "Fonti: " + t)); }
+  function nome(id) { return C.territori.filter(function (x) { return x.id === id; })[0].nome; }
+  function listaFinale() { return S.lista3 || S.lista1; }
+  function go(n, phase) { S.step = n; S.phase = phase || "scelta"; persist(); render(); }
+
+  function header() {
+    var h = el("div");
+    h.appendChild(el("span", "tag", "Contestualizzare e collegare"));
+    h.appendChild(el("h1", null, C.titolo));
+    h.appendChild(el("div", "sub", C.sottotitolo));
+    return h;
+  }
+  function progress(c, lab) {
+    c.appendChild(el("div", "eyebrow", lab));
+    var bar = el("div", "bar"), f = el("i"); f.style.width = Math.round(S.step / 6 * 100) + "%"; bar.appendChild(f); c.appendChild(bar);
+  }
+  function nextRow(parent, label, enabled, onclick) {
+    var row = el("div", "row"), b = el("button", "btn", label); b.type = "button"; b.disabled = !enabled; b.onclick = onclick; row.appendChild(b); parent.appendChild(row); return b;
+  }
+  function choice(parent, opts, current, onpick) {
+    opts.forEach(function (t, k) {
+      var b = el("button", "opt", t); b.type = "button";
+      b.setAttribute("aria-pressed", current === k ? "true" : "false");
+      b.onclick = function () { onpick(k); };
+      parent.appendChild(b);
+    });
+  }
+  function textarea(parent, label, value, max, cls, onval) {
+    var id = "t" + Math.random().toString(36).slice(2, 8);
+    var l = el("label", "q", label); l.htmlFor = id; parent.appendChild(l);
+    var ta = el("textarea", cls || null); ta.id = id; ta.maxLength = max; ta.value = value || "";
+    var cnt = el("div", "cnt");
+    function upd() { cnt.textContent = ta.value.length + " / " + max; onval(ta.value); }
+    ta.oninput = upd; parent.appendChild(ta); parent.appendChild(cnt); setTimeout(upd, 0);
+  }
+  function checklist(parent, sel, onchange) {
+    var box = el("div", "chk");
+    C.territori.forEach(function (t) {
+      var on = sel.indexOf(t.id) >= 0, b = el("button", "opt", t.nome); b.type = "button";
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.onclick = function () { var i = sel.indexOf(t.id); if (i >= 0) sel.splice(i, 1); else sel.push(t.id); onchange(); };
+      box.appendChild(b);
+    });
+    parent.appendChild(box);
+  }
+
+  function render() {
+    clear(); app.appendChild(header());
+    if (S.sub) return renderReview();
+    if (S.step === 0) return renderIntro();
+    if (S.step >= 1 && S.step <= NT) return S.phase === "esito" ? renderEsito(T[S.step - 1]) : renderTurno(T[S.step - 1]);
+    if (S.step === NT + 1) return renderConfronto(true);
+    return renderFinale();
+  }
+
+  function renderIntro() {
+    var c = el("div", "card");
+    c.appendChild(el("h2", null, "Chi sei")); c.appendChild(el("p", null, C.chiSei));
+    c.appendChild(el("h3", null, "Come funziona"));
+    var ol = el("ol"); C.comeFunziona.forEach(function (t) { ol.appendChild(el("li", null, t)); }); c.appendChild(ol);
+    app.appendChild(c);
+    var r = el("div", "card");
+    r.appendChild(el("h2", null, "Prima di cominciare")); paras(r, C.richiamo);
+    nextRow(r, "Comincia", true, function () { go(1); });
+    app.appendChild(r); window.scrollTo(0, 0);
+  }
+
+  function dossier(parent, t) {
+    var dl = el("dl", "dossier");
+    t.dossier.forEach(function (d) { dl.appendChild(el("dt", null, d[0])); dl.appendChild(el("dd", null, d[1])); });
+    parent.appendChild(dl);
+  }
+
+  function renderTurno(t) {
+    var n = S.step;
+    var c = el("div", "card"); progress(c, "Turno " + n + " di " + NT + " · " + t.data);
+    c.appendChild(el("h2", null, t.titolo));
+    dossier(c, t); quotes(c, t.citazioni); fonti(c, t.fonti);
+    app.appendChild(c);
+    var a = el("div", "card"), btn;
+    function valid() {
+      var ok = S.mossa[t.id] != null && (S.mot[t.id] || "").trim().length >= MIN;
+      if (t.lista) ok = ok && (n === 1 ? S.lista1 : S.lista3).length > 0;
+      if (t.subito) ok = ok && S.subito != null;
+      return ok;
+    }
+    function refresh() { persist(); render(); }
+    if (t.lista) {
+      if (n !== 1 && !S.lista3) { S.lista3 = S.lista1.slice(); persist(); }
+      a.appendChild(el("h3", null, t.listaDomanda || "Che cosa chiedi? Scegli i territori e i compensi della tua lista."));
+      checklist(a, n === 1 ? S.lista1 : S.lista3, refresh);
+    }
+    if (t.subito) {
+      a.appendChild(el("h3", null, t.subito.domanda));
+      choice(a, t.subito.opzioni, S.subito, function (k) { S.subito = k; refresh(); });
+    }
+    a.appendChild(el("h3", null, t.domanda));
+    choice(a, t.opzioni.map(function (o) { return o.label; }), S.mossa[t.id], function (k) { S.mossa[t.id] = k; refresh(); });
+    textarea(a, "Motiva la tua mossa in una riga", S.mot[t.id], MAX_MOT, null, function (v) { S.mot[t.id] = v; persist(); if (btn) btn.disabled = !valid(); });
+    a.appendChild(el("div", "warn", "La scelta è definitiva: dopo vedrai che cosa comporta e che cosa fece Sonnino."));
+    btn = nextRow(a, "Fai la tua mossa", valid(), function () { go(n, "esito"); });
+    app.appendChild(a); window.scrollTo(0, 0);
+  }
+
+  function esitoCard(parent, t, withOthers) {
+    var k = S.mossa[t.id], o = t.opzioni[k];
+    var c = el("div", "card pal");
+    c.appendChild(el("div", "lbl pi", "La tua mossa"));
+    c.appendChild(el("div", "mine", o.label + (S.mot[t.id] ? "\n" + S.mot[t.id] : "")));
+    c.appendChild(el("div", "lbl pz", "Che cosa comporta"));
+    c.appendChild(el("p", null, o.conseguenza));
+    if (withOthers) {
+      var d = el("details"); d.appendChild(el("summary", null, "Le altre mosse possibili"));
+      t.opzioni.forEach(function (x, i) { if (i === k) return; d.appendChild(el("p", null, x.label + ". " + x.conseguenza)); });
+      c.appendChild(d);
+    }
+    c.appendChild(el("div", "lbl pz", "Che cosa fece Sonnino"));
+    paras(c, t.storia); quotes(c, t.citazioniStoria);
+    parent.appendChild(c);
+  }
+
+  function renderEsito(t) {
+    var n = S.step;
+    var c = el("div", "card"); progress(c, "Turno " + n + " di " + NT + " · " + t.data);
+    c.appendChild(el("h2", null, t.titolo)); app.appendChild(c);
+    esitoCard(app, t, true);
+    var b = el("div", "card");
+    nextRow(b, n < NT ? "Avanti al turno " + (n + 1) : "Avanti al confronto con il Patto", true, function () { go(n + 1); });
+    app.appendChild(b); window.scrollTo(0, 0);
+  }
+
+  function confrontoCards(parent) {
+    var K = C.confronto, mine = listaFinale();
+    var c = el("div", "card");
+    c.appendChild(el("h2", null, "Il confronto con il Patto di Londra"));
+    c.appendChild(el("p", null, K.intro));
+    K.righe.forEach(function (r) {
+      var row = el("div", "row-cf");
+      row.appendChild(el("div", "cf-name", nome(r.id)));
+      var tu = el("div"); tu.appendChild(el("span", "cf-l", "Tu: ")); tu.appendChild(el("span", mine.indexOf(r.id) >= 0 ? "yes" : null, mine.indexOf(r.id) >= 0 ? "lo chiedi" : "non lo chiedi")); row.appendChild(tu);
+      row.appendChild(el("div", "cf-l", "Sonnino a Vienna, 8 aprile")); row.appendChild(el("div", null, r.vienna));
+      row.appendChild(el("div", "cf-l", "Patto di Londra, 26 aprile")); row.appendChild(el("div", null, r.patto));
+      c.appendChild(row);
+    });
+    [["quando", S.subito == null ? "-" : (S.subito === 0 ? "subito" : "a fine guerra, con la garanzia tedesca")], ["cambio", null]].forEach(function (x) {
+      var r = K[x[0]], row = el("div", "row-cf");
+      row.appendChild(el("div", "cf-name", r.label));
+      if (x[1]) { var tu = el("div"); tu.appendChild(el("span", "cf-l", "Tu: ")); tu.appendChild(el("span", "yes", x[1])); row.appendChild(tu); }
+      row.appendChild(el("div", "cf-l", "Sonnino a Vienna, 8 aprile")); row.appendChild(el("div", null, r.vienna));
+      row.appendChild(el("div", "cf-l", "Patto di Londra, 26 aprile")); row.appendChild(el("div", null, r.patto));
+      c.appendChild(row);
+    });
+    c.appendChild(el("p", "note", K.notaDalmazia));
+    fonti(c, K.fontiConfronto);
+    parent.appendChild(c);
+    var s = el("div", "card pal"), G = C.segreto;
+    s.appendChild(el("h2", null, "Chi lo sa"));
+    s.appendChild(el("p", null, G.intro));
+    quotes(s, [[G.art16, G.art16fonte], [G.memorandum, G.memorandumFonte]]);
+    var ul = el("ul"); G.chi.forEach(function (t) { ul.appendChild(el("li", null, t)); }); s.appendChild(ul);
+    parent.appendChild(s);
+  }
+
+  function renderConfronto() {
+    var c = el("div", "card"); progress(c, "Il confronto"); app.appendChild(c);
+    confrontoCards(app);
+    var b = el("div", "card"); nextRow(b, "Avanti alla domanda finale", true, function () { go(NT + 2); }); app.appendChild(b);
+    window.scrollTo(0, 0);
+  }
+
+  var sending = false, tentativi = 0;
+  function renderFinale() {
+    var a = el("div", "card"); progress(a, "La domanda finale");
+    a.appendChild(el("h2", null, C.finale.domanda));
+    a.appendChild(el("p", "note", C.finale.nota));
+    var btn, err;
+    textarea(a, "La tua risposta", S.fin, MAX_FIN, "big", function (v) { S.fin = v; persist(); if (btn) btn.disabled = v.trim().length < MIN || sending; });
+    err = el("div", "err"); a.appendChild(err);
+    btn = nextRow(a, "Consegna", (S.fin || "").trim().length >= MIN, function () { consegna(btn, err); });
+    var back = el("button", "btn", "Rivedi il confronto"); back.type = "button"; back.style.background = "transparent"; back.style.color = "var(--pri)"; back.style.marginRight = "auto";
+    back.onclick = function () { go(NT + 1); }; btn.parentNode.insertBefore(back, btn);
+    app.appendChild(a); window.scrollTo(0, 0);
+  }
+
+  function buildAnswers() {
+    var list = [];
+    function add(id, prompt, answer) { if (answer != null && String(answer).trim()) list.push({ id: id, prompt: prompt, type: "essay", answer: String(answer).trim(), correct: null }); }
+    add("t1_lista", "4 marzo: la lista delle richieste", S.lista1.map(nome).join("; "));
+    T.forEach(function (t, i) {
+      if (t.subito && S.subito != null) add("t2_subito", t.data + ": " + t.subito.domanda, t.subito.opzioni[S.subito]);
+      if (i === 2 && S.lista3) add("t3_lista", t.data + ": la lista dopo il compromesso", S.lista3.map(nome).join("; "));
+      if (S.mossa[t.id] != null) add(t.id + "_mossa", t.data + ": " + t.domanda, t.opzioni[S.mossa[t.id]].label);
+      add(t.id + "_motivazione", t.data + ": motivazione della mossa", S.mot[t.id]);
+    });
+    add(C.finale.id, C.finale.domanda, S.fin);
+    return list;
+  }
+
+  function consegna(btn, err) {
+    if (sending) return; sending = true; btn.disabled = true; err.textContent = "Consegna in corso…";
+    var list = buildAnswers();
+    var invio = window.Addestramento ? Promise.resolve(window.Addestramento.completa(list, null)).catch(function () { return false; }) : Promise.resolve(false);
+    invio.then(function (ok) {
+      if (ok === false && window.Addestramento && ++tentativi < 2) { sending = false; btn.disabled = false; err.textContent = "Invio non riuscito: controlla la connessione e premi di nuovo «Consegna»."; return; }
+      S.sub = true; S.ok = (ok !== false); persist(); sending = false; render();
+    });
+  }
+
+  function renderReview() {
+    var c = el("div", "card");
+    c.appendChild(el("div", "eyebrow", "Laboratorio consegnato"));
+    c.appendChild(el("h2", null, "Grazie: ne parlerete in classe"));
+    c.appendChild(el("p", S.ok === false ? "warn" : "note", S.ok === false ? "Attenzione: le risposte NON sono state registrate (connessione assente o bloccata). Avvisa il docente." : "Risposte registrate: il docente le leggerà per preparare la discussione in classe."));
+    c.appendChild(el("h3", null, C.finale.domanda));
+    c.appendChild(el("div", "mine", S.fin || "(nessuna risposta)"));
+    app.appendChild(c);
+    T.forEach(function (t, i) {
+      var h = el("div", "card"); h.appendChild(el("div", "eyebrow", "Turno " + (i + 1) + " · " + t.data)); h.appendChild(el("h3", null, t.titolo)); app.appendChild(h);
+      if (S.mossa[t.id] != null) esitoCard(app, t, false);
+    });
+    confrontoCards(app);
+    window.scrollTo(0, 0);
+  }
+
+  function avvia() {
+    app = document.getElementById("app");
+    if (!window.Addestramento) { render(); return; }
+    window.Addestramento.start({
+      labId: LAB_ID, title: C.titolo,
+      salvaRisposte: true,        // decisione del docente
+      tempoAtteso: 1200,          // 20 minuti
+      caratteriAttesi: 600,       // quattro motivazioni e la domanda finale
+      onReady: function () { app = document.getElementById("app"); render(); }
+    });
+  }
+  avvia();
+})();
+</script>
+</body>
+</html>
